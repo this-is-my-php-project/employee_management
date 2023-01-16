@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Modules\Permission;
+namespace App\Modules\Project;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Modules\Role\Role;
+use App\Modules\Workspace\Workspace;
 use App\Modules\User\User;
 
-class Permission extends Model
+class Project extends Model
 {
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
@@ -21,7 +21,7 @@ class Permission extends Model
      *
      * @var array
      */
-    protected $table = 'permissions';
+    protected $table = 'projects';
 
     /**
      * The attributes that are mass assignable.
@@ -62,20 +62,32 @@ class Permission extends Model
     ];
 
     /**
-     * Get the roles for the permission.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function roles(): belongsToMany
-    {
-        return $this->belongsToMany(Role::class, 'role_permission');
-    }
-
-    /**
-     * created by belong to user.
+     * Get the user that owns the Project
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * Get the workspace that owns the Project
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function workspaces(): BelongsToMany
+    {
+        return $this->belongsToMany(Workspace::class, 'workspace_project');
+    }
+
+    /**
+     * Get the users that owns the Project
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_project');
     }
 }

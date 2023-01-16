@@ -54,6 +54,10 @@ class GenerateModule extends Command
     {
         $moduleName = $this->getModuleName();
         $modulePath = $this->moduleDirectoryName . DIRECTORY_SEPARATOR . $moduleName;
+        if ($this->disk->exists($modulePath)) {
+            $this->error('Module already exists');
+            return 0;
+        }
 
         try {
             $this->disk->makeDirectory($modulePath);
@@ -481,7 +485,6 @@ class GenerateModule extends Command
         $moduleTitle = $this->getModuleTitle();
         $modelName = $this->getModelName();
         $policyName = $this->getPolicyName();
-        $this->info('here');
 
         $content = <<<XML
         <?php

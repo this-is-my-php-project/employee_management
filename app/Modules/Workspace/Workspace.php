@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Modules\Permission;
+namespace App\Modules\Workspace;
 
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Modules\Role\Role;
 use App\Modules\User\User;
+use App\Modules\Project\Project;
 
-class Permission extends Model
+class Workspace extends Model
 {
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
@@ -21,7 +20,7 @@ class Permission extends Model
      *
      * @var array
      */
-    protected $table = 'permissions';
+    protected $table = 'workspaces';
 
     /**
      * The attributes that are mass assignable.
@@ -58,24 +57,25 @@ class Permission extends Model
         'created_by' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'deleted_at' => 'datetime',
     ];
 
     /**
-     * Get the roles for the permission.
-     * 
+     * Get the user that owns the Workspace
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles(): belongsToMany
+    public function user(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class, 'role_permission');
+        return $this->belongsToMany(User::class, 'user_workspace');
     }
 
     /**
-     * created by belong to user.
+     * Get workspace's projects
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function createdBy(): BelongsTo
+    public function projects(): BelongsToMany
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsToMany(Project::class, 'workspace_project');
     }
 }

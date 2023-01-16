@@ -2,16 +2,14 @@
 
 namespace App\Modules\User;
 
-use App\Modules\Role\Role;
-use App\Modules\Company\Company;
 use Laravel\Passport\HasApiTokens;
-use App\Modules\Permission\Permission;
-use App\Modules\Role\Constants\RoleConstants;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Modules\Workspace\Workspace;
+use App\Modules\Role\Role;
 
 class User extends Authenticatable
 {
@@ -29,6 +27,7 @@ class User extends Authenticatable
         'email_verified_at',
         'status',
         'storage_id',
+        'created_by',
     ];
 
     /**
@@ -51,17 +50,25 @@ class User extends Authenticatable
     ];
 
     /**
-     * roles relationship; many-to-many.
+     * Get the roles that owns the user.
+     * 
+     * @return BelongsToMany
      */
     public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(
-            Role::class,
-            'user_role',
-            'user_id',
-            'role_id'
-        );
+        return $this->belongsToMany(Role::class, 'user_role',);
     }
+
+    /**
+     * Get the workspace that owns the user.
+     * 
+     * @return BelongsToMany
+     */
+    public function workspaces(): BelongsToMany
+    {
+        return $this->belongsToMany(Workspace::class, 'user_workspace',);
+    }
+
 
     /**
      * get all permissions of the user.

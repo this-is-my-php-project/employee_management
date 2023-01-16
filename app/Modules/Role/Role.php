@@ -8,8 +8,9 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Modules\User\User;
 use App\Modules\Permission\Permission;
+use App\Modules\User\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Role extends Model
 {
@@ -28,7 +29,9 @@ class Role extends Model
         'description',
         'status',
         'level',
-        'parent_id'
+        'parent_id',
+        'created_by',
+        'workspace_id'
     ];
 
     /**
@@ -46,13 +49,18 @@ class Role extends Model
         'description' => 'string',
         'status' => 'boolean',
         'level' => 'integer',
+        'parent_id' => 'integer',
+        'workspace_id' => 'integer',
+        'created_by' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
 
     /**
-     * permissions relationship; many-to-many.
+     * Get users of the role.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users(): belongsToMany
     {
@@ -65,15 +73,24 @@ class Role extends Model
     }
 
     /**
-     * permissions relationship; many-to-many.
+     * Get role creator.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function workspaces(): BelongsTo
+    {
+        return $this->belongsTo(Workspace::class);
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function permissions(): belongsToMany
     {
         return $this->belongsToMany(
             Permission::class,
             'role_permission',
-            'role_id',
-            'permission_id'
         );
     }
 }
