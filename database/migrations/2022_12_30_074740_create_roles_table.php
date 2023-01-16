@@ -20,6 +20,8 @@ return new class extends Migration
             $table->boolean('status')->default(1);
             $table->integer('parent_id')->nullable();
             $table->integer('level')->default(1);
+            $table->bigInteger('workspace_id')->unsigned()->nullable();
+            $table->bigInteger('created_by')->unsigned()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

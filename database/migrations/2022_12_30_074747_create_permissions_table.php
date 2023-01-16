@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->boolean('status')->default(1);
+            $table->bigInteger('created_by')->unsigned()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
