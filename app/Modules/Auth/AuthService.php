@@ -56,7 +56,12 @@ class AuthService extends BaseService
         return DB::transaction(function () use ($payload) {
             $payload['password'] = bcrypt($payload['password']);
             $payload['name'] = strtolower(trim($payload['name']));
-            $user = $this->userRepository->createOne($payload);
+            $user = $this->userRepository->createOne([
+                'name' => $payload['name'],
+                'email' => $payload['email'],
+                'password' => $payload['password'],
+                'created_by' => 1,
+            ]);
 
             return $user;
         });
