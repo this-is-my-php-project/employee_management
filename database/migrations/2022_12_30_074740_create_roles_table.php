@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->boolean('status')->default(1);
+            $table->integer('parent_id')->nullable();
+            $table->integer('level')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });
