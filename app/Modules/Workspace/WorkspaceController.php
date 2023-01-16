@@ -33,8 +33,9 @@ class WorkspaceController extends Controller
     {
         try {
             $this->authorize('viewAny', Workspace::class);
-            
+
             $workspaces = $this->workspaceService->paginate($request->all());
+            return response()->json($workspaces);
             return WorkspaceResource::collection($workspaces);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());

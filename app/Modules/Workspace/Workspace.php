@@ -2,14 +2,16 @@
 
 namespace App\Modules\Workspace;
 
+use App\Modules\Role\Role;
+use App\Modules\User\User;
+use App\Modules\Project\Project;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Modules\User\User;
-use App\Modules\Project\Project;
 
 class Workspace extends Model
 {
@@ -29,7 +31,6 @@ class Workspace extends Model
      */
     protected $fillable = [
         'name',
-        'title',
         'description',
         'status',
         'created_by',
@@ -64,7 +65,7 @@ class Workspace extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function user(): BelongsToMany
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_workspace');
     }
@@ -77,5 +78,15 @@ class Workspace extends Model
     public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'workspace_project');
+    }
+
+    /**
+     * Get workspace's roles
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles(): HasMany
+    {
+        return $this->hasMany(Role::class);
     }
 }

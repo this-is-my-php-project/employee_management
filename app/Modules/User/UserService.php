@@ -16,7 +16,10 @@ class UserService extends BaseService
      */
     protected array $allowedRelations = [
         'roles',
-        'roles.permissions'
+        'roles.workspace',
+        'roles.permissions',
+        'workspaces',
+        'workspaces.roles',
     ];
 
     /**

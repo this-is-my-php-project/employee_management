@@ -61,4 +61,14 @@ class AuthService extends BaseService
             return $user;
         });
     }
+
+    /**
+     * get authenticated user
+     * 
+     * @return User
+     */
+    public static function getAuthUser(): User
+    {
+        return auth()->user();
+    }
 }

@@ -2,15 +2,16 @@
 
 namespace App\Modules\Role;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Modules\User\User;
 use Laravel\Passport\HasApiTokens;
+use App\Modules\Workspace\Workspace;
+use App\Modules\Permission\Permission;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Modules\Permission\Permission;
-use App\Modules\User\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
@@ -77,7 +78,7 @@ class Role extends Model
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function workspaces(): BelongsTo
+    public function workspace(): BelongsTo
     {
         return $this->belongsTo(Workspace::class);
     }

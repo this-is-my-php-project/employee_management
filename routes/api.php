@@ -4,8 +4,8 @@ use App\Modules\Auth\AuthController;
 use App\Modules\Role\RoleController;
 use App\Modules\User\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Modules\Company\CompanyController;
 use App\Modules\Permission\PermissionController;
+use App\Modules\Workspace\WorkspaceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +32,5 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('permissions', PermissionController::class);
 
     // Companies
-    Route::resource('companies', CompanyController::class);
+    Route::resource('workspaces', WorkspaceController::class);
 });

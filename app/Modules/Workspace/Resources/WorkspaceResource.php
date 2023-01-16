@@ -2,6 +2,9 @@
 
 namespace App\Modules\Workspace\Resources;
 
+use App\Modules\Project\Resources\ProjectResource;
+use App\Modules\Role\Resources\RoleResource;
+use App\Modules\User\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class WorkspaceResource extends JsonResource
@@ -14,6 +17,17 @@ class WorkspaceResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this['id'],
+            'name' => $this['name'],
+            'description' => $this['description'],
+            'status' => $this['status'],
+            'users' => UserResource::collection($this->whenLoaded('users')),
+            'projects' => ProjectResource::collection($this->whenLoaded('projects')),
+            'roles' => RoleResource::collection($this->whenLoaded('roles')),
+            'created_at' => $this['created_at'],
+            'updated_at' => $this['updated_at'],
+            'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
+        ];
     }
 }
