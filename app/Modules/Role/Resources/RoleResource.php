@@ -24,12 +24,12 @@ class RoleResource extends JsonResource
             'status' => $this['status'],
             'level' => $this['level'],
             'parent_id' => $this['parent_id'],
-            'users' => UserResource::collection($this->whenLoaded('users')),
-            'workspace' => new WorkspaceResource($this->whenLoaded('workspace')),
-            'permissions' => PermissionResource::collection($this->whenLoaded('permissions')),
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
             'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
+            'users' => UserResource::collection($this->whenLoaded('users')),
+            'workspace' => new WorkspaceResource($this->whenLoaded('workspace')),
+            'permissions' => PermissionResource::collection($this->whenLoaded('permissions')),
         ];
     }
 }

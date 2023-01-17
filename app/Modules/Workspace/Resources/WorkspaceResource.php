@@ -22,12 +22,12 @@ class WorkspaceResource extends JsonResource
             'name' => $this['name'],
             'description' => $this['description'],
             'status' => $this['status'],
-            'users' => UserResource::collection($this->whenLoaded('users')),
-            'projects' => ProjectResource::collection($this->whenLoaded('projects')),
-            'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
             'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
+            'users' => UserResource::collection($this->whenLoaded('users')),
+            'projects' => ProjectResource::collection($this->whenLoaded('projects')),
+            'roles' => RoleResource::collection($this->whenLoaded('roles')),
         ];
     }
 }

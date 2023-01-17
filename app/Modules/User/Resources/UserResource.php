@@ -23,11 +23,11 @@ class UserResource extends JsonResource
             'email_verified_at' => $this['email_verified_at'],
             'status' => $this['status'],
             'storage_id' => $this['storage_id'],
-            'roles' => RoleResource::collection($this->whenLoaded('roles')),
-            'workspaces' => WorkspaceResource::collection($this->whenLoaded('workspaces')),
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
-            'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at'])
+            'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
+            'roles' => RoleResource::collection($this->whenLoaded('roles')),
+            'workspaces' => WorkspaceResource::collection($this->whenLoaded('workspaces')),
         ];
     }
 }

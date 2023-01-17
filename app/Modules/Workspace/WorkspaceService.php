@@ -14,7 +14,8 @@ class WorkspaceService extends BaseService
         'users.roles',
         'projects',
         'projects.workspaces',
-        'roles'
+        'roles',
+        'roles.users',
     ];
 
     protected RoleRepository $roleRepo;

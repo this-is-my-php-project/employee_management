@@ -21,10 +21,10 @@ class PermissionResource extends JsonResource
             'title' => $this['title'],
             'description' => $this['description'],
             'status' => $this['status'],
-            'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
             'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
+            'roles' => RoleResource::collection($this->whenLoaded('roles')),
         ];
     }
 }

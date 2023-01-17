@@ -21,11 +21,11 @@ class ProjectResource extends JsonResource
             'name' => $this['name'],
             'description' => $this['description'],
             'status' => $this['status'],
-            'workspaces' => WorkspaceResource::collection($this->whenLoaded('workspaces')),
-            'users' => UserResource::collection($this->whenLoaded('users')),
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
-            'deleted_at' => $this['deleted_at'],
+            'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
+            'workspaces' => WorkspaceResource::collection($this->whenLoaded('workspaces')),
+            'users' => UserResource::collection($this->whenLoaded('users')),
         ];
     }
 }
