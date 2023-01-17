@@ -41,9 +41,7 @@ class AuthController extends Controller
     public function register(AuthStoreRequest $request)
     {
         $payload = $request->validated();
-
         $user = $this->authService->register($payload);
-
         $user = $this->authService->login($payload);
 
         return new AuthResource($user);
