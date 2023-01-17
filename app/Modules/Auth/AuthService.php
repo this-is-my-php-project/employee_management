@@ -51,7 +51,7 @@ class AuthService extends BaseService
      * @param array $payload
      * @return User|null
      */
-    public function createOne(array $payload): ?User
+    public function register(array $payload): ?User
     {
         return DB::transaction(function () use ($payload) {
             $payload['password'] = bcrypt($payload['password']);

@@ -20,6 +20,11 @@ class AuthController extends Controller
         $this->authService = $authService;
     }
 
+    /**
+     * @param AuthLoginRequest $request
+     * 
+     * @return AuthResource
+     */
     public function login(AuthLoginRequest $request)
     {
         $payload = $request->validated();
@@ -28,11 +33,16 @@ class AuthController extends Controller
         return new AuthResource($user);
     }
 
+    /**
+     * @param AuthStoreRequest $request
+     * 
+     * @return AuthResource
+     */
     public function register(AuthStoreRequest $request)
     {
         $payload = $request->validated();
 
-        $user = $this->authService->createOne($payload);
+        $user = $this->authService->register($payload);
 
         $user = $this->authService->login($payload);
 
