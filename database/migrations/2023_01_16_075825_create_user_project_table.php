@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_project', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->bigInteger('project_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('project_id')->unsigned();
         });
     }
 

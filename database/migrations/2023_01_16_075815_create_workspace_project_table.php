@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('workspace_project', function (Blueprint $table) {
-            $table->bigInteger('workspace_id')->unsigned()->nullable();
-            $table->bigInteger('project_id')->unsigned()->nullable();
+            $table->bigInteger('workspace_id')->unsigned();
+            $table->bigInteger('project_id')->unsigned();
         });
     }
 

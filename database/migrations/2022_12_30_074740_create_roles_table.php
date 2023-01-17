@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('parent_id')->nullable();
             $table->integer('level')->default(1);
             $table->bigInteger('workspace_id')->unsigned()->nullable();
-            $table->bigInteger('created_by_workspace')->unsigned()->nullable();
+            $table->bigInteger('created_by_workspace')->unsigned();
             $table->softDeletes();
             $table->timestamps();
         });
