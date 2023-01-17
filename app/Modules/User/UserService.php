@@ -60,22 +60,28 @@ class UserService extends BaseService
                 'email' => $payload['email'],
                 'password' => $payload['password'],
                 'status' => $payload['status'],
-                'created_by_user' => $payload['created_by_user'],
-                'created_by_workspace' => $payload['created_by_workspace'],
+                'created_by_workspace' => $payload['workspace_id'],
             ]);
 
             if (!empty($payload['role_id'])) {
                 $user->roles()->attach($payload['role_id']);
             }
 
-            if (!empty($payload['workspace_id'])) {
-                $user->workspaces()->attach($payload['workspace_id']);
-            }
+            /**
+             * add user to workspace
+             */
+            $user->workspaces()->attach($payload['workspace_id']);
 
             return $user;
         });
     }
 
+    /**
+     * @param int $id
+     * @param array $payload
+     * 
+     * @return User|null
+     */
     public function updateUserRoles(int $id, array $payload): ?User
     {
         return DB::transaction(function () use ($id, $payload) {
