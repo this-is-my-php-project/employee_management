@@ -35,7 +35,12 @@ class WorkspaceService extends BaseService
              * create a workspace.
              */
             $payload['name'] = strtolower(trim($payload['name']));
-            $workspace = $this->repo->createOne($payload);
+            $workspace = $this->repo->createOne([
+                'name' => $payload['name'],
+                'description' => $payload['description'] ?? $payload['name'],
+                'status' => true,
+                'created_by_user' => auth()->user()->id
+            ]);
 
             /**
              * create a role and add role to the workspace.
@@ -47,7 +52,7 @@ class WorkspaceService extends BaseService
                 'level' => 1,
                 'parent_id' => 0,
                 'workspace_id' => $workspace->id,
-                'created_by' => auth()->user()->id
+                'created_by_user' => auth()->user()->id
             ]);
 
             /**

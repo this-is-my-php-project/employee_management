@@ -44,7 +44,6 @@ class RoleService extends BaseService
      */
     public function createOne(array $payload): Role
     {
-        $createdBy = auth()->user()->id;
         $payload['name'] = Str::lower(trim($payload['name']));
         return $this->repo->createOne([
             'name' => $payload['name'],
@@ -53,7 +52,7 @@ class RoleService extends BaseService
             'level' => $payload['level'],
             'parent_id' => $payload['parent_id'],
             'workspace_id' => $payload['workspace_id'],
-            'created_by' => $createdBy
+            'created_by_workspace' => $payload['workspace_id']
         ]);
     }
 }
