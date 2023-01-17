@@ -34,43 +34,34 @@ class RolePermissionSeeder extends Seeder
                 'status' => true,
                 'level' => 0,
                 'parent_id' => 0,
+                'created_by_workspace' => 0,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'id' => 2,
-                'name' => RoleConstants::ADMIN,
-                'description' => 'Administrator of the system. Has all permissions.',
-                'status' => true,
-                'level' => 1,
-                'parent_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
         ];
         Role::insert($role);
 
-        /**
-         * Permissions
-         */
-        foreach (PermissionConstants::getAdminPermissions() as $key => $value) {
-            $permission[] = [
-                'id' => $key + 1,
-                'name' => $value,
-                'title' => PermissionService::getTitle($value),
-                'description' => PermissionService::getLowerCase($value),
-                'status' => true,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
-        Permission::insert($permission);
+        // /**
+        //  * Permissions
+        //  */
+        // foreach (PermissionConstants::getAdminPermissions() as $key => $value) {
+        //     $permission[] = [
+        //         'id' => $key + 1,
+        //         'name' => $value,
+        //         'title' => PermissionService::getTitle($value),
+        //         'description' => PermissionService::getLowerCase($value),
+        //         'status' => true,
+        //         'created_at' => now(),
+        //         'updated_at' => now(),
+        //     ];
+        // }
+        // Permission::insert($permission);
 
-        /**
-         * Assign all permissions to admin roles
-         */
-        $role = Role::where('name', RoleConstants::ADMIN)->first();
-        $role->permissions()->sync(Permission::all()->pluck('id')->toArray());
+        // /**
+        //  * Assign all permissions to admin roles
+        //  */
+        // $role = Role::where('name', RoleConstants::ADMIN)->first();
+        // $role->permissions()->sync(Permission::all()->pluck('id')->toArray());
 
         /**
          * Assign super admin role to super admin user
