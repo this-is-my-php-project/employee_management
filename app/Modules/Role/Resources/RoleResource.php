@@ -2,6 +2,7 @@
 
 namespace App\Modules\Role\Resources;
 
+use App\Modules\CreateBy\Resources\CreateByResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Modules\Permission\Resources\PermissionResource;
 use App\Modules\User\Resources\UserResource;
@@ -27,6 +28,7 @@ class RoleResource extends JsonResource
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
             'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
+            'created_by_workspace' => new CreateByResource($this['createdByWorkspace']),
             'users' => UserResource::collection($this->whenLoaded('users')),
             'workspace' => new WorkspaceResource($this->whenLoaded('workspace')),
             'permissions' => PermissionResource::collection($this->whenLoaded('permissions')),

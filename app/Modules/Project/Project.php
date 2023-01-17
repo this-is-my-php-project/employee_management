@@ -33,7 +33,7 @@ class Project extends Model
         'title',
         'description',
         'status',
-        'created_by',
+        'created_by_workspace',
     ];
 
     /**
@@ -55,7 +55,7 @@ class Project extends Model
         'title' => 'string',
         'description' => 'string',
         'status' => 'boolean',
-        'created_by' => 'integer',
+        'created_by_workspace' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
@@ -64,17 +64,17 @@ class Project extends Model
     /**
      * Get the user that owns the Project
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
-    public function createdBy(): BelongsTo
+    public function createdByWorkspace(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by_workspace');
     }
 
     /**
      * Get the workspace that owns the Project
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function workspaces(): BelongsToMany
     {
@@ -84,7 +84,7 @@ class Project extends Model
     /**
      * Get the users that owns the Project
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function users(): BelongsToMany
     {

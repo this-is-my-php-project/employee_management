@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->boolean('status')->default(1);
-            $table->bigInteger('created_by')->unsigned()->nullable();
+            $table->bigInteger('created_by_user')->unsigned()->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

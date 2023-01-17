@@ -31,7 +31,7 @@ class Role extends Model
         'status',
         'level',
         'parent_id',
-        'created_by',
+        'created_by_workspace',
         'workspace_id'
     ];
 
@@ -52,16 +52,26 @@ class Role extends Model
         'level' => 'integer',
         'parent_id' => 'integer',
         'workspace_id' => 'integer',
-        'created_by' => 'integer',
+        'created_by_workspace' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
 
     /**
+     * Get role creator.
+     * 
+     * @return BelongsTo
+     */
+    public function createdByWorkspace(): BelongsTo
+    {
+        return $this->belongsTo(Workspace::class, 'created_by_workspace');
+    }
+
+    /**
      * Get users of the role.
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function users(): belongsToMany
     {
@@ -76,16 +86,15 @@ class Role extends Model
     /**
      * Get role creator.
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function workspace(): BelongsTo
     {
         return $this->belongsTo(Workspace::class);
     }
 
-
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function permissions(): belongsToMany
     {

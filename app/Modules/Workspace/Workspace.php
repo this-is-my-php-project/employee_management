@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Workspace extends Model
@@ -33,7 +34,7 @@ class Workspace extends Model
         'name',
         'description',
         'status',
-        'created_by',
+        'created_by_user',
     ];
 
     /**
@@ -55,7 +56,7 @@ class Workspace extends Model
         'title' => 'string',
         'description' => 'string',
         'status' => 'boolean',
-        'created_by' => 'integer',
+        'created_by_user' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -63,7 +64,17 @@ class Workspace extends Model
     /**
      * Get the user that owns the Workspace
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsTo
+     */
+    public function createdByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by_user');
+    }
+
+    /** 
+     * Get the user that owns the Workspace
+     *
+     * @return BelongsToMany
      */
     public function users(): BelongsToMany
     {
@@ -73,7 +84,7 @@ class Workspace extends Model
     /**
      * Get workspace's projects
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function projects(): BelongsToMany
     {
@@ -83,7 +94,7 @@ class Workspace extends Model
     /**
      * Get workspace's roles
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function roles(): HasMany
     {

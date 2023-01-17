@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('status')->default(1);
             $table->foreignId('storage_id')->nullable();
-            $table->bigInteger('created_by')->unsigned()->nullable();
+            $table->bigInteger('created_by_user')->unsigned()->nullable();
+            $table->bigInteger('created_by_workspace')->unsigned()->nullable();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

@@ -21,6 +21,8 @@ class UserService extends BaseService
         'roles.permissions',
         'workspaces',
         'workspaces.roles',
+        'createdByUser',
+        'createdByWorkspace',
     ];
 
     /**
@@ -53,7 +55,14 @@ class UserService extends BaseService
         return DB::transaction(function () use ($payload) {
             $payload['password'] = bcrypt($payload['password']);
             $payload['name'] = strtolower(trim($payload['name']));
-            $user = $this->userRepository->createOne($payload);
+            $user = $this->userRepository->createOne([
+                'name' => $payload['name'],
+                'email' => $payload['email'],
+                'password' => $payload['password'],
+                'status' => $payload['status'],
+                'created_by_user' => $payload['created_by_user'],
+                'created_by_workspace' => $payload['created_by_workspace'],
+            ]);
 
             if (!empty($payload['role_id'])) {
                 $user->roles()->attach($payload['role_id']);

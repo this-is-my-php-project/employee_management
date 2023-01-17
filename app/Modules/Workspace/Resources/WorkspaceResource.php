@@ -2,6 +2,7 @@
 
 namespace App\Modules\Workspace\Resources;
 
+use App\Modules\CreateBy\Resources\CreateByResource;
 use App\Modules\Project\Resources\ProjectResource;
 use App\Modules\Role\Resources\RoleResource;
 use App\Modules\User\Resources\UserResource;
@@ -25,6 +26,7 @@ class WorkspaceResource extends JsonResource
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
             'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
+            'created_by_user' => new CreateByResource($this['createdByUser']),
             'users' => UserResource::collection($this->whenLoaded('users')),
             'projects' => ProjectResource::collection($this->whenLoaded('projects')),
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
