@@ -18,6 +18,8 @@ class UserStoreRequest extends BaseRequest
             'password' => 'required',
             'name' => 'required|string',
             'status' => 'boolean',
+            'workspace_id' => 'required|integer|exists:workspaces,id',
+            'role_id' => 'integer|exists:roles,id',
         ];
     }
 }

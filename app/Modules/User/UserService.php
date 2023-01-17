@@ -3,6 +3,7 @@
 namespace App\Modules\User;
 
 use App\Libraries\Crud\BaseService;
+use Illuminate\Support\Facades\DB;
 
 class UserService extends BaseService
 {
@@ -49,10 +50,30 @@ class UserService extends BaseService
      */
     public function createOne(array $payload): ?User
     {
+        return DB::transaction(function () use ($payload) {
+            $payload['password'] = bcrypt($payload['password']);
+            $payload['name'] = strtolower(trim($payload['name']));
+            $user = $this->userRepository->createOne($payload);
 
-        $payload['password'] = bcrypt($payload['password']);
+            if (!empty($payload['role_id'])) {
+                $user->roles()->attach($payload['role_id']);
+            }
 
-        $user = $this->userRepository->createOne($payload);
-        return $user;
+            if (!empty($payload['workspace_id'])) {
+                $user->workspaces()->attach($payload['workspace_id']);
+            }
+
+            return $user;
+        });
+    }
+
+    public function updateUserRoles(int $id, array $payload): ?User
+    {
+        return DB::transaction(function () use ($id, $payload) {
+            $user = $this->userRepository->getOne($id, []);
+            $user->roles()->sync($payload['role_id']);
+
+            return $user;
+        });
     }
 }

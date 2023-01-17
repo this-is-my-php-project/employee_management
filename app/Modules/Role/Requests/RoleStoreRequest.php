@@ -19,7 +19,7 @@ class RoleStoreRequest extends BaseRequest
             'status' => 'boolean',
             'level' => 'integer|not_in:0',
             'parent_id' => 'integer|not_in:0',
-            'workspace_id' => 'integer|not_in:0',
+            'workspace_id' => 'integer|not_in:0|exists:workspaces,id',
         ];
     }
 }

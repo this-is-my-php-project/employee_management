@@ -5,7 +5,6 @@ namespace App\Modules\Workspace;
 use App\Libraries\Crud\BaseService;
 use App\Modules\Auth\AuthService;
 use App\Modules\Role\RoleRepository;
-use App\Modules\User\User;
 use Illuminate\Support\Facades\DB;
 
 class WorkspaceService extends BaseService
@@ -52,6 +51,7 @@ class WorkspaceService extends BaseService
 
             /**
              * add a role and workspace to the user.
+             * role is get from workspace and if user have role means user is in workspace.
              */
             $user = AuthService::getAuthUser();
             $user->roles()->attach($role->id);

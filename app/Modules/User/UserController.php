@@ -134,4 +134,27 @@ class UserController extends Controller
             return $this->sendError($e->getMessage());
         }
     }
+
+    /**
+     * @OA\PUT(
+     *     path="/api/users/{id}/roles",
+     *     tags={"Users"},
+     *     summary="Update an existing User's Roles",
+     *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=422, description="Unprocessable Entity"),
+     * )
+     */
+    public function updateUserRoles(UserUpdateRequest $request, int $id)
+    {
+        try {
+            $this->authorize('update', User::class);
+
+            $payload = $request->all();
+            $user = $this->userService->updateUserRoles($id, $payload);
+
+            return new UserResource($user);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
 }

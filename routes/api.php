@@ -24,6 +24,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     // Users
     Route::resource('users', UserController::class);
+    Route::put('users/{id}/roles', [UserController::class, 'updateUserRoles']);
 
     // Roles
     Route::resource('roles', RoleController::class);

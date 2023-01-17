@@ -14,10 +14,10 @@ class UserUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'email' => 'string|email|unique:users',
             'password' => 'string',
             'name' => 'string',
             'status' => 'boolean',
+            'role_id' => 'array',
         ];
     }
 }
