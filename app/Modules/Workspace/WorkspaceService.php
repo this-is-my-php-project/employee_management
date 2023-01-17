@@ -52,7 +52,7 @@ class WorkspaceService extends BaseService
                 'level' => 1,
                 'parent_id' => 0,
                 'workspace_id' => $workspace->id,
-                'created_by_user' => auth()->user()->id
+                'created_by_workspace' => $workspace->id
             ]);
 
             /**
