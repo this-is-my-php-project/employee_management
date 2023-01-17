@@ -30,7 +30,6 @@ class Project extends Model
      */
     protected $fillable = [
         'name',
-        'title',
         'description',
         'status',
         'created_by_workspace',
@@ -52,7 +51,6 @@ class Project extends Model
      */
     protected $casts = [
         'name' => 'string',
-        'title' => 'string',
         'description' => 'string',
         'status' => 'boolean',
         'created_by_workspace' => 'integer',
@@ -68,7 +66,7 @@ class Project extends Model
      */
     public function createdByWorkspace(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by_workspace');
+        return $this->belongsTo(Workspace::class, 'created_by_workspace');
     }
 
     /**

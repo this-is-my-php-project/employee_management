@@ -14,7 +14,10 @@ class ProjectStoreRequest extends BaseRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'workspace_id' => 'required|integer|exists:workspaces,id'
         ];
     }
 }

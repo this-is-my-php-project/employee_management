@@ -5,6 +5,7 @@ use App\Modules\Role\RoleController;
 use App\Modules\User\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Modules\Permission\PermissionController;
+use App\Modules\Project\ProjectController;
 use App\Modules\Workspace\WorkspaceController;
 
 /*
@@ -32,6 +33,9 @@ Route::middleware('auth:api')->group(function () {
     // Permissions
     Route::resource('permissions', PermissionController::class);
 
-    // Companies
+    // workspaces
     Route::resource('workspaces', WorkspaceController::class);
+
+    // Projects
+    Route::resource('projects', ProjectController::class);
 });
