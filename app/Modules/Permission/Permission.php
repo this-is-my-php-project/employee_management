@@ -33,6 +33,7 @@ class Permission extends Model
         'title',
         'description',
         'status',
+        'workspace_id',
         'created_by_workspace',
     ];
 
@@ -55,6 +56,7 @@ class Permission extends Model
         'title' => 'string',
         'description' => 'string',
         'status' => 'boolean',
+        'workspace_id' => 'integer',
         'created_by_workspace' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',

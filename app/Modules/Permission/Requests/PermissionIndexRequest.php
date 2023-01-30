@@ -18,6 +18,7 @@ class PermissionIndexRequest extends BaseRequest
             'title' => 'string',
             'description' => 'string',
             'status' => 'boolean',
+            'workspace_id' => 'integer',
         ];
     }
 }

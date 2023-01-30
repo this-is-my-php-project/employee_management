@@ -18,6 +18,7 @@ class PermissionStoreRequest extends BaseRequest
             'title' => 'required|string',
             'description' => 'string',
             'status' => 'boolean',
+            'workspace_id' => 'required|integer|exists:workspaces,id',
         ];
     }
 }

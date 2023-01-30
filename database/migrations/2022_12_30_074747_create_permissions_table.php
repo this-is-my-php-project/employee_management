@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->boolean('status')->default(1);
+            $table->bigInteger('workspace_id')->unsigned();
             $table->bigInteger('created_by_workspace')->unsigned();
             $table->softDeletes();
             $table->timestamps();
