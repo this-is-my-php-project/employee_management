@@ -2,12 +2,13 @@
 
 namespace App\Libraries\CRUD;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Response;
 use App\Libraries\CRUD\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use DateTime;
+use DateTimeZone;
 
 class BaseService
 {
@@ -46,6 +47,15 @@ class BaseService
     public function __construct(BaseRepository $repo)
     {
         $this->repo = $repo;
+    }
+
+    /**
+     * Get current date time
+     */
+    public function getCurrentDateTime($timeZone = 'Asia/Phnom_Penh')
+    {
+        $now = new DateTime('now', new DateTimeZone($timeZone));
+        return $now->format('Y-m-d H:i:s');
     }
 
     /**

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->date('start_time')->nullable();
-            $table->date('end_time')->nullable();
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->boolean('status')->default(1);
             $table->integer('user_id');
             $table->integer('workspace_id');

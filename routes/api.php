@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Attendance\AttendanceController;
 use App\Modules\Auth\AuthController;
 use App\Modules\Role\RoleController;
 use App\Modules\User\UserController;
@@ -38,4 +39,10 @@ Route::middleware('auth:api')->group(function () {
 
     // Projects
     Route::resource('projects', ProjectController::class);
+
+    // Attendances
+    Route::get('attendances', [AttendanceController::class, 'index']);
+    Route::get('attendances/{id}', [AttendanceController::class, 'show']);
+    Route::post('attendances', [AttendanceController::class, 'store']);
+    Route::post('attendances/check-out', [AttendanceController::class, 'checkOut']);
 });
