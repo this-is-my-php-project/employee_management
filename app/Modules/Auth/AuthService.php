@@ -60,7 +60,6 @@ class AuthService extends BaseService
                 'name' => $payload['name'],
                 'email' => $payload['email'],
                 'password' => $payload['password'],
-                'created_by_user' => 1,
             ]);
 
             return $user;
