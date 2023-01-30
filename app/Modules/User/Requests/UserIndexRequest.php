@@ -17,6 +17,7 @@ class UserIndexRequest extends BaseRequest
             'email' => 'string|email',
             'name' => 'string',
             'status' => 'boolean',
+            'phone' => 'string',
         ];
     }
 }

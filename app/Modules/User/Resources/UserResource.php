@@ -27,8 +27,6 @@ class UserResource extends JsonResource
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
             'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
-            'created_by_user' => new CreateByResource($this['createdByUser']),
-            'created_by_workspace' => new CreateByResource($this['createdByWorkspace']),
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'workspaces' => WorkspaceResource::collection($this->whenLoaded('workspaces')),
         ];

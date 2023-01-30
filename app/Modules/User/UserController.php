@@ -77,19 +77,19 @@ class UserController extends Controller
      *     @OA\Response(response=422, description="Unprocessable Entity"),
      * )
      */
-    public function store(UserStoreRequest $request)
-    {
-        try {
-            $this->authorize('create', User::class);
+    // public function store(UserStoreRequest $request)
+    // {
+    //     try {
+    //         $this->authorize('create', User::class);
 
-            $payload = $request->validated();
-            $user = $this->userService->createOne($payload);
+    //         $payload = $request->validated();
+    //         $user = $this->userService->createOne($payload);
 
-            return new UserResource($user);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
+    //         return new UserResource($user);
+    //     } catch (\Exception $e) {
+    //         return $this->sendError($e->getMessage());
+    //     }
+    // }
 
     /**
      * @OA\PUT(

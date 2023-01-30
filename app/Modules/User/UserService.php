@@ -21,8 +21,6 @@ class UserService extends BaseService
         'roles.permissions',
         'workspaces',
         'workspaces.roles',
-        'createdByUser',
-        'createdByWorkspace',
     ];
 
     /**
@@ -46,35 +44,34 @@ class UserService extends BaseService
         $this->userRepository = $repo;
     }
 
-    /**
-     * @param array $payload
-     * @return User|null
-     */
-    public function createOne(array $payload): ?User
-    {
-        return DB::transaction(function () use ($payload) {
-            $payload['password'] = bcrypt($payload['password']);
-            $payload['name'] = strtolower(trim($payload['name']));
-            $user = $this->userRepository->createOne([
-                'name' => $payload['name'],
-                'email' => $payload['email'],
-                'password' => $payload['password'],
-                'status' => $payload['status'],
-                'created_by_workspace' => $payload['workspace_id'],
-            ]);
+    // /**
+    //  * @param array $payload
+    //  * @return User|null
+    //  */
+    // public function createOne(array $payload): ?User
+    // {
+    //     return DB::transaction(function () use ($payload) {
+    //         $payload['password'] = bcrypt($payload['password']);
+    //         $payload['name'] = strtolower(trim($payload['name']));
+    //         $user = $this->userRepository->createOne([
+    //             'name' => $payload['name'],
+    //             'email' => $payload['email'],
+    //             'password' => $payload['password'],
+    //             'status' => $payload['status'],
+    //         ]);
 
-            if (!empty($payload['role_id'])) {
-                $user->roles()->attach($payload['role_id']);
-            }
+    //         if (!empty($payload['role_id'])) {
+    //             $user->roles()->attach($payload['role_id']);
+    //         }
 
-            /**
-             * add user to workspace
-             */
-            $user->workspaces()->attach($payload['workspace_id']);
+    //         /**
+    //          * add user to workspace
+    //          */
+    //         $user->workspaces()->attach($payload['workspace_id']);
 
-            return $user;
-        });
-    }
+    //         return $user;
+    //     });
+    // }
 
     /**
      * @param int $id

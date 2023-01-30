@@ -28,8 +28,6 @@ class User extends Authenticatable
         'email_verified_at',
         'status',
         'storage_id',
-        'created_by_user',
-        'created_by_workspace',
     ];
 
     /**
@@ -50,26 +48,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * Get the user that owns the user.
-     * 
-     * @return BelongsTo
-     */
-    public function createdByUser(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by_user',);
-    }
-
-    /**
-     * Get the workspace that owns the user.
-     * 
-     * @return BelongsTo
-     */
-    public function createdByWorkspace(): BelongsTo
-    {
-        return $this->belongsTo(Workspace::class, 'created_by_workspace',);
-    }
 
     /**
      * Get the roles that owns the user.

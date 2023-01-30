@@ -14,9 +14,10 @@ class UserStoreRequest extends BaseRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:users',
+            'email' => 'email|unique:users',
             'password' => 'required',
-            'name' => 'required|string',
+            'name' => 'string',
+            'phone' => 'string',
             'status' => 'boolean',
             'workspace_id' => 'required|integer|exists:workspaces,id',
             'role_id' => 'integer|exists:roles,id',
