@@ -62,6 +62,21 @@ class BaseRepository
     }
 
     /**
+     * Create many records
+     * @param array $payloads
+     * @return array
+     */
+    public function createMany(array $payloads)
+    {
+        $models = [];
+        foreach ($payloads as $payload) {
+            $models[] = $this->createOne($payload);
+        }
+
+        return $models;
+    }
+
+    /**
      * Delete one record
      * @param Model $model
      * @return bool|null

@@ -4,6 +4,7 @@ namespace App\Modules\Workspace;
 
 use App\Libraries\Crud\BaseService;
 use App\Modules\Auth\AuthService;
+use App\Modules\Meta\MetaRepository;
 use App\Modules\Role\RoleRepository;
 use Illuminate\Support\Facades\DB;
 
@@ -20,12 +21,16 @@ class WorkspaceService extends BaseService
 
     protected RoleRepository $roleRepo;
 
+    protected MetaRepository $metaRepo;
+
     public function __construct(
         WorkspaceRepository $repo,
-        RoleRepository $roleRepo
+        RoleRepository $roleRepo,
+        MetaRepository $metaRepo
     ) {
         parent::__construct($repo);
         $this->roleRepo = $roleRepo;
+        $this->metaRepo = $metaRepo;
     }
 
     public function createOne(array $payload): Workspace
@@ -41,6 +46,24 @@ class WorkspaceService extends BaseService
                 'status' => true,
                 'created_by_user' => auth()->user()->id
             ]);
+
+            /**
+             * create a two meta for the workspace.
+             */
+            $this->metaRepo->createMany(
+                [
+                    'key' => 'start_time',
+                    'value' => null,
+                    'name' => 'start time',
+                    'workspace_id' => $workspace->id
+                ],
+                [
+                    'key' => 'end_time',
+                    'value' => null,
+                    'name' => 'end time',
+                    'workspace_id' => $workspace->id
+                ]
+            );
 
             /**
              * create a role and add role to the workspace.

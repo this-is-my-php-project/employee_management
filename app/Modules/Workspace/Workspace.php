@@ -100,4 +100,14 @@ class Workspace extends Model
     {
         return $this->hasMany(Role::class);
     }
+
+    /**
+     * Get workspace's meta
+     * 
+     * @return HasMany
+     */
+    public function meta(): HasMany
+    {
+        return $this->hasMany(\App\Modules\Meta\Meta::class);
+    }
 }
