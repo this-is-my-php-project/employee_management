@@ -26,7 +26,7 @@ class ProjectResource extends JsonResource
             'updated_at' => $this['updated_at'],
             'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
             'created_by_workspace' => new CreateByResource($this['createdByWorkspace']),
-            'workspaces' => WorkspaceResource::collection($this->whenLoaded('workspaces')),
+            'workspace' => WorkspaceResource::collection($this->whenLoaded('workspace')),
             'users' => UserResource::collection($this->whenLoaded('users')),
         ];
     }

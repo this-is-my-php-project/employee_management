@@ -23,10 +23,9 @@ class ProjectService extends BaseService
             $project = $this->repo->createOne([
                 'name' => $payload['name'],
                 'description' => $payload['description'],
+                'workspace_id' => $payload['workspace_id'],
                 'created_by_workspace' => $payload['workspace_id'],
             ]);
-
-            $project->workspaces()->attach($payload['workspace_id']);
 
             return $project;
         });

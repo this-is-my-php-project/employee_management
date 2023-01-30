@@ -86,9 +86,9 @@ class Workspace extends Model
      * 
      * @return BelongsToMany
      */
-    public function projects(): BelongsToMany
+    public function projects(): HasMany
     {
-        return $this->belongsToMany(Project::class, 'workspace_project');
+        return $this->hasMany(Project::class);
     }
 
     /**
