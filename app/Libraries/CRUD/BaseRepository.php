@@ -70,7 +70,7 @@ class BaseRepository
     {
         $models = [];
         foreach ($payloads as $payload) {
-            $models[] = $this->createOne($payload);
+            $models[] = $this->model->create($payload);
         }
 
         return $models;

@@ -30,6 +30,7 @@ class WorkspaceResource extends JsonResource
             'users' => UserResource::collection($this->whenLoaded('users')),
             'projects' => ProjectResource::collection($this->whenLoaded('projects')),
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
+            'meta' => $this->whenLoaded('meta')
         ];
     }
 }

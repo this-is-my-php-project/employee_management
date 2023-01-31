@@ -19,12 +19,14 @@ class Meta extends Model
         'value',
         'name',
         'workspace_id',
+        'is_active',
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
         'deleted_at',
+        'is_active'
     ];
 
     protected $casts = [
