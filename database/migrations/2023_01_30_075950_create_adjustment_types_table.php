@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->boolean('status')->default(1);
             $table->boolean('is_global')->default(0);
-            $table->integer('workspace_id');
+            $table->integer('workspace_id')->nullable();
             $table->timestamps();
         });
     }
