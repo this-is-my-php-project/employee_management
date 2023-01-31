@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(1);
-            $table->integer('type_id');
+            $table->integer('adjustment_type_id');
             $table->integer('workspace_id');
+            $table->boolean('is_global')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

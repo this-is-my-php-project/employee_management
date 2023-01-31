@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Meta;
+namespace App\Modules\Adjustment;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,36 +8,42 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Meta extends Model
+class Adjustment extends Model
 {
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
-    protected $table = 'meta';
+    protected $table = 'adjustments';
 
     protected $fillable = [
-        'key',
-        'value',
         'name',
+        'status',
+        'adjustment_type_id',
         'workspace_id',
-        'is_active',
-        'is_global',
+        'is_global'
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
         'deleted_at',
-        'is_active',
-        'is_global',
     ];
 
     protected $casts = [
         'id' => 'integer',
+        'name' => 'string',
+        'status' => 'boolean',
+        'adjustment_type_id' => 'integer',
         'workspace_id' => 'integer',
+        'is_global' => 'boolean',
     ];
 
     public function workspace()
     {
         return $this->belongsTo(\App\Modules\Workspace\Workspace::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(\App\Modules\AdjustmentType\AdjustmentType::class);
     }
 }

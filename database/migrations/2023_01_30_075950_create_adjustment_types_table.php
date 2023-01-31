@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('types', function (Blueprint $table) {
+        Schema::create('adjustment_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(1);
+            $table->boolean('is_global')->default(0);
             $table->integer('workspace_id');
             $table->timestamps();
         });
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('types');
+        Schema::dropIfExists('adjustment_types');
     }
 };

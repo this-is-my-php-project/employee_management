@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('workspace_id');
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_global')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
