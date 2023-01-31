@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('total')->nullable();
             $table->date('date')->nullable();
             $table->integer('user_id');
-            $table->integer('attendance_type_id');
+            $table->integer('adjustment_id');
             $table->integer('workspace_id');
             $table->softDeletes();
             $table->timestamps();

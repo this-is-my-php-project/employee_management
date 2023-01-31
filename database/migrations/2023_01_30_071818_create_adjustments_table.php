@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('attendance_type', function (Blueprint $table) {
+        Schema::create('adjustments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(1);
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendance_type');
+        Schema::dropIfExists('adjustments');
     }
 };
