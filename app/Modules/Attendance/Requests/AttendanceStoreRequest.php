@@ -17,8 +17,8 @@ class AttendanceStoreRequest extends BaseRequest
             'timezone' => 'string',
             'start_date' => 'date',
             'end_date' => 'date',
-            'start_time' => 'date',
-            'end_time' => 'date',
+            'start_time' => 'date_format:H:i:s',
+            'end_time' => 'date_format:H:i:s',
             'status' => 'boolean',
             'workspace_id' => 'required|integer',
         ];
