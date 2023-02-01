@@ -15,6 +15,14 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->integer('parent_id')->unsigned()->nullable();
+            $table->boolean('is_active')->default(true);
+
+            $table->integer('workspace_id')->unsigned();
+            $table->foreign('workspace_id')->references('id')->on('workspaces');
+
             $table->timestamps();
         });
     }

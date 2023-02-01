@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('workspaces', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->string('logo')->nullable();
+            $table->string('cover')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

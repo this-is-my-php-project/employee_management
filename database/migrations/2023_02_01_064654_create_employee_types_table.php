@@ -15,6 +15,15 @@ return new class extends Migration
     {
         Schema::create('employee_types', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->boolean('is_global')->default(false);
+
+            $table->integer('workspace_id')->unsigned();
+            $table->foreign('workspace_id')->references('id')->on('workspaces');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }
