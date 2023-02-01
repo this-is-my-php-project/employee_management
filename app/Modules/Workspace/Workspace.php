@@ -2,6 +2,7 @@
 
 namespace App\Modules\Workspace;
 
+use App\Modules\EmployeeType\EmployeeType;
 use App\Modules\Role\Role;
 use App\Modules\User\User;
 use App\Modules\Project\Project;
@@ -109,5 +110,10 @@ class Workspace extends Model
     public function meta(): HasMany
     {
         return $this->hasMany(\App\Modules\Meta\Meta::class);
+    }
+
+    public function employeeTypes(): BelongsToMany
+    {
+        return $this->belongsToMany(EmployeeType::class);
     }
 }

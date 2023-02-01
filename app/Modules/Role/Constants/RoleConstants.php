@@ -20,7 +20,7 @@ class RoleConstants
     ];
 
     const MEMBER = [
-        'name' => 'member',
-        'key' => 'member',
+        'name' => 'normal member',
+        'key' => 'normal_member',
     ];
 }

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('level')->unsigned()->nullable();
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_global')->default(false);
             $table->softDeletes();
             $table->timestamps();
         });
