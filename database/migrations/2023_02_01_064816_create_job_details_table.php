@@ -18,16 +18,16 @@ return new class extends Migration
             $table->string('title');
             $table->string('description')->nullable();
 
-            $table->integer('employee_type_id')->unsigned();
+            $table->unsignedBigInteger('employee_type_id');
             $table->foreign('employee_type_id')->references('id')->on('employee_types');
 
-            $table->integer('role_id')->unsigned();
+            $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
 
-            $table->integer('department_id')->unsigned();
+            $table->unsignedBigInteger('department_id');
             $table->foreign('department_id')->references('id')->on('departments');
 
-            $table->integer('workspace_id')->unsigned();
+            $table->unsignedBigInteger('workspace_id');
             $table->foreign('workspace_id')->references('id')->on('workspaces');
 
             $table->softDeletes();

@@ -21,13 +21,13 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
 
-            $table->integer('job_detail_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('job_detail_id')->nullable();
             $table->foreign('job_detail_id')->references('id')->on('job_details');
 
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->integer('workspace_id')->unsigned();
+            $table->unsignedBigInteger('workspace_id');
             $table->foreign('workspace_id')->references('id')->on('workspaces');
 
             $table->softDeletes();

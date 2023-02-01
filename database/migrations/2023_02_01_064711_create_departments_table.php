@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('parent_id')->unsigned()->nullable();
             $table->boolean('is_active')->default(true);
 
-            $table->integer('workspace_id')->unsigned();
+            $table->unsignedBigInteger('workspace_id');
             $table->foreign('workspace_id')->references('id')->on('workspaces');
 
             $table->timestamps();
