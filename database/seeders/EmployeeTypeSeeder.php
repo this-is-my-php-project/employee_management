@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Modules\EmployeeType\EmployeeType;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Modules\EmployeeType\Constants\EmployeeTypeConstants;
 use Illuminate\Database\Seeder;
 
 class EmployeeTypeSeeder extends Seeder
@@ -18,7 +18,7 @@ class EmployeeTypeSeeder extends Seeder
         $employees = [
             [
                 'id' => 1,
-                'name' => 'Full Time',
+                'name' => EmployeeTypeConstants::FULL_TIME['name'],
                 'description' => 'Full Time Employee',
                 'is_active' => true,
                 'is_global' => true,
@@ -27,7 +27,7 @@ class EmployeeTypeSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'name' => 'Part Time',
+                'name' => EmployeeTypeConstants::PART_TIME['name'],
                 'description' => 'Part Time Employee',
                 'is_active' => true,
                 'is_global' => true,
@@ -36,7 +36,7 @@ class EmployeeTypeSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'name' => 'Contract',
+                'name' => EmployeeTypeConstants::CONTRACT['name'],
                 'description' => 'Contract Employee',
                 'is_active' => true,
                 'is_global' => true,
@@ -45,7 +45,7 @@ class EmployeeTypeSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'name' => 'Intern',
+                'name' => EmployeeTypeConstants::INTERN['name'],
                 'description' => 'Intern Employee',
                 'is_active' => true,
                 'is_global' => true,
@@ -54,7 +54,7 @@ class EmployeeTypeSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'name' => 'Temporary',
+                'name' => EmployeeTypeConstants::TEMPORARY['name'],
                 'description' => 'Temporary Employee',
                 'is_active' => true,
                 'is_global' => true,
@@ -63,7 +63,7 @@ class EmployeeTypeSeeder extends Seeder
             ],
             [
                 'id' => 6,
-                'name' => 'Casual',
+                'name' => EmployeeTypeConstants::CASUAL['name'],
                 'description' => 'Casual Employee',
                 'is_active' => true,
                 'is_global' => true,
@@ -72,7 +72,7 @@ class EmployeeTypeSeeder extends Seeder
             ],
             [
                 'id' => 7,
-                'name' => 'Seasonal',
+                'name' => EmployeeTypeConstants::SEASONAL['name'],
                 'description' => 'Seasonal Employee',
                 'is_active' => true,
                 'is_global' => true,
@@ -81,7 +81,7 @@ class EmployeeTypeSeeder extends Seeder
             ],
             [
                 'id' => 8,
-                'name' => 'Volunteer',
+                'name' => EmployeeTypeConstants::VOLUNTEER['name'],
                 'description' => 'Volunteer Employee',
                 'is_active' => true,
                 'is_global' => true,
@@ -90,7 +90,7 @@ class EmployeeTypeSeeder extends Seeder
             ],
             [
                 'id' => 9,
-                'name' => 'Apprentice',
+                'name' => EmployeeTypeConstants::APPRENTICE['name'],
                 'description' => 'Apprentice Employee',
                 'is_active' => true,
                 'is_global' => true,
@@ -99,7 +99,7 @@ class EmployeeTypeSeeder extends Seeder
             ],
             [
                 'id' => 10,
-                'name' => 'Trainee',
+                'name' => EmployeeTypeConstants::TRAINEE['name'],
                 'description' => 'Trainee Employee',
                 'is_active' => true,
                 'is_global' => true,
@@ -108,7 +108,7 @@ class EmployeeTypeSeeder extends Seeder
             ],
             [
                 'id' => 11,
-                'name' => 'Probation',
+                'name' => EmployeeTypeConstants::PROBATION['name'],
                 'description' => 'Probation Employee',
                 'is_active' => true,
                 'is_global' => true,
@@ -117,7 +117,7 @@ class EmployeeTypeSeeder extends Seeder
             ],
             [
                 'id' => 12,
-                'name' => 'Permanent',
+                'name' => EmployeeTypeConstants::PERMANENT['name'],
                 'description' => 'Permanent Employee',
                 'is_active' => true,
                 'is_global' => true,

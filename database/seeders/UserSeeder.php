@@ -16,9 +16,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('profiles')->delete();
-        DB::table('users')->delete();
-
         User::create([
             'name' => UserConstants::SUPER_ADMIN,
             'email' => 'superadmin@gmail.com',

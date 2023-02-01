@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('key')->unique();
             $table->string('description')->nullable();
             $table->boolean('is_active')->default(true);
             $table->boolean('is_global')->default(false);
