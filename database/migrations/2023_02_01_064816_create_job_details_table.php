@@ -17,19 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('description')->nullable();
-
             $table->unsignedBigInteger('employee_type_id');
-            $table->foreign('employee_type_id')->references('id')->on('employee_types');
-
             $table->unsignedBigInteger('role_id')->nullable();
-            $table->foreign('role_id')->references('id')->on('roles');
-
             $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments');
-
             $table->unsignedBigInteger('workspace_id')->nullable();
-            $table->foreign('workspace_id')->references('id')->on('workspaces');
-
             $table->softDeletes();
             $table->timestamps();
         });

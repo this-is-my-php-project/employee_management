@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('key');
             $table->string('value');
             $table->string('name');
-            $table->integer('workspace_id');
+            $table->unsignedBigInteger('workspace_id');
             $table->boolean('is_active')->default(true);
             $table->softDeletes();
             $table->timestamps();

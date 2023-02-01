@@ -20,13 +20,9 @@ return new class extends Migration
             $table->integer('avatar')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
-
             $table->unsignedBigInteger('job_detail_id')->nullable();
-
             $table->unsignedBigInteger('user_id')->nullable();
-
             $table->unsignedBigInteger('workspace_id')->nullable();
-
             $table->softDeletes();
             $table->timestamps();
         });

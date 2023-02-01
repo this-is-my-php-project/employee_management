@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('workspace_employee_type', function (Blueprint $table) {
             $table->unsignedBigInteger('workspace_id');
-            $table->foreign('workspace_id')->references('id')->on('workspaces')->onDelete('cascade');
             $table->unsignedBigInteger('employee_type_id');
-            $table->foreign('employee_type_id')->references('id')->on('employee_types')->onDelete('cascade');
             $table->timestamps();
         });
     }

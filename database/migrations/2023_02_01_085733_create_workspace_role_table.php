@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('workspace_role', function (Blueprint $table) {
             $table->unsignedBigInteger('workspace_id');
-            $table->foreign('workspace_id')->references('id')->on('workspaces')->onDelete('cascade');
             $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->timestamps();
         });
     }
