@@ -25,6 +25,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'status' => true,
                 'is_global' => true,
                 'workspace_id' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 2,
@@ -32,6 +34,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'status' => true,
                 'is_global' => true,
                 'workspace_id' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 3,
@@ -39,6 +43,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'status' => true,
                 'is_global' => true,
                 'workspace_id' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 4,
@@ -46,6 +52,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'status' => true,
                 'is_global' => true,
                 'workspace_id' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ];
         AdjustmentType::insert($adjustmentTypes);
@@ -68,6 +76,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'adjustment_type_id' => 2,
                 'workspace_id' => null,
                 'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 3,
@@ -76,6 +86,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'adjustment_type_id' => 2,
                 'workspace_id' => null,
                 'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 4,
@@ -84,6 +96,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'adjustment_type_id' => 2,
                 'workspace_id' => null,
                 'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 5,
@@ -92,6 +106,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'adjustment_type_id' => 2,
                 'workspace_id' => null,
                 'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 6,
@@ -100,6 +116,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'adjustment_type_id' => 2,
                 'workspace_id' => null,
                 'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 7,
@@ -108,6 +126,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'adjustment_type_id' => 2,
                 'workspace_id' => null,
                 'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 8,
@@ -116,6 +136,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'adjustment_type_id' => 2,
                 'workspace_id' => null,
                 'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 9,
@@ -124,6 +146,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'adjustment_type_id' => 3,
                 'workspace_id' => null,
                 'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 10,
@@ -132,6 +156,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'adjustment_type_id' => 4,
                 'workspace_id' => null,
                 'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 11,
@@ -140,6 +166,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'adjustment_type_id' => 4,
                 'workspace_id' => null,
                 'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id' => 12,
@@ -148,6 +176,8 @@ class AdjustmentAdjustmentTypeSeeder extends Seeder
                 'adjustment_type_id' => 4,
                 'workspace_id' => null,
                 'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ];
         Adjustment::insert($adjustments);
