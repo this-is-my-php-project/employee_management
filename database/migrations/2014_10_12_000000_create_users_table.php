@@ -20,8 +20,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('phone')->nullable();
-            $table->boolean('status')->default(1);
-            $table->foreignId('storage_id')->nullable();
+            $table->boolean('is_active')->default(1);
+            $table->foreignId('avatar')->nullable();
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

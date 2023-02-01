@@ -21,14 +21,14 @@ class UserSeeder extends Seeder
             'name' => UserConstants::SUPER_ADMIN,
             'email' => 'superadmin@gmail.com',
             'password' => bcrypt('12345'),
-            'status' => true,
+            'is_active' => true,
         ]);
 
         User::create([
             'name' => UserConstants::ADMIN,
             'email' => 'admin1@gmail.com',
             'password' => bcrypt('12345'),
-            'status' => true,
+            'is_active' => true,
         ]);
     }
 }
