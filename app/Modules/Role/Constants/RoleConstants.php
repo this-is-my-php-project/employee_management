@@ -4,6 +4,23 @@ namespace App\Modules\Role\Constants;
 
 class RoleConstants
 {
-    const ADMIN = 'admin';
-    const SUPER_ADMIN = 'super_admin';
+    const SUPER_ADMIN = [
+        'name' => 'super admin',
+        'key' => 'super_admin',
+    ];
+
+    const ADMIN = [
+        'name' => 'administrator',
+        'key' => 'admin',
+    ];
+
+    const MANAGER = [
+        'name' => 'manager',
+        'key' => 'manager',
+    ];
+
+    const MEMBER = [
+        'name' => 'member',
+        'key' => 'member',
+    ];
 }

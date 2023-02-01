@@ -47,12 +47,12 @@ class RoleService extends BaseService
         $payload['name'] = Str::lower(trim($payload['name']));
         return $this->repo->createOne([
             'name' => $payload['name'],
+            'key' => Str::slug($payload['name'], '_'),
             'description' => $payload['description'],
-            'status' => $payload['status'],
-            'level' => $payload['level'],
             'parent_id' => $payload['parent_id'],
+            'level' => $payload['level'],
+            'is_active' => $payload['is_active'] ?? true,
             'workspace_id' => $payload['workspace_id'],
-            'created_by_workspace' => $payload['workspace_id']
         ]);
     }
 }

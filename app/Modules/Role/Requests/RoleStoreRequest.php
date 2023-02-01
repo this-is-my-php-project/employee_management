@@ -16,9 +16,9 @@ class RoleStoreRequest extends BaseRequest
         return [
             'name' => 'required|string',
             'description' => 'string',
-            'status' => 'boolean',
-            'level' => 'integer|not_in:0',
             'parent_id' => 'integer|not_in:0',
+            'level' => 'integer|not_in:0',
+            'is_active' => 'boolean',
             'workspace_id' => 'integer|not_in:0|exists:workspaces,id',
         ];
     }

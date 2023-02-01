@@ -27,11 +27,12 @@ class Role extends Model
      */
     protected $fillable = [
         'name',
+        'key',
         'description',
-        'status',
-        'level',
         'parent_id',
-        'created_by_workspace',
+        'level',
+        'is_active',
+        'is_global',
         'workspace_id'
     ];
 
@@ -46,16 +47,8 @@ class Role extends Model
      * The attributes that should be cast to native types.
      */
     protected $casts = [
-        'name' => 'string',
-        'description' => 'string',
-        'status' => 'boolean',
-        'level' => 'integer',
-        'parent_id' => 'integer',
-        'workspace_id' => 'integer',
-        'created_by_workspace' => 'integer',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'deleted_at' => 'datetime',
+        'is_active' => 'boolean',
+        'is_global' => 'boolean',
     ];
 
     /**
@@ -65,7 +58,7 @@ class Role extends Model
      */
     public function createdByWorkspace(): BelongsTo
     {
-        return $this->belongsTo(Workspace::class, 'created_by_workspace');
+        return $this->belongsTo(Workspace::class);
     }
 
     /**
