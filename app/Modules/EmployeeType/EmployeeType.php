@@ -5,6 +5,7 @@ namespace App\Modules\EmployeeType;
 use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,7 +21,6 @@ class EmployeeType extends Model
         'description',
         'is_active',
         'is_global',
-        'workspace_id',
     ];
 
     protected $hidden = [
@@ -34,8 +34,8 @@ class EmployeeType extends Model
         'is_global' => 'boolean',
     ];
 
-    public function workspace()
+    public function workspaces(): BelongsToMany
     {
-        return $this->belongsTo(Workspace::class);
+        return $this->belongsToMany(Workspace::class);
     }
 }
