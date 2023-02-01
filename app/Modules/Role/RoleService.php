@@ -63,7 +63,7 @@ class RoleService extends BaseService
         return $this->roleRepo->getRoleIds();
     }
 
-    public function getDefaultRoleIds(): array
+    public function getDefaultRoleIds(): int
     {
         return $this->roleRepo->getDefaultRoleIds();
     }

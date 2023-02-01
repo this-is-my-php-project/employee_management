@@ -18,8 +18,8 @@ class RoleRepository extends BaseRepository
         return $this->model->where('key', '!=', RoleConstants::SUPER_ADMIN['key'])->pluck('id')->toArray();
     }
 
-    public function getDefaultRoleIds(): array
+    public function getDefaultRoleIds(): int
     {
-        return $this->model->where('key', RoleConstants::ADMIN['key'])->pluck('id')->toArray();
+        return $this->model->where('key', RoleConstants::ADMIN['key'])->first()->id;
     }
 }

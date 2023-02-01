@@ -7,6 +7,7 @@ use App\Modules\Auth\AuthService;
 use App\Modules\Department\DepartmentService;
 use App\Modules\EmployeeType\EmployeeType;
 use App\Modules\EmployeeType\EmployeeTypeService;
+use App\Modules\JobDetail\JobDetailService;
 use App\Modules\Meta\MetaRepository;
 use App\Modules\Meta\MetaService;
 use App\Modules\Profile\ProfileService;
@@ -31,6 +32,7 @@ class WorkspaceService extends BaseService
     protected RoleService $roleService;
     protected EmployeeTypeService $employeeTypeService;
     protected DepartmentService $departmentService;
+    protected JobDetailService $jobDetailService;
     protected ProfileService $profileService;
 
     public function __construct(
@@ -40,7 +42,8 @@ class WorkspaceService extends BaseService
         RoleService $roleService,
         EmployeeTypeService $employeeTypeService,
         DepartmentService $departmentService,
-        ProfileService $profileService
+        JobDetailService $jobDetailService,
+        ProfileService $profileService,
     ) {
         parent::__construct($repo);
         $this->roleRepo = $roleRepo;
@@ -48,6 +51,7 @@ class WorkspaceService extends BaseService
         $this->roleService = $roleService;
         $this->employeeTypeService = $employeeTypeService;
         $this->departmentService = $departmentService;
+        $this->jobDetailService = $jobDetailService;
         $this->profileService = $profileService;
     }
 
@@ -91,13 +95,12 @@ class WorkspaceService extends BaseService
 
 
             // create default job details
-            $defaultJobDetails = $this->departmentService->createDefault(
+            $defaultJobDetails = $this->jobDetailService->createDefault(
                 $workspace->id,
                 $defaultEmployeeId,
                 $defaultRole,
                 $defaultDepartmentId
             );
-
 
             // create new user data
             $userData = [
