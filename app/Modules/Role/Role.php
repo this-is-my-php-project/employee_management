@@ -33,7 +33,6 @@ class Role extends Model
         'level',
         'is_active',
         'is_global',
-        'workspace_id'
     ];
 
     /**
@@ -81,9 +80,9 @@ class Role extends Model
      * 
      * @return BelongsTo
      */
-    public function workspace(): BelongsTo
+    public function workspaces(): BelongsToMany
     {
-        return $this->belongsTo(Workspace::class);
+        return $this->belongsToMany(Workspace::class, 'workspace_role');
     }
 
     /**

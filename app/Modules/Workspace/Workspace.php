@@ -96,9 +96,9 @@ class Workspace extends Model
      * 
      * @return BelongsToMany
      */
-    public function roles(): HasMany
+    public function roles(): BelongsToMany
     {
-        return $this->hasMany(Role::class);
+        return $this->belongsToMany(Role::class, 'workspace_role');
     }
 
     /**

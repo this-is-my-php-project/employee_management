@@ -52,7 +52,6 @@ class RoleService extends BaseService
             'parent_id' => $payload['parent_id'],
             'level' => $payload['level'],
             'is_active' => $payload['is_active'] ?? true,
-            'workspace_id' => $payload['workspace_id'],
         ]);
     }
 }
