@@ -21,7 +21,6 @@ class Department extends Model
         'parent_id',
         'level',
         'is_active',
-        'is_global',
         'is_default',
         'workspace_id',
     ];
@@ -34,7 +33,6 @@ class Department extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
-        'is_global' => 'boolean',
         'is_default' => 'boolean',
     ];
 

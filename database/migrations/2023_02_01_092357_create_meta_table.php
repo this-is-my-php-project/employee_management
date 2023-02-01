@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('workspaces', function (Blueprint $table) {
+        Schema::create('meta', function (Blueprint $table) {
             $table->id();
+            $table->string('key');
+            $table->string('value');
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->integer('workspace_id');
             $table->boolean('is_active')->default(true);
-            $table->string('logo')->nullable();
-            $table->string('cover')->nullable();
-            $table->unsignedBigInteger('created_by_user');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('workspaces');
+        Schema::dropIfExists('meta');
     }
 };

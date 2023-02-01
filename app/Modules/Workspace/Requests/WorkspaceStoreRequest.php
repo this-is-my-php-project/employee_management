@@ -16,7 +16,8 @@ class WorkspaceStoreRequest extends BaseRequest
         return [
             'name' => 'required|string|max:255',
             'description' => 'string|max:255',
-            'status' => 'boolean',
+            'logo' => 'file|image|max:1024',
+            'cover' => 'file|image|max:1024',
         ];
     }
 }

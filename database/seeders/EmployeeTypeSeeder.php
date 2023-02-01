@@ -123,6 +123,15 @@ class EmployeeTypeSeeder extends Seeder
                 'is_global' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
+            ],
+            [
+                'id' => 13,
+                'name' => EmployeeTypeConstants::NORMAL['name'],
+                'description' => 'NORMAL Employee',
+                'is_active' => true,
+                'is_global' => true,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ];
 

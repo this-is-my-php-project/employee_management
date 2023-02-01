@@ -3,6 +3,7 @@
 namespace App\Modules\JobDetail;
 
 use App\Libraries\Crud\BaseService;
+use App\Modules\Role\Constants\RoleConstants;
 
 class JobDetailService extends BaseService
 {
@@ -22,6 +23,18 @@ class JobDetailService extends BaseService
             'role_id' => $payload['role_id'],
             'department_id' => $payload['department_id'],
             'workspace_id' => $payload['workspace_id'],
+        ]);
+    }
+
+    public function createDefault(int $workspaceId, int $employeeTypeId, int $roleId, int $departmentId)
+    {
+        return $this->repo->createOne([
+            'title' => 'Default',
+            'description' => 'Default job detail for workspace',
+            'employee_type_id' => $employeeTypeId,
+            'role_id' => $roleId,
+            'department_id' => $departmentId,
+            'workspace_id' => $workspaceId,
         ]);
     }
 }

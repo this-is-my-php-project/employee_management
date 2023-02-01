@@ -3,6 +3,7 @@
 namespace App\Modules\EmployeeType;
 
 use App\Libraries\Crud\BaseRepository;
+use App\Modules\EmployeeType\Constants\EmployeeTypeConstants;
 use App\Modules\EmployeeType\EmployeeType;
 
 class EmployeeTypeRepository extends BaseRepository
@@ -10,5 +11,15 @@ class EmployeeTypeRepository extends BaseRepository
     public function __construct(EmployeeType $employeeType)
     {
         parent::__construct($employeeType);
+    }
+
+    public function getIds(): array
+    {
+        return $this->model->pluck('id')->toArray();
+    }
+
+    public function getNormalEmployeeId(): int
+    {
+        return $this->model->where('name', '=', EmployeeTypeConstants::NORMAL['name'])->first()->id;
     }
 }

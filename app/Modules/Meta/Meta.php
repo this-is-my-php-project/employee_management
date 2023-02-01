@@ -20,7 +20,6 @@ class Meta extends Model
         'name',
         'workspace_id',
         'is_active',
-        'is_global',
     ];
 
     protected $hidden = [
@@ -28,7 +27,6 @@ class Meta extends Model
         'updated_at',
         'deleted_at',
         'is_active',
-        'is_global',
     ];
 
     protected $casts = [

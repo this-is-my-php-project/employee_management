@@ -22,13 +22,10 @@ return new class extends Migration
             $table->string('email')->nullable();
 
             $table->unsignedBigInteger('job_detail_id')->nullable();
-            $table->foreign('job_detail_id')->references('id')->on('job_details');
 
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id')->nullable();
 
             $table->unsignedBigInteger('workspace_id')->nullable();
-            $table->foreign('workspace_id')->references('id')->on('workspaces');
 
             $table->softDeletes();
             $table->timestamps();

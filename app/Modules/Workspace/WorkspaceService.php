@@ -4,9 +4,14 @@ namespace App\Modules\Workspace;
 
 use App\Libraries\Crud\BaseService;
 use App\Modules\Auth\AuthService;
+use App\Modules\Department\DepartmentService;
+use App\Modules\EmployeeType\EmployeeType;
+use App\Modules\EmployeeType\EmployeeTypeService;
 use App\Modules\Meta\MetaRepository;
 use App\Modules\Meta\MetaService;
+use App\Modules\Profile\ProfileService;
 use App\Modules\Role\RoleRepository;
+use App\Modules\Role\RoleService;
 use Illuminate\Support\Facades\DB;
 
 class WorkspaceService extends BaseService
@@ -23,56 +28,92 @@ class WorkspaceService extends BaseService
 
     protected RoleRepository $roleRepo;
     protected MetaService $metaService;
+    protected RoleService $roleService;
+    protected EmployeeTypeService $employeeTypeService;
+    protected DepartmentService $departmentService;
+    protected ProfileService $profileService;
 
     public function __construct(
         WorkspaceRepository $repo,
         RoleRepository $roleRepo,
-        MetaService $metaService
+        MetaService $metaService,
+        RoleService $roleService,
+        EmployeeTypeService $employeeTypeService,
+        DepartmentService $departmentService,
+        ProfileService $profileService
     ) {
         parent::__construct($repo);
         $this->roleRepo = $roleRepo;
         $this->metaService = $metaService;
+        $this->roleService = $roleService;
+        $this->employeeTypeService = $employeeTypeService;
+        $this->departmentService = $departmentService;
+        $this->profileService = $profileService;
     }
 
     public function createOne(array $payload): Workspace
     {
         return DB::transaction(function () use ($payload) {
-            /**
-             * create a workspace.
-             */
+            $user = auth()->user();
+            // create a workspace.
             $payload['name'] = strtolower(trim($payload['name']));
             $workspace = $this->repo->createOne([
                 'name' => $payload['name'],
                 'description' => $payload['description'] ?? $payload['name'],
-                'status' => true,
+                'is_active' => true,
+                'logo' => $payload['logo'] ?? null,
+                'cover' => $payload['cover'] ?? null,
                 'created_by_user' => auth()->user()->id
             ]);
 
-            /**
-             * create a two meta for the workspace.
-             */
+            // create a two meta for the workspace.
             $this->metaService->createWorkspaceMeta($workspace->id);
 
             /**
-             * create a role and add role to the workspace.
+             * add a default role to the workspace.
+             * many to many relationship.
              */
-            $role = $this->roleRepo->createOne([
-                'name' => 'admin',
-                'description' => 'This is the default admin role for the workspace. It has all the permissions.',
-                'status' => true,
-                'level' => 1,
-                'parent_id' => 0,
-                'workspace_id' => $workspace->id,
-                'created_by_workspace' => $workspace->id
-            ]);
+            $roleIds = $this->roleRepo->getRoleIds();
+            $workspace->roles()->attach($roleIds);
+            $defaultRole = $this->roleService->getDefaultRoleIds();
 
             /**
-             * add a role and workspace to the user.
-             * role is get from workspace and if user have role means user is in workspace.
+             * add a default employee type to the workspace.
+             * many to many relationship.
              */
-            $user = AuthService::getAuthUser();
-            $user->roles()->attach($role->id);
-            $user->workspaces()->attach($workspace->id);
+            $employeeIds = $this->employeeTypeService->getIds();
+            $workspace->employeeTypes()->attach($employeeIds);
+            $defaultEmployeeId = $this->employeeTypeService->getNormalEmployeeId();
+
+            // create default department
+            $defaultDepartment = $this->departmentService->createDefault($workspace->id, $workspace->name);
+            $defaultDepartmentId = $defaultDepartment->id;
+
+
+            // create default job details
+            $defaultJobDetails = $this->departmentService->createDefault(
+                $workspace->id,
+                $defaultEmployeeId,
+                $defaultRole,
+                $defaultDepartmentId
+            );
+
+
+            // create new user data
+            $userData = [
+                'name' => $user->name,
+                'avatar' => $user->avatar,
+                'phone' => $user->phone,
+                'email' => $user->email,
+                'id' => $user->id
+            ];
+
+            // create workspace profile for user
+            $this->profileService->createDefault(
+                $userData,
+                $defaultJobDetails->id,
+                $workspace->id
+            );
 
             return $workspace;
         });

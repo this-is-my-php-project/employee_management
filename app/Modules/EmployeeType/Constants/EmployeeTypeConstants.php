@@ -63,4 +63,9 @@ class EmployeeTypeConstants
         'name' => 'Permanent',
         'key' => 'permanent',
     ];
+
+    const NORMAL = [
+        'name' => 'Normal',
+        'key' => 'normal',
+    ];
 }

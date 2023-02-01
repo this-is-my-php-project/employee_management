@@ -28,12 +28,15 @@ class RoleService extends BaseService
         'updated_at'
     ];
 
+    protected $roleRepo;
+
     /**
      * constructor.
      */
     public function __construct(RoleRepository $repo)
     {
         parent::__construct($repo);
+        $this->roleRepo = $repo;
     }
 
     /**
@@ -53,5 +56,15 @@ class RoleService extends BaseService
             'level' => $payload['level'],
             'is_active' => $payload['is_active'] ?? true,
         ]);
+    }
+
+    public function getRoleIds(): array
+    {
+        return $this->roleRepo->getRoleIds();
+    }
+
+    public function getDefaultRoleIds(): array
+    {
+        return $this->roleRepo->getDefaultRoleIds();
     }
 }

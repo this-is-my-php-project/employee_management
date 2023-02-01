@@ -34,7 +34,9 @@ class Workspace extends Model
     protected $fillable = [
         'name',
         'description',
-        'status',
+        'is_active',
+        'logo',
+        'cover',
         'created_by_user',
     ];
 
@@ -54,9 +56,10 @@ class Workspace extends Model
      */
     protected $casts = [
         'name' => 'string',
-        'title' => 'string',
         'description' => 'string',
-        'status' => 'boolean',
+        'is_active' => 'boolean',
+        'logo' => 'string',
+        'cover' => 'string',
         'created_by_user' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
@@ -114,6 +117,6 @@ class Workspace extends Model
 
     public function employeeTypes(): BelongsToMany
     {
-        return $this->belongsToMany(EmployeeType::class);
+        return $this->belongsToMany(EmployeeType::class, 'workspace_employee_type');
     }
 }
