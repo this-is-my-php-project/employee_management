@@ -12,4 +12,14 @@ class EmployeeTypeService extends BaseService
     {
         parent::__construct($repo);
     }
+
+    public function createOne(array $params): EmployeeType
+    {
+        return $this->repo->createOne([
+            'name' => $params['name'],
+            'description' => $params['description'] ?? null,
+            'is_active' => $params['is_active'] ?? true,
+            'workspace_id' => $params['workspace_id'],
+        ]);
+    }
 }

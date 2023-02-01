@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Modules\User\Constants\UserConstants;
 use App\Modules\User\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -15,7 +16,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::truncate();
+        DB::table('profiles')->delete();
+        DB::table('users')->delete();
 
         User::create([
             'name' => UserConstants::SUPER_ADMIN,

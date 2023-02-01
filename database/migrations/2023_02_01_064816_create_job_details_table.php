@@ -27,7 +27,7 @@ return new class extends Migration
             $table->unsignedBigInteger('department_id');
             $table->foreign('department_id')->references('id')->on('departments');
 
-            $table->unsignedBigInteger('workspace_id');
+            $table->unsignedBigInteger('workspace_id')->nullable();
             $table->foreign('workspace_id')->references('id')->on('workspaces');
 
             $table->softDeletes();
