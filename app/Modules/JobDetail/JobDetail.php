@@ -25,6 +25,7 @@ class JobDetail extends Model
         'role_id',
         'department_id',
         'workspace_id',
+        'user_id',
     ];
 
     protected $hidden = [

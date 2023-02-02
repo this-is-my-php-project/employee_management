@@ -23,7 +23,6 @@ class Profile extends Model
         'avatar',
         'phone',
         'email',
-        'job_detail_id',
         'user_id',
         'workspace_id',
     ];
@@ -39,11 +38,6 @@ class Profile extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function jobDetail()
-    {
-        return $this->belongsTo(JobDetail::class);
     }
 
     public function workspace()

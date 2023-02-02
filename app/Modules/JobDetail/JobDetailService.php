@@ -23,10 +23,11 @@ class JobDetailService extends BaseService
             'role_id' => $payload['role_id'],
             'department_id' => $payload['department_id'],
             'workspace_id' => $payload['workspace_id'],
+            'user_id' => $payload['user_id'],
         ]);
     }
 
-    public function createDefault(int $workspaceId, int $employeeTypeId, int $roleId, int $departmentId)
+    public function createDefault(int $workspaceId, int $employeeTypeId, int $roleId, int $departmentId, $userId)
     {
         return $this->repo->createOne([
             'title' => 'Default',
@@ -35,6 +36,7 @@ class JobDetailService extends BaseService
             'role_id' => $roleId,
             'department_id' => $departmentId,
             'workspace_id' => $workspaceId,
+            'user_id' => $userId,
         ]);
     }
 }
