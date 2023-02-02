@@ -4,6 +4,7 @@ namespace App\Modules\JobDetail;
 
 use App\Modules\Department\Department;
 use App\Modules\EmployeeType\EmployeeType;
+use App\Modules\Profile\Profile;
 use App\Modules\Role\Role;
 use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;
@@ -37,23 +38,53 @@ class JobDetail extends Model
         'is_global' => 'boolean',
     ];
 
+    /**
+     * Get the employee type that owns the JobDetail
+     * 
+     * @return BelongsTo
+     */
     public function employeeType()
     {
         return $this->belongsTo(EmployeeType::class);
     }
 
+    /**
+     * Get the role that owns the JobDetail
+     * 
+     * @return BelongsTo
+     */
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
 
+    /**
+     * Get the department that owns the JobDetail
+     * 
+     * @return BelongsTo
+     */
     public function department()
     {
         return $this->belongsTo(Department::class);
     }
 
+    /**
+     * Get the workspace that owns the JobDetail
+     * 
+     * @return BelongsTo
+     */
     public function workspace()
     {
         return $this->belongsTo(Workspace::class);
+    }
+
+    /**
+     * Get the profile that owns the JobDetail
+     * 
+     * @return BelongsTo
+     */
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
     }
 }
