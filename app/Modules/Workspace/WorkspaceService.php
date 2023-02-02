@@ -94,14 +94,6 @@ class WorkspaceService extends BaseService
             $defaultDepartment = $this->departmentService->createDefault($workspace->id, $workspace->name);
             $defaultDepartmentId = $defaultDepartment->id;
 
-            // create default job details
-            $defaultJobDetails = $this->jobDetailService->createDefault(
-                $workspace->id,
-                $defaultEmployeeId,
-                $defaultRole,
-                $defaultDepartmentId
-            );
-
             // create new user data
             $userData = [
                 'name' => $user->name,
@@ -112,10 +104,18 @@ class WorkspaceService extends BaseService
             ];
 
             // create workspace profile for user
-            $this->profileService->createDefault(
+            $profile = $this->profileService->createDefault(
                 $userData,
-                $defaultJobDetails->id,
                 $workspace->id
+            );
+
+            // create default job details
+            $this->jobDetailService->createDefault(
+                $workspace->id,
+                $defaultEmployeeId,
+                $defaultRole,
+                $defaultDepartmentId,
+                $profile->id
             );
 
             return $workspace;

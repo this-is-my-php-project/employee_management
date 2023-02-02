@@ -2,7 +2,6 @@
 
 namespace App\Modules\Profile;
 
-use App\Modules\JobDetail\JobDetail;
 use App\Modules\User\User;
 use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;

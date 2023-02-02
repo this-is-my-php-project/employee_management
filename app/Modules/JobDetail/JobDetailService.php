@@ -23,12 +23,27 @@ class JobDetailService extends BaseService
             'role_id' => $payload['role_id'],
             'department_id' => $payload['department_id'],
             'workspace_id' => $payload['workspace_id'],
-            'user_id' => $payload['user_id'],
+            'profile_id' => $payload['profile_id'],
         ]);
     }
 
-    public function createDefault(int $workspaceId, int $employeeTypeId, int $roleId, int $departmentId, $userId)
-    {
+    /**
+     * Create default job detail for workspace
+     *
+     * @param int $workspaceId
+     * @param int $employeeTypeId
+     * @param int $roleId
+     * @param int $departmentId
+     * @param int $profileId
+     * @return JobDetail
+     */
+    public function createDefault(
+        int $workspaceId,
+        int $employeeTypeId,
+        int $roleId,
+        int $departmentId,
+        int $profileId
+    ) {
         return $this->repo->createOne([
             'title' => 'Default',
             'description' => 'Default job detail for workspace',
@@ -36,7 +51,7 @@ class JobDetailService extends BaseService
             'role_id' => $roleId,
             'department_id' => $departmentId,
             'workspace_id' => $workspaceId,
-            'user_id' => $userId,
+            'profile_id' => $profileId,
         ]);
     }
 }

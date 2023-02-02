@@ -13,7 +13,14 @@ class ProfileService extends BaseService
         parent::__construct($repo);
     }
 
-    public function createDefault(array $user, int $jobDetailId, int $workspaceId): Profile
+    /**
+     * Create default profile for user
+     *
+     * @param array $user
+     * @param int $workspaceId
+     * @return Profile
+     */
+    public function createDefault(array $user, int $workspaceId): Profile
     {
         return $this->repo->createOne([
             'name' => $user['name'],
@@ -21,7 +28,6 @@ class ProfileService extends BaseService
             'avatar' => $user['avatar'] ?? null,
             'phone' => $user['phone'] ?? null,
             'email' => $user['email'] ?? null,
-            'job_detail_id' => $jobDetailId,
             'user_id' => $user['id'],
             'workspace_id' => $workspaceId,
         ]);
