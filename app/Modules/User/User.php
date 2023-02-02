@@ -2,6 +2,7 @@
 
 namespace App\Modules\User;
 
+use App\Modules\Profile\Profile;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Modules\Workspace\Workspace;
 use App\Modules\Role\Role;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -31,10 +33,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
         'email_verified_at',
-        'status',
-        'storage_id',
+        'password',
+        'phone',
+        'is_active',
+        'avatar',
+        'is_super_admin',
     ];
 
     /**
@@ -57,54 +61,12 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the roles that owns the user.
+     * Get profiles.
      * 
-     * @return BelongsToMany
+     * @return HasMany
      */
-    public function roles(): BelongsToMany
+    public function profiles(): HasMany
     {
-        return $this->belongsToMany(Role::class, 'user_role',);
-    }
-
-    /**
-     * Get the workspace that owns the user.
-     * 
-     * @return BelongsToMany
-     */
-    public function workspaces(): BelongsToMany
-    {
-        return $this->belongsToMany(Workspace::class, 'user_workspace',);
-    }
-
-
-    /**
-     * get all permissions of the user.
-     */
-    public function getPermissions(): array
-    {
-        $permissions = [];
-        foreach ($this->roles as $role) {
-            foreach ($role->permissions as $permission) {
-                $permissions[] = $permission->name;
-            }
-        }
-
-        return $permissions;
-    }
-
-    /**
-     * check if the user has a specific permission.
-     */
-    public function hasPermission(string $permission): bool
-    {
-        return in_array($permission, $this->getPermissions());
-    }
-
-    /**
-     * check if the user is super admin.
-     */
-    public function isSuperAdmin(): ?bool
-    {
-        return $this->roles()->where('parent_id', 0)->exists();
+        return $this->hasMany(Profile::class);
     }
 }
