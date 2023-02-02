@@ -3,6 +3,11 @@
 namespace App\Modules\Workspace\Resources;
 
 use App\Modules\CreateBy\Resources\CreateByResource;
+use App\Modules\Department\Resources\DepartmentResource;
+use App\Modules\EmployeeType\Resources\EmployeeTypeResource;
+use App\Modules\JobDetail\Resources\JobDetailResource;
+use App\Modules\Meta\Resources\MetaResource;
+use App\Modules\Profile\Resources\ProfileResource;
 use App\Modules\Project\Resources\ProjectResource;
 use App\Modules\Role\Resources\RoleResource;
 use App\Modules\User\Resources\UserResource;
@@ -30,7 +35,11 @@ class WorkspaceResource extends JsonResource
             'users' => UserResource::collection($this->whenLoaded('users')),
             'projects' => ProjectResource::collection($this->whenLoaded('projects')),
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
-            'meta' => $this->whenLoaded('meta')
+            'meta' => MetaResource::collection($this->whenLoaded('meta')),
+            'employee_types' => EmployeeTypeResource::collection($this->whenLoaded('employeeType')),
+            'departments' => DepartmentResource::collection($this->whenLoaded('departments')),
+            'job_details' => JobDetailResource::collection($this->whenLoaded('jobDetails')),
+            'user_profiles' => ProfileResource::collection($this->whenLoaded('userProfiles')),
         ];
     }
 }

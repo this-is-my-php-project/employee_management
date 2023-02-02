@@ -24,7 +24,11 @@ class WorkspaceService extends BaseService
         'projects.workspaces',
         'roles',
         'roles.users',
-        'meta'
+        'meta',
+        'employeeTypes',
+        'departments',
+        'jobDetails',
+        'userProfiles',
     ];
 
     protected MetaService $metaService;
