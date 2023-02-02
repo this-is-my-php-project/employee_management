@@ -25,7 +25,7 @@ class DepartmentService extends BaseService
         ]);
     }
 
-    public function createDefault(int $workspaceId, string $workspaceName,)
+    public function createDefault(int $workspaceId, string $workspaceName)
     {
         return $this->repo->createOne([
             'name' => 'Default',

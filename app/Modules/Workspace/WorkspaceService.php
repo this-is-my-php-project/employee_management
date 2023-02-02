@@ -27,7 +27,6 @@ class WorkspaceService extends BaseService
         'meta'
     ];
 
-    protected RoleRepository $roleRepo;
     protected MetaService $metaService;
     protected RoleService $roleService;
     protected EmployeeTypeService $employeeTypeService;
@@ -37,7 +36,6 @@ class WorkspaceService extends BaseService
 
     public function __construct(
         WorkspaceRepository $repo,
-        RoleRepository $roleRepo,
         MetaService $metaService,
         RoleService $roleService,
         EmployeeTypeService $employeeTypeService,
@@ -46,7 +44,6 @@ class WorkspaceService extends BaseService
         ProfileService $profileService,
     ) {
         parent::__construct($repo);
-        $this->roleRepo = $roleRepo;
         $this->metaService = $metaService;
         $this->roleService = $roleService;
         $this->employeeTypeService = $employeeTypeService;
@@ -77,7 +74,7 @@ class WorkspaceService extends BaseService
              * add a default role to the workspace.
              * many to many relationship.
              */
-            $roleIds = $this->roleRepo->getRoleIds();
+            $roleIds = $this->roleService->getRoleIds();
             $workspace->roles()->attach($roleIds);
             $defaultRole = $this->roleService->getDefaultRoleIds();
 
@@ -92,7 +89,6 @@ class WorkspaceService extends BaseService
             // create default department
             $defaultDepartment = $this->departmentService->createDefault($workspace->id, $workspace->name);
             $defaultDepartmentId = $defaultDepartment->id;
-
 
             // create default job details
             $defaultJobDetails = $this->jobDetailService->createDefault(
