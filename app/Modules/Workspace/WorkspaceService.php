@@ -80,7 +80,6 @@ class WorkspaceService extends BaseService
              */
             $roleIds = $this->roleService->getRoleIds();
             $workspace->roles()->attach($roleIds);
-            $defaultRole = $this->roleService->getDefaultRoleIds();
 
             /**
              * add a default employee type to the workspace.
@@ -88,11 +87,9 @@ class WorkspaceService extends BaseService
              */
             $employeeIds = $this->employeeTypeService->getIds();
             $workspace->employeeTypes()->attach($employeeIds);
-            $defaultEmployeeId = $this->employeeTypeService->getNormalEmployeeId();
 
             // create default department
             $defaultDepartment = $this->departmentService->createDefault($workspace->id, $workspace->name);
-            $defaultDepartmentId = $defaultDepartment->id;
 
             // create new user data
             $userData = [
@@ -108,6 +105,10 @@ class WorkspaceService extends BaseService
                 $userData,
                 $workspace->id
             );
+
+            $defaultRole = $this->roleService->getDefaultRoleIds();
+            $defaultEmployeeId = $this->employeeTypeService->getNormalEmployeeId();
+            $defaultDepartmentId = $defaultDepartment->id;
 
             // create default job details
             $this->jobDetailService->createDefault(
