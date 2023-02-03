@@ -33,7 +33,7 @@ class EmployeeTypeController extends Controller
     {
         try {
             $this->authorize('viewAny', EmployeeType::class);
-            
+
             $employeeTypes = $this->employeeTypeService->paginate($request->all());
             return EmployeeTypeResource::collection($employeeTypes);
         } catch (\Exception $e) {

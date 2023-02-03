@@ -14,7 +14,7 @@ class EmployeeTypeUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            //  
+            'is_active' => 'boolean',
         ];
     }
 }

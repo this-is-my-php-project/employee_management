@@ -7,6 +7,7 @@ use App\Libraries\Crud\BaseService;
 class EmployeeTypeService extends BaseService
 {
     protected array $allowedRelations = [];
+    protected array $filterable = [];
     protected $employeeRepo;
 
     public function __construct(EmployeeTypeRepository $repo)

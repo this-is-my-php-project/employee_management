@@ -2,6 +2,7 @@
 
 use App\Modules\Attendance\AttendanceController;
 use App\Modules\Auth\AuthController;
+use App\Modules\EmployeeType\EmployeeTypeController;
 use App\Modules\Role\RoleController;
 use App\Modules\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -45,4 +46,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('attendances/{id}', [AttendanceController::class, 'show']);
     Route::post('attendances', [AttendanceController::class, 'store']);
     Route::post('attendances/check-out', [AttendanceController::class, 'checkOut']);
+
+    // employee types
+    Route::resource('employee-types', EmployeeTypeController::class);
 });
