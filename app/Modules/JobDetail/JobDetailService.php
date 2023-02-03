@@ -46,7 +46,7 @@ class JobDetailService extends BaseService
     ) {
         return $this->repo->createOne([
             'title' => 'Default',
-            'description' => 'Default job detail for workspace',
+            'description' => 'Default job detail for workspace id ' . $workspaceId,
             'employee_type_id' => $employeeTypeId,
             'role_id' => $roleId,
             'department_id' => $departmentId,

@@ -12,8 +12,7 @@ class RoleService extends BaseService
      * @var array
      */
     protected array $allowedRelations = [
-        'permissions',
-        'users'
+        'jobDetails'
     ];
 
     /**
@@ -56,6 +55,25 @@ class RoleService extends BaseService
             'level' => $payload['level'],
             'is_active' => $payload['is_active'] ?? true,
         ]);
+    }
+
+    public function deleteOne(string|int $id): ?Role
+    {
+        $role = $this->repo->getOneOrFail($id, []);
+
+        if ($role->level === 0) {
+            throw new \Exception('Cannot delete root role');
+        }
+
+        if ($role->is_default === true) {
+            throw new \Exception('Cannot delete default role');
+        }
+        if ($role->jobDetails()->count() > 0) {
+            throw new \Exception('Cannot delete role with user');
+        }
+
+        $role->delete();
+        return $role;
     }
 
     public function getRoleIds(): array

@@ -2,16 +2,12 @@
 
 namespace App\Modules\Role;
 
-use App\Modules\User\User;
+use App\Modules\JobDetail\JobDetail;
 use Laravel\Passport\HasApiTokens;
-use App\Modules\Workspace\Workspace;
-use App\Modules\Permission\Permission;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
@@ -50,49 +46,8 @@ class Role extends Model
         'is_global' => 'boolean',
     ];
 
-    /**
-     * Get role creator.
-     * 
-     * @return BelongsTo
-     */
-    public function createdByWorkspace(): BelongsTo
+    public function jobDetails()
     {
-        return $this->belongsTo(Workspace::class);
-    }
-
-    /**
-     * Get users of the role.
-     * 
-     * @return BelongsToMany
-     */
-    public function users(): belongsToMany
-    {
-        return $this->belongsToMany(
-            User::class,
-            'user_role',
-            'role_id',
-            'user_id'
-        );
-    }
-
-    /**
-     * Get role creator.
-     * 
-     * @return BelongsTo
-     */
-    public function workspaces(): BelongsToMany
-    {
-        return $this->belongsToMany(Workspace::class, 'workspace_role');
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function permissions(): belongsToMany
-    {
-        return $this->belongsToMany(
-            Permission::class,
-            'role_permission',
-        );
+        return $this->hasMany(JobDetail::class);
     }
 }
