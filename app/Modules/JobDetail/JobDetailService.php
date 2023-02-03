@@ -7,7 +7,13 @@ use App\Modules\Role\Constants\RoleConstants;
 
 class JobDetailService extends BaseService
 {
-    protected array $allowedRelations = [];
+    protected array $allowedRelations = [
+        'employeeType',
+        'role',
+        'department',
+        'workspace',
+        'profile',
+    ];
 
     public function __construct(JobDetailRepository $repo)
     {
@@ -53,5 +59,16 @@ class JobDetailService extends BaseService
             'workspace_id' => $workspaceId,
             'profile_id' => $profileId,
         ]);
+    }
+
+    public function deleteOne(string|int $id): ?JobDetail
+    {
+        $jobDetail = $this->repo->getOneOrFail($id, []);
+
+        if ($jobDetail->profile()->count() > 0) {
+            throw new \Exception('Job detail is in use. Delete profile first');
+        }
+
+        return $jobDetail;
     }
 }

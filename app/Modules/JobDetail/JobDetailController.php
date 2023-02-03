@@ -33,7 +33,7 @@ class JobDetailController extends Controller
     {
         try {
             $this->authorize('viewAny', JobDetail::class);
-            
+
             $jobDetails = $this->jobDetailService->paginate($request->all());
             return JobDetailResource::collection($jobDetails);
         } catch (\Exception $e) {

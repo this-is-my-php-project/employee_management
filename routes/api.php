@@ -4,6 +4,7 @@ use App\Modules\Attendance\AttendanceController;
 use App\Modules\Auth\AuthController;
 use App\Modules\Department\DepartmentController;
 use App\Modules\EmployeeType\EmployeeTypeController;
+use App\Modules\JobDetail\JobDetailController;
 use App\Modules\Role\RoleController;
 use App\Modules\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -53,4 +54,7 @@ Route::middleware('auth:api')->group(function () {
 
     // departments
     Route::resource('departments', DepartmentController::class);
+
+    // job details
+    Route::resource('job-details', JobDetailController::class);
 });
