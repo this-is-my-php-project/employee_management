@@ -2,6 +2,7 @@
 
 use App\Modules\Attendance\AttendanceController;
 use App\Modules\Auth\AuthController;
+use App\Modules\Department\DepartmentController;
 use App\Modules\EmployeeType\EmployeeTypeController;
 use App\Modules\Role\RoleController;
 use App\Modules\User\UserController;
@@ -49,4 +50,7 @@ Route::middleware('auth:api')->group(function () {
 
     // employee types
     Route::resource('employee-types', EmployeeTypeController::class);
+
+    // departments
+    Route::resource('departments', DepartmentController::class);
 });

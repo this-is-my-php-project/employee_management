@@ -2,6 +2,7 @@
 
 namespace App\Modules\Department;
 
+use App\Modules\JobDetail\JobDetail;
 use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -39,5 +40,10 @@ class Department extends Model
     public function workspace()
     {
         return $this->belongsTo(Workspace::class);
+    }
+
+    public function jobDetails()
+    {
+        return $this->hasMany(JobDetail::class);
     }
 }

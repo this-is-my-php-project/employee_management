@@ -33,7 +33,7 @@ class DepartmentController extends Controller
     {
         try {
             $this->authorize('viewAny', Department::class);
-            
+
             $departments = $this->departmentService->paginate($request->all());
             return DepartmentResource::collection($departments);
         } catch (\Exception $e) {

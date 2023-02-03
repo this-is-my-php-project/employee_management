@@ -14,7 +14,8 @@ class DepartmentUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            //  
+            'name' => 'string',
+            'description' => 'string',
         ];
     }
 }
