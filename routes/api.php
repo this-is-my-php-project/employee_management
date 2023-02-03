@@ -9,6 +9,7 @@ use App\Modules\Role\RoleController;
 use App\Modules\User\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Modules\Permission\PermissionController;
+use App\Modules\Profile\ProfileController;
 use App\Modules\Project\ProjectController;
 use App\Modules\Workspace\WorkspaceController;
 
@@ -57,4 +58,7 @@ Route::middleware('auth:api')->group(function () {
 
     // job details
     Route::resource('job-details', JobDetailController::class);
+
+    // profile
+    Route::resource('profiles', ProfileController::class);
 });

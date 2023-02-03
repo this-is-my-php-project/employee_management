@@ -14,7 +14,9 @@ class ProfileUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            //  
+            'name' => 'string|max:255',
+            'alias' => 'nullable|string|max:255',
+            'avatar' => 'nullable|string|max:255',
         ];
     }
 }

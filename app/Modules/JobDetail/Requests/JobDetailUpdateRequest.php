@@ -14,11 +14,11 @@ class JobDetailUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'employee_type_id' => 'required|integer|exists:employee_types,id',
-            'role_id' => 'required|integer|exists:roles,id',
-            'department_id' => 'required|integer|exists:departments,id',
+            'title' => 'string|max:255',
+            'description' => 'string|max:255',
+            'employee_type_id' => 'integer|exists:employee_types,id',
+            'role_id' => 'integer|exists:roles,id',
+            'department_id' => 'integer|exists:departments,id',
         ];
     }
 }

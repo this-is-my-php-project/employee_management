@@ -77,17 +77,18 @@ class BaseRepository
     }
 
     /**
-     * Delete one record
      * @param Model $model
-     * @return bool|null
+     * @return null|Model
      */
-    public function deleteOne(Model $model)
+    public function deleteOne(Model $model): ?Model
     {
         if (!$model) {
             return null;
         }
 
-        return $model->delete();
+        $model->delete();
+
+        return $model;
     }
 
     /**

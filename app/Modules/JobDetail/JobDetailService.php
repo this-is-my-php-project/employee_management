@@ -68,7 +68,6 @@ class JobDetailService extends BaseService
         if ($jobDetail->profile()->count() > 0) {
             throw new \Exception('Job detail is in use. Delete profile first');
         }
-
-        return $jobDetail;
+        return $this->repo->deleteOne($jobDetail);
     }
 }
