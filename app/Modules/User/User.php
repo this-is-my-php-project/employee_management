@@ -8,10 +8,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Modules\Workspace\Workspace;
-use App\Modules\Role\Role;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
@@ -68,5 +64,10 @@ class User extends Authenticatable
     public function profiles(): HasMany
     {
         return $this->hasMany(Profile::class);
+    }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->is_super_admin == true;
     }
 }

@@ -2,10 +2,8 @@
 
 namespace App\Modules\User;
 
-use App\Modules\Permission\Constants\PermissionConstants;
 use App\Modules\User\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Modules\Permission\Enum\Permission;
 
 class UserPolicy
 {
@@ -19,7 +17,9 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 
     /**
@@ -30,8 +30,9 @@ class UserPolicy
      */
     public function view(User $user)
     {
-        // return $user->can(Permission::VIEW_USER->value);
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 
     /**
@@ -42,8 +43,9 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        // return $user->can(Permission::CREATE_USER->value);
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 
     /**
@@ -54,8 +56,9 @@ class UserPolicy
      */
     public function update(User $user)
     {
-        // return $user->can(Permission::UPDATE_USER->value);
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 
     /**
@@ -66,7 +69,8 @@ class UserPolicy
      */
     public function delete(User $user)
     {
-        // return $user->can(Permission::DELETE_USER->value);
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 }
