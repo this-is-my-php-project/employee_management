@@ -18,8 +18,9 @@ class WorkspacePolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can(Permission::VIEW_USER);
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 
     /**
@@ -30,8 +31,9 @@ class WorkspacePolicy
      */
     public function view(User $user)
     {
-        // return $user->can(Permission::VIEW_USER->value);
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 
     /**
@@ -42,7 +44,6 @@ class WorkspacePolicy
      */
     public function create(User $user)
     {
-        // return $user->can(Permission::CREATE_USER->value);
         return true;
     }
 
@@ -54,8 +55,13 @@ class WorkspacePolicy
      */
     public function update(User $user)
     {
-        // return $user->can(Permission::UPDATE_USER->value);
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        if ($user->isWorkspaceOwner()) {
+            return true;
+        }
     }
 
     /**
@@ -66,8 +72,9 @@ class WorkspacePolicy
      */
     public function delete(User $user)
     {
-        // return $user->can(Permission::DELETE_USER->value);
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 
     /**
@@ -78,8 +85,9 @@ class WorkspacePolicy
      */
     public function restore(User $user)
     {
-        // return $user->can(Permission::RESTORE_USER->value);
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 
     /**
@@ -90,7 +98,8 @@ class WorkspacePolicy
      */
     public function forceDelete(User $user)
     {
-        // return $user->can(Permission::FORCE_DELETE_USER->value);
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 }

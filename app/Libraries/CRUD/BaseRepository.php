@@ -40,7 +40,6 @@ class BaseRepository
             return null;
         }
 
-        $model = $this->model;
         $model->fill($payload);
         $model->save();
 
@@ -264,7 +263,7 @@ class BaseRepository
      * @param array $options
      * @return null|Model
      */
-    public function getOneOrFail(mixed $id, ?array $options = null, ?callable $beforeQuery = null): ?Model
+    public function getOneOrFail(mixed $id, ?array $options = [], ?callable $beforeQuery = null): ?Model
     {
         $query = $this->buildQuery($options);
         if ($beforeQuery) {

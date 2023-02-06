@@ -3,6 +3,7 @@
 namespace App\Modules\User;
 
 use App\Modules\Profile\Profile;
+use App\Modules\Workspace\Workspace;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -69,5 +70,19 @@ class User extends Authenticatable
     public function isSuperAdmin(): bool
     {
         return $this->is_super_admin == true;
+    }
+
+    public function isWorkspaceOwner()
+    {
+        $userWorkspace = Workspace::where('created_by_user', $this->id)->first();
+
+        if (empty($userWorkspace)) {
+            return false;
+        }
+
+        $userWorkspace = $userWorkspace->created_by_user;
+        if ($this->id == $userWorkspace) {
+            return true;
+        }
     }
 }

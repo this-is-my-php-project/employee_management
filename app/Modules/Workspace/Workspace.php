@@ -7,6 +7,7 @@ use App\Modules\EmployeeType\EmployeeType;
 use App\Modules\JobDetail\JobDetail;
 use App\Modules\Profile\Profile;
 use App\Modules\Role\Role;
+use App\Modules\User\User;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -95,6 +96,12 @@ class Workspace extends Model
     // {
     //     return $this->hasMany(Project::class);
     // }
+
+
+    public function createdByUser()
+    {
+        return $this->belongsTo(User::class, 'created_by_user');
+    }
 
     /**
      * Get workspace's roles

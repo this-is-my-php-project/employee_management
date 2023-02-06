@@ -3,15 +3,11 @@
 namespace App\Modules\Workspace;
 
 use App\Libraries\Crud\BaseService;
-use App\Modules\Auth\AuthService;
 use App\Modules\Department\DepartmentService;
-use App\Modules\EmployeeType\EmployeeType;
 use App\Modules\EmployeeType\EmployeeTypeService;
 use App\Modules\JobDetail\JobDetailService;
-use App\Modules\Meta\MetaRepository;
 use App\Modules\Meta\MetaService;
 use App\Modules\Profile\ProfileService;
-use App\Modules\Role\RoleRepository;
 use App\Modules\Role\RoleService;
 use Illuminate\Support\Facades\DB;
 
