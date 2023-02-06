@@ -12,6 +12,9 @@ class ProfileService extends BaseService
         'user',
         'workspace',
         'jobDetail',
+        'jobDetail.role',
+        'jobDetail.department',
+        'jobDetail.workspace',
     ];
 
     protected JobDetailService $jobDetailService;

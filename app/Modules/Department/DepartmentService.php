@@ -9,6 +9,8 @@ class DepartmentService extends BaseService
     protected array $allowedRelations = [
         'workspace',
         'jobDetails',
+        'jobDetails.profile',
+        'jobDetails.profile.user',
     ];
 
     public function __construct(DepartmentRepository $repo)

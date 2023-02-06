@@ -2,6 +2,9 @@
 
 namespace App\Modules\Profile\Resources;
 
+use App\Modules\JobDetail\Resources\JobDetailResource;
+use App\Modules\User\Resources\UserResource;
+use App\Modules\Workspace\Resources\WorkspaceResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProfileResource extends JsonResource
@@ -14,6 +17,15 @@ class ProfileResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this['id'],
+            'name' => $this['name'],
+            'alias' => $this['alias'],
+            'phone' => $this['phone'],
+            'email' => $this['email'],
+            'user' => new UserResource($this->whenLoaded('user')),
+            'workspace' => new WorkspaceResource($this->whenLoaded('workspace')),
+            'job_detail' => new JobDetailResource($this->whenLoaded('jobDetail')),
+        ];
     }
 }

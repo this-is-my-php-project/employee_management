@@ -2,6 +2,7 @@
 
 namespace App\Modules\EmployeeType\Resources;
 
+use App\Modules\Workspace\Resources\WorkspaceResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EmployeeTypeResource extends JsonResource
@@ -14,6 +15,16 @@ class EmployeeTypeResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this['id'],
+            'name' => $this['name'],
+            'description' => $this['description'],
+            'is_active' => $this['is_active'],
+            'is_global' => $this['is_global'],
+            'created_at' => $this['created_at'],
+            'updated_at' => $this['updated_at'],
+            'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
+            'workspaces' => WorkspaceResource::collection($this->whenLoaded('workspaces')),
+        ];
     }
 }

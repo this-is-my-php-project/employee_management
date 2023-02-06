@@ -14,7 +14,10 @@ class WorkspaceUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            //  
+            'name' => 'string',
+            'description' => 'string',
+            'logo' => 'file',
+            'cover' => 'file',
         ];
     }
 }

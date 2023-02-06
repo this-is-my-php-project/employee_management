@@ -38,7 +38,6 @@ class UserController extends Controller
 
             $payload = $request->all();
             $users = $this->userService->paginate($payload);
-            return response()->json($users);
 
             return UserResource::collection($users);
         } catch (\Exception $e) {

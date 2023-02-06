@@ -6,7 +6,9 @@ use App\Libraries\Crud\BaseService;
 
 class EmployeeTypeService extends BaseService
 {
-    protected array $allowedRelations = [];
+    protected array $allowedRelations = [
+        'workspaces',
+    ];
     protected array $filterable = [];
     protected $employeeRepo;
 

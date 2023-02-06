@@ -36,6 +36,9 @@ class EmployeeType extends Model
 
     public function workspaces(): BelongsToMany
     {
-        return $this->belongsToMany(Workspace::class);
+        return $this->belongsToMany(
+            Workspace::class,
+            'workspace_employee_type',
+        );
     }
 }
