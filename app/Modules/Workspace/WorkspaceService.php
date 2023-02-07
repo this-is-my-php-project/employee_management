@@ -9,6 +9,7 @@ use App\Modules\JobDetail\JobDetailService;
 use App\Modules\Meta\MetaService;
 use App\Modules\Profile\ProfileService;
 use App\Modules\Role\RoleService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class WorkspaceService extends BaseService
@@ -33,6 +34,7 @@ class WorkspaceService extends BaseService
     protected DepartmentService $departmentService;
     protected JobDetailService $jobDetailService;
     protected ProfileService $profileService;
+    protected WorkspaceRepository $workspaceRepo;
 
     public function __construct(
         WorkspaceRepository $repo,
@@ -50,6 +52,7 @@ class WorkspaceService extends BaseService
         $this->departmentService = $departmentService;
         $this->jobDetailService = $jobDetailService;
         $this->profileService = $profileService;
+        $this->workspaceRepo = $repo;
     }
 
     public function createOne(array $payload): Workspace
@@ -183,5 +186,12 @@ class WorkspaceService extends BaseService
 
             return $workspace;
         });
+    }
+
+    public function myWorkspaces()
+    {
+        $userId = auth()->user()->id;
+        $workspaces = $this->workspaceRepo->myWorkspaces($userId);
+        return $workspaces;
     }
 }

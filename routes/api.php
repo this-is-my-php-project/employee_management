@@ -41,6 +41,7 @@ Route::middleware('auth:api')->group(function () {
     // workspaces
     Route::resource('workspaces', WorkspaceController::class);
     Route::post('workspaces/{id}/invite', [WorkspaceController::class, 'inviteToWorkspace']);
+    Route::get('my-workspaces', [WorkspaceController::class, 'myWorkspaces']);
 
     // Projects
     Route::resource('projects', ProjectController::class);

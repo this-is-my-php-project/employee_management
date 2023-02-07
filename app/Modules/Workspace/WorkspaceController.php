@@ -172,4 +172,15 @@ class WorkspaceController extends Controller
             return $this->sendError($e->getMessage());
         }
     }
+
+    public function myWorkspaces()
+    {
+        try {
+            $workspaces = $this->workspaceService->myWorkspaces();
+
+            return WorkspaceResource::collection($workspaces);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
 }

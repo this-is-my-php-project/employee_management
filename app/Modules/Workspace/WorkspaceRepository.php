@@ -11,4 +11,11 @@ class WorkspaceRepository extends BaseRepository
     {
         parent::__construct($workspace);
     }
+
+    public function myWorkspaces($userId)
+    {
+        return $this->model->whereHas('userProfiles', function ($query) use ($userId) {
+            $query->where('profiles.user_id', $userId);
+        })->get();
+    }
 }
