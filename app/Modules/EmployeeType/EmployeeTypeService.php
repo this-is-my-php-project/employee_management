@@ -58,4 +58,9 @@ class EmployeeTypeService extends BaseService
         $workspace->employeeTypes()->detach($this->getIds());
         return $workspace;
     }
+
+    public function getInviteEmployeeId(): int
+    {
+        return $this->employeeRepo->getDefaultEmployeeId();
+    }
 }

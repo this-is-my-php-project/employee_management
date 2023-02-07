@@ -22,4 +22,9 @@ class RoleRepository extends BaseRepository
     {
         return $this->model->where('key', RoleConstants::ADMIN['key'])->first()->id;
     }
+
+    public function getInviteRoleId(): int
+    {
+        return $this->model->where('key', RoleConstants::MEMBER['key'])->first()->id;
+    }
 }

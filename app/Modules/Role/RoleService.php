@@ -115,4 +115,9 @@ class RoleService extends BaseService
         $workspace->roles()->detach($this->getRoleIds());
         return $workspace;
     }
+
+    public function getInviteRoleId(): int
+    {
+        return $this->roleRepo->getInviteRoleId();
+    }
 }

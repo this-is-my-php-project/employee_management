@@ -3,6 +3,7 @@
 namespace App\Modules\Workspace;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Workspace\Requests\WorkspaceInviteRequest;
 use App\Modules\Workspace\WorkspaceService;
 use App\Modules\Workspace\Resources\WorkspaceResource;
 use App\Modules\Workspace\Requests\WorkspaceStoreRequest;
@@ -145,6 +146,27 @@ class WorkspaceController extends Controller
             $this->authorize('restore', Workspace::class);
 
             $workspace = $this->workspaceService->restoreOne($id);
+            return new WorkspaceResource($workspace);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    /**
+     * @OA\POST(
+     *     path="/api/workspaces/{id}/invite",
+     *     tags={"Workspaces"},
+     *     summary="Invite a user to a workspace",
+     *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
+    public function inviteToWorkspace(WorkspaceInviteRequest $request, int $id)
+    {
+        try {
+            $payload = $request->validated();
+            $workspace = $this->workspaceService->inviteToWorkspace($id, $payload);
+
             return new WorkspaceResource($workspace);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());

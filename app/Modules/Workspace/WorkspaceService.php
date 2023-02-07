@@ -148,4 +148,40 @@ class WorkspaceService extends BaseService
             return $workspace;
         });
     }
+
+    public function inviteToWorkspace(string|int $id, array $payload): Workspace
+    {
+        return DB::transaction(function () use ($id, $payload) {
+            $workspace = $this->repo->getOneOrFail($id);
+            if (empty($workspace)) {
+                throw new \Exception('Workspace not found');
+            }
+
+            $user = auth()->user();
+            $userData = [
+                'name' => $user->name,
+                'avatar' => $user->avatar,
+                'phone' => $user->phone,
+                'email' => $user->email,
+                'id' => $user->id
+            ];
+            $profile = $this->profileService->createDefault(
+                $userData,
+                $id
+            );
+
+            $inviteRoleId = $this->roleService->getInviteRoleId();
+            $inviteEmployeeId = $this->employeeTypeService->getInviteEmployeeId();
+            $departmentId = $payload['department_id'];
+            $this->jobDetailService->createDefault(
+                $id,
+                $inviteEmployeeId,
+                $inviteRoleId,
+                $departmentId,
+                $profile->id
+            );
+
+            return $workspace;
+        });
+    }
 }
