@@ -12,7 +12,6 @@ use App\Modules\Permission\PermissionController;
 use App\Modules\Profile\ProfileController;
 use App\Modules\Project\ProjectController;
 use App\Modules\Workspace\WorkspaceController;
-use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------

@@ -56,6 +56,12 @@ class WorkspaceService extends BaseService
         $this->workspaceRepo = $repo;
     }
 
+    /**
+     * Create a workspace.
+     * 
+     * @param array $payload
+     * @return Workspace
+     */
     public function createOne(array $payload): Workspace
     {
         return DB::transaction(function () use ($payload) {
@@ -123,6 +129,12 @@ class WorkspaceService extends BaseService
         });
     }
 
+    /**
+     * Delete a workspace.
+     * 
+     * @param string|int $id
+     * @return Workspace
+     */
     public function deleteOne(string|int $id): ?Workspace
     {
         return DB::transaction(function () use ($id) {
@@ -153,6 +165,12 @@ class WorkspaceService extends BaseService
         });
     }
 
+    /**
+     * Add a user to a workspace.
+     * 
+     * @param array $payload
+     * @return Workspace
+     */
     public function addToWorkspace(array $payload): Workspace
     {
         return DB::transaction(function () use ($payload) {
@@ -191,6 +209,11 @@ class WorkspaceService extends BaseService
         });
     }
 
+    /**
+     * Get my workspaces.
+     * 
+     * @return Workspace
+     */
     public function myWorkspaces()
     {
         $userId = auth()->user()->id;
@@ -198,7 +221,13 @@ class WorkspaceService extends BaseService
         return $workspaces;
     }
 
-    public function invitations($payload)
+    /**
+     * Invite a user to a workspace with URL.
+     * 
+     * @param array $payload
+     * @return string
+     */
+    public function invitations($payload): string
     {
         $workspaceId = encryptData($payload['workspace_id']);
         $departmentId = encryptData($payload['department_id']);

@@ -154,7 +154,7 @@ class WorkspaceController extends Controller
 
     /**
      * @OA\POST(
-     *     path="/api/workspaces/{id}/invite",
+     *     path="/api/add-to-workspace",
      *     tags={"Workspaces"},
      *     summary="Invite a user to a workspace",
      *     @OA\Response(response=400, description="Bad request"),
@@ -173,6 +173,15 @@ class WorkspaceController extends Controller
         }
     }
 
+    /**
+     * @OA\POST(
+     *    path="/api/my-workspaces",
+     *    tags={"Workspaces"},
+     *    summary="Get my workspaces",
+     *    @OA\Response(response=400, description="Bad request"),
+     *    @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
     public function myWorkspaces()
     {
         try {
@@ -184,6 +193,15 @@ class WorkspaceController extends Controller
         }
     }
 
+    /**
+     * @OA\POST(
+     *   path="/api/invitations",
+     *   tags={"Workspaces"},
+     *   summary="Get invitations",
+     *   @OA\Response(response=400, description="Bad request"),
+     *   @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
     public function invitations(WorkspaceInviteRequest $request)
     {
         try {
