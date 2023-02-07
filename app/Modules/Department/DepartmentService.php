@@ -87,11 +87,10 @@ class DepartmentService extends BaseService
 
     /**
      * @param int $workspaceId
-     * @return Department
+     * @return bool
      */
-    public function deleteAllFromWorkspace(int $workspaceId): Department
+    public function deleteAllFromWorkspace(int $workspaceId): bool
     {
-        $department = $this->departmentRepo->deleteAllFromWorkspace($workspaceId);
-        return $department;
+        return $this->departmentRepo->deleteAllFromWorkspace($workspaceId);
     }
 }

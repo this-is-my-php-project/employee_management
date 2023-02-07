@@ -83,11 +83,10 @@ class JobDetailService extends BaseService
      * Delete all job details from workspace
      *
      * @param string|int $workspaceId
-     * @return JobDetail|null
+     * @return bool
      */
-    public function deleteAllFromWorkspace(string|int $workspaceId): ?JobDetail
+    public function deleteAllFromWorkspace(string|int $workspaceId): bool
     {
-        $jobDetail = $this->jobDetailRepo->deleteAllFromWorkspace($workspaceId);
-        return $jobDetail;
+        return $this->jobDetailRepo->deleteAllFromWorkspace($workspaceId);
     }
 }

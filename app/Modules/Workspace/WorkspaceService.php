@@ -3,7 +3,6 @@
 namespace App\Modules\Workspace;
 
 use App\Libraries\Crud\BaseService;
-use App\Modules\Department\Department;
 use App\Modules\Department\DepartmentService;
 use App\Modules\EmployeeType\EmployeeTypeService;
 use App\Modules\JobDetail\JobDetailService;
@@ -68,8 +67,8 @@ class WorkspaceService extends BaseService
                 'created_by_user' => auth()->user()->id
             ]);
 
-            // create a two meta for the workspace.
-            $this->metaService->createWorkspaceMeta($workspace->id);
+            // // create a two meta for the workspace.
+            // $this->metaService->createWorkspaceMeta($workspace->id);
 
             /**
              * add a default role to the workspace.
@@ -120,13 +119,13 @@ class WorkspaceService extends BaseService
         });
     }
 
-    public function deleteOne(string|int $id): ?Department
+    public function deleteOne(string|int $id): ?Workspace
     {
         return DB::transaction(function () use ($id) {
             $model = $this->repo->getOneOrFail($id);
 
-            // delete workspace meta
-            $this->metaService->deleteOne($model->id);
+            // // delete workspace meta
+            // $this->metaService->deleteOne($model->id);
 
             // remove roles from workspace
             $this->roleService->removeAllFromWorkspace($model);

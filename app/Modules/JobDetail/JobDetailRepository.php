@@ -16,11 +16,10 @@ class JobDetailRepository extends BaseRepository
      * Delete all job details from workspace
      *
      * @param string|int $workspaceId
-     * @return JobDetail|null
+     * @return bool
      */
-    public function deleteAllFromWorkspace(string|int $workspaceId): ?JobDetail
+    public function deleteAllFromWorkspace(string|int $workspaceId): bool
     {
-        $jobDetail = $this->model->where('workspace_id', $workspaceId)->delete();
-        return $jobDetail;
+        return $this->model->where('workspace_id', $workspaceId)->delete();
     }
 }

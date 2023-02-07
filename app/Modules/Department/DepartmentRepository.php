@@ -24,11 +24,10 @@ class DepartmentRepository extends BaseRepository
 
     /**
      * @param int $workspaceId
-     * @return Department
+     * @return bool
      */
-    public function deleteAllFromWorkspace(int $workspaceId): Department
+    public function deleteAllFromWorkspace(int $workspaceId): bool
     {
-        $department = $this->model->where('workspace_id', '=', $workspaceId)->delete();
-        return $department;
+        return $this->model->where('workspace_id', '=', $workspaceId)->delete();
     }
 }

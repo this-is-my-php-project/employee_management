@@ -65,9 +65,8 @@ class ProfileService extends BaseService
         });
     }
 
-    public function deleteAllFromWorkspace(string|int $workspaceId): ?Profile
+    public function deleteAllFromWorkspace(string|int $workspaceId): bool
     {
-        $profile = $this->profileRepo->deleteAllFromWorkspace($workspaceId);
-        return $profile;
+        return $this->profileRepo->deleteAllFromWorkspace($workspaceId);
     }
 }
