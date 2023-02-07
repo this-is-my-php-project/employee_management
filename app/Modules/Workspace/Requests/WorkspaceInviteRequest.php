@@ -14,6 +14,7 @@ class WorkspaceInviteRequest extends BaseRequest
     public function rules()
     {
         return [
+            'workspace_id' => 'required|integer|exists:workspaces,id',
             'department_id' => 'required|integer|exists:departments,id',
         ];
     }

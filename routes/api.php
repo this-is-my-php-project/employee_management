@@ -12,6 +12,7 @@ use App\Modules\Permission\PermissionController;
 use App\Modules\Profile\ProfileController;
 use App\Modules\Project\ProjectController;
 use App\Modules\Workspace\WorkspaceController;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,7 @@ use App\Modules\Workspace\WorkspaceController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -40,7 +42,8 @@ Route::middleware('auth:api')->group(function () {
 
     // workspaces
     Route::resource('workspaces', WorkspaceController::class);
-    Route::post('workspaces/{id}/invite', [WorkspaceController::class, 'inviteToWorkspace']);
+    Route::get('invitations', [WorkspaceController::class, 'invitations'])->name('invitations');
+    Route::post('add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
     Route::get('my-workspaces', [WorkspaceController::class, 'myWorkspaces']);
 
     // Projects

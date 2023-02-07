@@ -11,6 +11,7 @@ use App\Modules\Profile\ProfileService;
 use App\Modules\Role\RoleService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class WorkspaceService extends BaseService
 {
@@ -152,10 +153,11 @@ class WorkspaceService extends BaseService
         });
     }
 
-    public function inviteToWorkspace(string|int $id, array $payload): Workspace
+    public function addToWorkspace(array $payload): Workspace
     {
-        return DB::transaction(function () use ($id, $payload) {
-            $workspace = $this->repo->getOneOrFail($id);
+        return DB::transaction(function () use ($payload) {
+            $workspaceId = $payload['workspace_id'];
+            $workspace = $this->repo->getOneOrFail($workspaceId);
             if (empty($workspace)) {
                 throw new \Exception('Workspace not found');
             }
@@ -170,14 +172,14 @@ class WorkspaceService extends BaseService
             ];
             $profile = $this->profileService->createDefault(
                 $userData,
-                $id
+                $workspaceId
             );
 
             $inviteRoleId = $this->roleService->getInviteRoleId();
             $inviteEmployeeId = $this->employeeTypeService->getInviteEmployeeId();
             $departmentId = $payload['department_id'];
             $this->jobDetailService->createDefault(
-                $id,
+                $workspaceId,
                 $inviteEmployeeId,
                 $inviteRoleId,
                 $departmentId,
@@ -193,5 +195,20 @@ class WorkspaceService extends BaseService
         $userId = auth()->user()->id;
         $workspaces = $this->workspaceRepo->myWorkspaces($userId);
         return $workspaces;
+    }
+
+    public function invitations($payload)
+    {
+        $workspaceId = $payload['workspace_id'];
+        $departmentId = $payload['department_id'];
+        $url = URL::temporarySignedRoute(
+            'add-to-workspace',
+            now()->addDays(7),
+            [
+                'workspace_id' => $workspaceId,
+                'department_id' => $departmentId
+            ]
+        );
+        return $url;
     }
 }

@@ -161,11 +161,11 @@ class WorkspaceController extends Controller
      *     @OA\Response(response=404, description="Resource Not Found"),
      * )
      */
-    public function inviteToWorkspace(WorkspaceInviteRequest $request, int $id)
+    public function addToWorkspace(WorkspaceInviteRequest $request)
     {
         try {
             $payload = $request->validated();
-            $workspace = $this->workspaceService->inviteToWorkspace($id, $payload);
+            $workspace = $this->workspaceService->addToWorkspace($payload);
 
             return new WorkspaceResource($workspace);
         } catch (\Exception $e) {
@@ -179,6 +179,18 @@ class WorkspaceController extends Controller
             $workspaces = $this->workspaceService->myWorkspaces();
 
             return WorkspaceResource::collection($workspaces);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function invitations(WorkspaceInviteRequest $request)
+    {
+        try {
+            $payload = $request->validated();
+            $url = $this->workspaceService->invitations($payload);
+
+            return $url;
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
