@@ -156,7 +156,9 @@ class WorkspaceService extends BaseService
     public function addToWorkspace(array $payload): Workspace
     {
         return DB::transaction(function () use ($payload) {
-            $workspaceId = $payload['workspace_id'];
+            $workspaceId = decryptData($payload['workspace_id']);
+            $departmentId = decryptData($payload['department_id']);
+
             $workspace = $this->repo->getOneOrFail($workspaceId);
             if (empty($workspace)) {
                 throw new \Exception('Workspace not found');
@@ -177,7 +179,6 @@ class WorkspaceService extends BaseService
 
             $inviteRoleId = $this->roleService->getInviteRoleId();
             $inviteEmployeeId = $this->employeeTypeService->getInviteEmployeeId();
-            $departmentId = $payload['department_id'];
             $this->jobDetailService->createDefault(
                 $workspaceId,
                 $inviteEmployeeId,
@@ -199,8 +200,8 @@ class WorkspaceService extends BaseService
 
     public function invitations($payload)
     {
-        $workspaceId = $payload['workspace_id'];
-        $departmentId = $payload['department_id'];
+        $workspaceId = encryptData($payload['workspace_id']);
+        $departmentId = encryptData($payload['department_id']);
         $url = URL::temporarySignedRoute(
             'add-to-workspace',
             now()->addDays(7),

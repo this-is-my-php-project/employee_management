@@ -125,6 +125,11 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'aes' => [
+        'key' => env('AES_KEY_STR'),
+        'iv' => env('AES_IV_STR'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver
