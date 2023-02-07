@@ -164,6 +164,10 @@ class WorkspaceController extends Controller
     public function addToWorkspace(WorkspaceInviteRequest $request)
     {
         try {
+            if (!$request->hasValidSignature()) {
+                return $this->sendError('Invalid invite link');
+            }
+
             $payload = $request->validated();
             $workspace = $this->workspaceService->addToWorkspace($payload);
 

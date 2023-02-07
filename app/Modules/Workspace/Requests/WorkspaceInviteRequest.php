@@ -16,6 +16,8 @@ class WorkspaceInviteRequest extends BaseRequest
         return [
             'workspace_id' => 'required|string',
             'department_id' => 'required|string',
+            'expires' => 'required|string',
+            'signature' => 'required|string',
         ];
     }
 }
