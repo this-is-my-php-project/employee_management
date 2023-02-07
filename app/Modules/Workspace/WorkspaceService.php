@@ -5,11 +5,14 @@ namespace App\Modules\Workspace;
 use App\Libraries\Crud\BaseService;
 use App\Modules\Department\DepartmentService;
 use App\Modules\EmployeeType\EmployeeTypeService;
+use App\Modules\InvitationLink\InvitationLinkService;
+use App\Modules\InvitationUrl\InvitationUrl;
+use App\Modules\InvitationUrl\InvitationUrlService;
 use App\Modules\JobDetail\JobDetailService;
 use App\Modules\Meta\MetaService;
 use App\Modules\Profile\ProfileService;
 use App\Modules\Role\RoleService;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
@@ -36,7 +39,7 @@ class WorkspaceService extends BaseService
     protected JobDetailService $jobDetailService;
     protected ProfileService $profileService;
     protected WorkspaceRepository $workspaceRepo;
-
+    protected InvitationUrlService $invitationUrlService;
     public function __construct(
         WorkspaceRepository $repo,
         MetaService $metaService,
@@ -45,6 +48,7 @@ class WorkspaceService extends BaseService
         DepartmentService $departmentService,
         JobDetailService $jobDetailService,
         ProfileService $profileService,
+        InvitationUrlService $invitationUrlService
     ) {
         parent::__construct($repo);
         $this->metaService = $metaService;
@@ -54,6 +58,7 @@ class WorkspaceService extends BaseService
         $this->jobDetailService = $jobDetailService;
         $this->profileService = $profileService;
         $this->workspaceRepo = $repo;
+        $this->invitationUrlService = $invitationUrlService;
     }
 
     /**
@@ -227,7 +232,7 @@ class WorkspaceService extends BaseService
      * @param array $payload
      * @return string
      */
-    public function invitations($payload): string
+    public function invitations(array $payload): string
     {
         $workspaceId = encryptData($payload['workspace_id']);
         $departmentId = encryptData($payload['department_id']);
@@ -235,10 +240,28 @@ class WorkspaceService extends BaseService
             'add-to-workspace',
             now()->addDays(7),
             [
-                'workspace_id' => $workspaceId,
-                'department_id' => $departmentId
+                'workspace' => $workspaceId,
+                'department' => $departmentId
             ]
         );
+        $url_components = parse_url($url);
+        parse_str($url_components['query'], $params);
+
+        $newParams = [
+            'url' => $url,
+            'workspace_id' => decryptData($params['workspace']),
+            'department_id' => decryptData($params['department']),
+            'expires' => $params['expires'],
+            'signature' => $params['signature']
+        ];
+
+        $this->invitationUrlService->createOne($newParams);
+
         return $url;
+    }
+
+    public function getInvitationUrl(array $payload): ?InvitationUrl
+    {
+        return $this->invitationUrlService->getOneInvitationUrlForWorkspace($payload['workspace_id']);
     }
 }

@@ -41,9 +41,12 @@ Route::middleware('auth:api')->group(function () {
 
     // workspaces
     Route::resource('workspaces', WorkspaceController::class);
-    Route::get('invitations', [WorkspaceController::class, 'invitations'])->name('invitations');
+    Route::post('invitations', [WorkspaceController::class, 'invitations'])->name('invitations');
     Route::post('add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
     Route::get('my-workspaces', [WorkspaceController::class, 'myWorkspaces']);
+
+    // invitations Url
+    Route::get('invitation-url', [WorkspaceController::class, 'getInvitationUrl']);
 
     // Projects
     Route::resource('projects', ProjectController::class);

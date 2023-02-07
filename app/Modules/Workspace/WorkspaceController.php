@@ -212,7 +212,19 @@ class WorkspaceController extends Controller
             $payload = $request->validated();
             $url = $this->workspaceService->invitations($payload);
 
-            return $url;
+            return response()->json(['url' => $url]);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function getInvitationUrl(WorkspaceInviteRequest $request)
+    {
+        try {
+            $payload = $request->validated();
+            $url = $this->workspaceService->getInvitationUrl($payload);
+
+            return response()->json(['url' => $url]);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
