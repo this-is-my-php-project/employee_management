@@ -59,6 +59,12 @@ class RoleService extends BaseService
         ]);
     }
 
+    /**
+     * Delete a role.
+     * 
+     * @param string|int $id
+     * @return Role|null
+     */
     public function deleteOne(string|int $id): ?Role
     {
         $role = $this->repo->getOneOrFail($id, []);
@@ -78,11 +84,21 @@ class RoleService extends BaseService
         return $role;
     }
 
+    /**
+     * Get all role ids.
+     * 
+     * @return array
+     */
     public function getRoleIds(): array
     {
         return $this->roleRepo->getRoleIds();
     }
 
+    /**
+     * Get default role ids.
+     * 
+     * @return int
+     */
     public function getDefaultRoleIds(): int
     {
         return $this->roleRepo->getDefaultRoleIds();
@@ -94,7 +110,7 @@ class RoleService extends BaseService
      * @param Workspace $workspace
      * @return Workspace
      */
-    public function removeRolesFromWorkspace(Workspace $workspace): Workspace
+    public function removeAllFromWorkspace(Workspace $workspace): Workspace
     {
         $workspace->roles()->detach($this->getRoleIds());
         return $workspace;

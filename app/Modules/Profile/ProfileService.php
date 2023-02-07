@@ -19,11 +19,14 @@ class ProfileService extends BaseService
 
     protected JobDetailService $jobDetailService;
 
+    protected ProfileRepository $profileRepo;
+
     public function __construct(
         ProfileRepository $repo,
         JobDetailService $jobDetailService
     ) {
         parent::__construct($repo);
+        $this->profileRepo = $repo;
         $this->jobDetailService = $jobDetailService;
     }
 
@@ -60,5 +63,11 @@ class ProfileService extends BaseService
 
             return $profile;
         });
+    }
+
+    public function deleteAllFromWorkspace(string|int $workspaceId): ?Profile
+    {
+        $profile = $this->profileRepo->deleteAllFromWorkspace($workspaceId);
+        return $profile;
     }
 }

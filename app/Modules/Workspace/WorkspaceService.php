@@ -129,16 +129,24 @@ class WorkspaceService extends BaseService
             $this->metaService->deleteOne($model->id);
 
             // remove roles from workspace
-            $this->roleService->removeRolesFromWorkspace($model);
+            $this->roleService->removeAllFromWorkspace($model);
 
             // remove employee types from workspace
-            $this->employeeTypeService->removeEmployeeTypesFromWorkspace($model);
+            $this->employeeTypeService->removeAllFromWorkspace($model);
 
             // delete all departments in workspace
-            $this->departmentService->deleteAllDepartmentWorkspace($model->id);
+            $this->departmentService->deleteAllFromWorkspace($model->id);
+
+            // delete all job details in workspace
+            $this->jobDetailService->deleteAllFromWorkspace($model->id);
+
+            // delete all profiles in workspace
+            $this->profileService->deleteAllFromWorkspace($model->id);
 
             // delete workspace
             $workspace = $this->repo->deleteOne($model);
+
+            return $workspace;
         });
     }
 }

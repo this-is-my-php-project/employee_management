@@ -14,10 +14,12 @@ class JobDetailService extends BaseService
         'workspace',
         'profile',
     ];
+    protected JobDetailRepository $jobDetailRepo;
 
     public function __construct(JobDetailRepository $repo)
     {
         parent::__construct($repo);
+        $this->jobDetailRepo = $repo;
     }
 
     public function createOne(array $payload): JobDetail
@@ -61,6 +63,12 @@ class JobDetailService extends BaseService
         ]);
     }
 
+    /**
+     * Delete a job detail
+     * 
+     * @param string|int $id
+     * @return JobDetail|null
+     */
     public function deleteOne(string|int $id): ?JobDetail
     {
         $jobDetail = $this->repo->getOneOrFail($id, []);
@@ -69,5 +77,17 @@ class JobDetailService extends BaseService
             throw new \Exception('Job detail is in use. Delete profile first');
         }
         return $this->repo->deleteOne($jobDetail);
+    }
+
+    /**
+     * Delete all job details from workspace
+     *
+     * @param string|int $workspaceId
+     * @return JobDetail|null
+     */
+    public function deleteAllFromWorkspace(string|int $workspaceId): ?JobDetail
+    {
+        $jobDetail = $this->jobDetailRepo->deleteAllFromWorkspace($workspaceId);
+        return $jobDetail;
     }
 }

@@ -53,7 +53,7 @@ class EmployeeTypeService extends BaseService
      * @param Workspace $workspace
      * @return Workspace
      */
-    public function removeEmployeeTypesFromWorkspace(Workspace $workspace): Workspace
+    public function removeAllFromWorkspace(Workspace $workspace): Workspace
     {
         $workspace->employeeTypes()->detach($this->getIds());
         return $workspace;

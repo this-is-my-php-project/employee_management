@@ -26,7 +26,7 @@ class DepartmentRepository extends BaseRepository
      * @param int $workspaceId
      * @return Department
      */
-    public function deleteAllDepartmentWorkspace(int $workspaceId): Department
+    public function deleteAllFromWorkspace(int $workspaceId): Department
     {
         $department = $this->model->where('workspace_id', '=', $workspaceId)->delete();
         return $department;

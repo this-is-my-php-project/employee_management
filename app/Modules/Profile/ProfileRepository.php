@@ -11,4 +11,10 @@ class ProfileRepository extends BaseRepository
     {
         parent::__construct($profile);
     }
+
+    public function deleteAllFromWorkspace(string|int $workspaceId): ?Profile
+    {
+        $profile = $this->model->where('workspace_id', $workspaceId)->delete();
+        return $profile;
+    }
 }
