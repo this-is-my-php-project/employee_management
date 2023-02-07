@@ -13,11 +13,19 @@ class DepartmentService extends BaseService
         'jobDetails.profile.user',
     ];
 
-    public function __construct(DepartmentRepository $repo)
-    {
+    protected DepartmentRepository $departmentRepo;
+
+    public function __construct(
+        DepartmentRepository $repo
+    ) {
         parent::__construct($repo);
+        $this->departmentRepo = $repo;
     }
 
+    /**
+     * @param array $params
+     * @return Department
+     */
     public function createOne(array $params): Department
     {
         return $this->repo->createOne([
@@ -30,7 +38,11 @@ class DepartmentService extends BaseService
         ]);
     }
 
-    public function createDefault(int $workspaceId, string $workspaceName)
+    /**
+     * @param array $params
+     * @return Department
+     */
+    public function createDefault(int $workspaceId, string $workspaceName): Department
     {
         return $this->repo->createOne([
             'name' => 'Default',
@@ -43,6 +55,10 @@ class DepartmentService extends BaseService
         ]);
     }
 
+    /**
+     * @param array $params
+     * @return Department|null
+     */
     public function deleteOne(string|int $id): ?Department
     {
         $department = $this->repo->getOneOrFail($id, []);
@@ -56,6 +72,26 @@ class DepartmentService extends BaseService
         }
 
         $department->delete();
+        return $department;
+    }
+
+    /**
+     * @param int $workspaceId
+     * @return array
+     */
+    public function getAllDepartmentWorkspace(int $workspaceId): array
+    {
+        $department = $this->departmentRepo->getAllDepartmentWorkspace($workspaceId);
+        return $department;
+    }
+
+    /**
+     * @param int $workspaceId
+     * @return Department
+     */
+    public function deleteAllDepartmentWorkspace(int $workspaceId): Department
+    {
+        $department = $this->departmentRepo->deleteAllDepartmentWorkspace($workspaceId);
         return $department;
     }
 }

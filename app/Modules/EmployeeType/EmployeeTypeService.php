@@ -3,6 +3,7 @@
 namespace App\Modules\EmployeeType;
 
 use App\Libraries\Crud\BaseService;
+use App\Modules\Workspace\Workspace;
 
 class EmployeeTypeService extends BaseService
 {
@@ -18,6 +19,10 @@ class EmployeeTypeService extends BaseService
         $this->employeeRepo = $repo;
     }
 
+    /**
+     * @param array $params
+     * @return EmployeeType
+     */
     public function createOne(array $params): EmployeeType
     {
         return $this->repo->createOne([
@@ -28,13 +33,29 @@ class EmployeeTypeService extends BaseService
         ]);
     }
 
+    /**
+     * @return array
+     */
     public function getIds(): array
     {
         return $this->employeeRepo->getIds();
     }
 
-    public function getNormalEmployeeId(): int
+    /**
+     * @return int
+     */
+    public function getDefaultEmployeeId(): int
     {
-        return $this->employeeRepo->getNormalEmployeeId();
+        return $this->employeeRepo->getDefaultEmployeeId();
+    }
+
+    /**
+     * @param Workspace $workspace
+     * @return Workspace
+     */
+    public function removeEmployeeTypesFromWorkspace(Workspace $workspace): Workspace
+    {
+        $workspace->employeeTypes()->detach($this->getIds());
+        return $workspace;
     }
 }

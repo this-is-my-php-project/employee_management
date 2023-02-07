@@ -75,6 +75,10 @@ class WorkspacePolicy
         if ($user->isSuperAdmin()) {
             return true;
         }
+
+        if ($user->isWorkspaceOwner()) {
+            return true;
+        }
     }
 
     /**

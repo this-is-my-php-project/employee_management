@@ -3,6 +3,7 @@
 namespace App\Modules\Workspace;
 
 use App\Libraries\Crud\BaseService;
+use App\Modules\Department\Department;
 use App\Modules\Department\DepartmentService;
 use App\Modules\EmployeeType\EmployeeTypeService;
 use App\Modules\JobDetail\JobDetailService;
@@ -103,7 +104,7 @@ class WorkspaceService extends BaseService
             );
 
             $defaultRole = $this->roleService->getDefaultRoleIds();
-            $defaultEmployeeId = $this->employeeTypeService->getNormalEmployeeId();
+            $defaultEmployeeId = $this->employeeTypeService->getDefaultEmployeeId();
             $defaultDepartmentId = $defaultDepartment->id;
 
             // create default job details
@@ -116,6 +117,28 @@ class WorkspaceService extends BaseService
             );
 
             return $workspace;
+        });
+    }
+
+    public function deleteOne(string|int $id): ?Department
+    {
+        return DB::transaction(function () use ($id) {
+            $model = $this->repo->getOneOrFail($id);
+
+            // delete workspace meta
+            $this->metaService->deleteOne($model->id);
+
+            // remove roles from workspace
+            $this->roleService->removeRolesFromWorkspace($model);
+
+            // remove employee types from workspace
+            $this->employeeTypeService->removeEmployeeTypesFromWorkspace($model);
+
+            // delete all departments in workspace
+            $this->departmentService->deleteAllDepartmentWorkspace($model->id);
+
+            // delete workspace
+            $workspace = $this->repo->deleteOne($model);
         });
     }
 }

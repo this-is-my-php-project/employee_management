@@ -18,7 +18,7 @@ class EmployeeTypeRepository extends BaseRepository
         return $this->model->pluck('id')->toArray();
     }
 
-    public function getNormalEmployeeId(): int
+    public function getDefaultEmployeeId(): int
     {
         return $this->model->where('name', '=', EmployeeTypeConstants::NORMAL['name'])->first()->id;
     }

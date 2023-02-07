@@ -5,6 +5,8 @@ namespace App\Modules\Role;
 use Illuminate\Support\Str;
 use App\Libraries\Crud\BaseService;
 use App\Modules\Role\RoleRepository;
+use App\Modules\Workspace\Workspace;
+use Illuminate\Database\Eloquent\Model;
 
 class RoleService extends BaseService
 {
@@ -84,5 +86,17 @@ class RoleService extends BaseService
     public function getDefaultRoleIds(): int
     {
         return $this->roleRepo->getDefaultRoleIds();
+    }
+
+    /**
+     * Detach all roles from a workspace.
+     * 
+     * @param Workspace $workspace
+     * @return Workspace
+     */
+    public function removeRolesFromWorkspace(Workspace $workspace): Workspace
+    {
+        $workspace->roles()->detach($this->getRoleIds());
+        return $workspace;
     }
 }
