@@ -16,4 +16,9 @@ class InvitationUrlRepository extends BaseRepository
     {
         return $this->model->where('workspace_id', $workspaceId)->orderBy('created_at', 'desc')->first();
     }
+
+    public function getUrlBySignature(string $signature): ?InvitationUrl
+    {
+        return $this->model->where('signature', $signature)->first();
+    }
 }

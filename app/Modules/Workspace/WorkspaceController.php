@@ -3,6 +3,7 @@
 namespace App\Modules\Workspace;
 
 use App\Http\Controllers\Controller;
+use App\Modules\InvitationUrl\InvitationUrlService;
 use App\Modules\Workspace\Requests\WorkspaceInviteRequest;
 use App\Modules\Workspace\WorkspaceService;
 use App\Modules\Workspace\Resources\WorkspaceResource;
@@ -12,12 +13,16 @@ use Illuminate\Http\Request;
 
 class WorkspaceController extends Controller
 {
-    protected $workspaceService;
+    protected WorkspaceService $workspaceService;
+    protected InvitationUrlService $invitationUrlService;
 
-    public function __construct(WorkspaceService $workspaceService)
-    {
+    public function __construct(
+        WorkspaceService $workspaceService,
+        InvitationUrlService $invitationUrlService
+    ) {
         $this->middleware('auth');
         $this->workspaceService = $workspaceService;
+        $this->invitationUrlService = $invitationUrlService;
     }
 
     /**
@@ -164,10 +169,7 @@ class WorkspaceController extends Controller
     public function addToWorkspace(WorkspaceInviteRequest $request)
     {
         try {
-            if (!$request->hasValidSignature()) {
-                return $this->sendError('Invalid invite link');
-            }
-
+            $this->invitationUrlService->validateUrl($request);
             $payload = $request->validated();
             $workspace = $this->workspaceService->addToWorkspace($payload);
 

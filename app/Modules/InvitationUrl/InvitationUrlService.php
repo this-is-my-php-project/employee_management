@@ -4,6 +4,7 @@ namespace App\Modules\InvitationUrl;
 
 use App\Libraries\Crud\BaseService;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Http\Request;
 
 class InvitationUrlService extends BaseService
 {
@@ -30,11 +31,6 @@ class InvitationUrlService extends BaseService
         ]);
 
         return $invitationUrl;
-    }
-
-    public function getOneInvitationUrlForWorkspace(string|int $workspaceId)
-    {
-        return $this->invitationUrlRepo->getOneInvitationUrlForWorkspace($workspaceId);
     }
 
     /**
@@ -71,8 +67,53 @@ class InvitationUrlService extends BaseService
         return $url;
     }
 
+    /**
+     * Get invitation url
+     * 
+     * @param array $payload
+     * @return InvitationUrl|null
+     */
     public function getInvitationUrl(array $payload): ?InvitationUrl
     {
-        return $this->getOneInvitationUrlForWorkspace($payload['workspace_id']);
+        return $this->invitationUrlRepo->getOneInvitationUrlForWorkspace($payload['workspace_id']);
+    }
+
+    /**
+     * Validate invitation url
+     * 
+     * @param Request $request
+     * @return bool
+     */
+    public function validateUrl(Request $request): bool
+    {
+        $signature = $request->signature;
+        $url = $this->getUrlBySignature($signature);
+
+        if (empty($url)) {
+            abort(401, 'Invalid URL');
+        }
+
+        if (!empty($url)) {
+            if (!empty($url->force_expired)) {
+                abort(401, 'URL has expired');
+            }
+        }
+
+        if (!$request->hasValidSignature()) {
+            abort(401, 'Invalid URL');
+        }
+
+        return true;
+    }
+
+    /**
+     * Get invitation url by signature
+     * 
+     * @param string $signature
+     * @return InvitationUrl|null
+     */
+    public function getUrlBySignature(string $signature): ?InvitationUrl
+    {
+        return $this->invitationUrlRepo->getUrlBySignature($signature);
     }
 }
