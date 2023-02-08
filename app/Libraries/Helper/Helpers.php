@@ -50,3 +50,24 @@ if (!function_exists('encryptData')) {
         );
     }
 }
+
+if (!function_exists('generateOTPCode')) {
+    /**
+     * @return string
+     */
+    function generateOTPCode(string|int $length = 4): string
+    {
+        $length = $length === 4 ? 4 : 6;
+        $number = random_int(
+            min: 000_000,
+            max: 999_999,
+        );
+
+        return str_pad(
+            string: strval($number),
+            length: 6,
+            pad_string: '0',
+            pad_type: STR_PAD_LEFT,
+        );
+    }
+}
