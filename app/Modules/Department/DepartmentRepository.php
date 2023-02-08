@@ -30,4 +30,21 @@ class DepartmentRepository extends BaseRepository
     {
         return $this->model->where('workspace_id', '=', $workspaceId)->delete();
     }
+
+    /**
+     * Move user from one department to another
+     * 
+     * @param string|int $fromDepartmentId
+     * @param string|int $toDepartmentId
+     * @param array $profileIds
+     * @return bool
+     */
+    public function moveUser(string|int $fromDepartmentId, string|int $toDepartmentId, array $profileIds): bool
+    {
+        return $this->model->where('id', '=', $fromDepartmentId)
+            ->first()
+            ->jobDetails()
+            ->whereIn('profile_id', $profileIds)
+            ->update(['department_id' => $toDepartmentId]);
+    }
 }

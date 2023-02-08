@@ -66,6 +66,7 @@ Route::middleware('auth:api')->group(function () {
 
     // departments
     Route::resource('departments', DepartmentController::class);
+    Route::post('move-user-department', [DepartmentController::class, 'moveUser']);
 
     // job details
     Route::resource('job-details', JobDetailController::class);

@@ -14,7 +14,11 @@ class DepartmentStoreRequest extends BaseRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string',
+            'description' => 'string',
+            'level' => 'required|integer',
+            'parent_id' => 'required|integer',
+            'workspace_id' => 'required|integer',
         ];
     }
 }

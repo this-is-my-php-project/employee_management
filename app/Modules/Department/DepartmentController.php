@@ -7,6 +7,7 @@ use App\Modules\Department\DepartmentService;
 use App\Modules\Department\Resources\DepartmentResource;
 use App\Modules\Department\Requests\DepartmentStoreRequest;
 use App\Modules\Department\Requests\DepartmentUpdateRequest;
+use App\Modules\Department\Requests\MoveUserRequest;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -145,6 +146,23 @@ class DepartmentController extends Controller
 
             $department = $this->departmentService->restoreOne($id);
             return new DepartmentResource($department);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function moveUser(MoveUserRequest $request)
+    {
+        try {
+            $payload = $request->validated();
+            $department = $this->departmentService->moveUser($payload);
+            if (empty($department)) {
+                return $this->sendError('Something went wrong');
+            }
+
+            return response()->json([
+                'message' => 'User moved successfully',
+            ]);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }

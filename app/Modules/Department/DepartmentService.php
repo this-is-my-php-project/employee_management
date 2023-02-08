@@ -3,6 +3,7 @@
 namespace App\Modules\Department;
 
 use App\Libraries\Crud\BaseService;
+use Illuminate\Support\Facades\DB;
 
 class DepartmentService extends BaseService
 {
@@ -31,9 +32,9 @@ class DepartmentService extends BaseService
         return $this->repo->createOne([
             'name' => $params['name'],
             'description' => $params['description'],
-            'parent_id' => 0,
+            'parent_id' => $params['parent_id'],
             'level' => $params['level'],
-            'is_active' => $params['is_active'] ?? true,
+            'is_active' => true,
             'workspace_id' => $params['workspace_id'],
         ]);
     }
@@ -92,5 +93,22 @@ class DepartmentService extends BaseService
     public function deleteAllFromWorkspace(int $workspaceId): bool
     {
         return $this->departmentRepo->deleteAllFromWorkspace($workspaceId);
+    }
+
+    /**
+     * Move user from one department to another
+     * 
+     * @param array $payload
+     * @return bool
+     */
+    public function moveUser(array $payload): bool
+    {
+        return DB::transaction(function () use ($payload) {
+            $fromDepartmentId = $payload['from_department_id'];
+            $toDepartmentId = $payload['to_department_id'];
+            $profileIds = $payload['profile_ids'];
+
+            return $this->departmentRepo->moveUser($fromDepartmentId, $toDepartmentId, $profileIds);
+        });
     }
 }
