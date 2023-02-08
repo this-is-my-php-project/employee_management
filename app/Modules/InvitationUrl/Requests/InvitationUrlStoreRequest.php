@@ -14,7 +14,8 @@ class InvitationUrlStoreRequest extends BaseRequest
     public function rules()
     {
         return [
-            //
+            'workspace_id' => 'required|integer',
+            'department_id' => 'required|integer',
         ];
     }
 }

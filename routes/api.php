@@ -4,6 +4,7 @@ use App\Modules\Attendance\AttendanceController;
 use App\Modules\Auth\AuthController;
 use App\Modules\Department\DepartmentController;
 use App\Modules\EmployeeType\EmployeeTypeController;
+use App\Modules\InvitationUrl\InvitationUrlController;
 use App\Modules\JobDetail\JobDetailController;
 use App\Modules\Role\RoleController;
 use App\Modules\User\UserController;
@@ -41,12 +42,15 @@ Route::middleware('auth:api')->group(function () {
 
     // workspaces
     Route::resource('workspaces', WorkspaceController::class);
-    Route::post('invitations', [WorkspaceController::class, 'invitations'])->name('invitations');
     Route::post('add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
     Route::get('my-workspaces', [WorkspaceController::class, 'myWorkspaces']);
 
     // invitations Url
-    Route::get('invitation-url', [WorkspaceController::class, 'getInvitationUrl']);
+    Route::get('invitations', [InvitationUrlController::class, 'index']);
+    Route::get('invitations/{id}', [InvitationUrlController::class, 'show']);
+    Route::put('invitations/{id}', [InvitationUrlController::class, 'update']);
+    Route::post('generate-url', [InvitationUrlController::class, 'generateUrl'])->name('invitations');
+    Route::get('invitation-url', [InvitationUrlController::class, 'getInvitationUrl']);
 
     // Projects
     Route::resource('projects', ProjectController::class);

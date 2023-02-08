@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InvitationUrl extends Model
 {
-    use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
+    use HasFactory, HasApiTokens, Notifiable;
 
     protected $table = 'invitation_urls';
 
@@ -20,8 +19,8 @@ class InvitationUrl extends Model
         'expires',
         'signature',
         'url',
-        'is_expired',
-        'is_used',
+        'force_expired',
+        'used',
     ];
 
     public function workspace()

@@ -179,8 +179,8 @@ class WorkspaceService extends BaseService
     public function addToWorkspace(array $payload): Workspace
     {
         return DB::transaction(function () use ($payload) {
-            $workspaceId = decryptData($payload['workspace_id']);
-            $departmentId = decryptData($payload['department_id']);
+            $workspaceId = decryptData($payload['workspace']);
+            $departmentId = decryptData($payload['department']);
 
             $workspace = $this->repo->getOneOrFail($workspaceId);
             if (empty($workspace)) {
@@ -224,44 +224,5 @@ class WorkspaceService extends BaseService
         $userId = auth()->user()->id;
         $workspaces = $this->workspaceRepo->myWorkspaces($userId);
         return $workspaces;
-    }
-
-    /**
-     * Invite a user to a workspace with URL.
-     * 
-     * @param array $payload
-     * @return string
-     */
-    public function invitations(array $payload): string
-    {
-        $workspaceId = encryptData($payload['workspace_id']);
-        $departmentId = encryptData($payload['department_id']);
-        $url = URL::temporarySignedRoute(
-            'add-to-workspace',
-            now()->addDays(7),
-            [
-                'workspace' => $workspaceId,
-                'department' => $departmentId
-            ]
-        );
-        $url_components = parse_url($url);
-        parse_str($url_components['query'], $params);
-
-        $newParams = [
-            'url' => $url,
-            'workspace_id' => decryptData($params['workspace']),
-            'department_id' => decryptData($params['department']),
-            'expires' => $params['expires'],
-            'signature' => $params['signature']
-        ];
-
-        $this->invitationUrlService->createOne($newParams);
-
-        return $url;
-    }
-
-    public function getInvitationUrl(array $payload): ?InvitationUrl
-    {
-        return $this->invitationUrlService->getOneInvitationUrlForWorkspace($payload['workspace_id']);
     }
 }

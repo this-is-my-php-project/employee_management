@@ -196,37 +196,4 @@ class WorkspaceController extends Controller
             return $this->sendError($e->getMessage());
         }
     }
-
-    /**
-     * @OA\POST(
-     *   path="/api/invitations",
-     *   tags={"Workspaces"},
-     *   summary="Get invitations",
-     *   @OA\Response(response=400, description="Bad request"),
-     *   @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function invitations(WorkspaceInviteRequest $request)
-    {
-        try {
-            $payload = $request->validated();
-            $url = $this->workspaceService->invitations($payload);
-
-            return response()->json(['url' => $url]);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    public function getInvitationUrl(WorkspaceInviteRequest $request)
-    {
-        try {
-            $payload = $request->validated();
-            $url = $this->workspaceService->getInvitationUrl($payload);
-
-            return response()->json(['url' => $url]);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
 }

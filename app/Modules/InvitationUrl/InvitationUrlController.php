@@ -4,6 +4,7 @@ namespace App\Modules\InvitationUrl;
 
 use App\Http\Controllers\Controller;
 use App\Modules\InvitationUrl\InvitationUrlService;
+use App\Modules\InvitationUrl\Requests\InvitationForWorkspace;
 use App\Modules\InvitationUrl\Resources\InvitationUrlResource;
 use App\Modules\InvitationUrl\Requests\InvitationUrlStoreRequest;
 use App\Modules\InvitationUrl\Requests\InvitationUrlUpdateRequest;
@@ -33,7 +34,7 @@ class InvitationUrlController extends Controller
     {
         try {
             $this->authorize('viewAny', InvitationUrl::class);
-            
+
             $invitationUrls = $this->invitationUrlService->paginate($request->all());
             return InvitationUrlResource::collection($invitationUrls);
         } catch (\Exception $e) {
@@ -145,6 +146,39 @@ class InvitationUrlController extends Controller
 
             $invitationUrl = $this->invitationUrlService->restoreOne($id);
             return new InvitationUrlResource($invitationUrl);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    /**
+     * @OA\POST(
+     *   path="/api/invitations",
+     *   tags={"Workspaces"},
+     *   summary="Get invitations",
+     *   @OA\Response(response=400, description="Bad request"),
+     *   @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
+    public function generateUrl(InvitationUrlStoreRequest $request)
+    {
+        try {
+            $payload = $request->validated();
+            $url = $this->invitationUrlService->generateUrl($payload);
+
+            return response()->json(['url' => $url]);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function getInvitationUrl(InvitationForWorkspace $request)
+    {
+        try {
+            $payload = $request->validated();
+            $url = $this->invitationUrlService->getInvitationUrl($payload);
+
+            return response()->json(['url' => $url]);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }

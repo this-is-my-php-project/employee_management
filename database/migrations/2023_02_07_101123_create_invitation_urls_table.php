@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('signature');
             $table->string('expires');
             $table->string('url');
-            $table->boolean('is_expired')->default(false);
-            $table->integer('is_used')->nullable();
+            $table->boolean('force_expired')->default(false);
+            $table->integer('used')->nullable();
             $table->timestamps();
         });
     }
