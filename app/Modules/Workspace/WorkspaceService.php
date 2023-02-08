@@ -179,14 +179,6 @@ class WorkspaceService extends BaseService
     public function addToWorkspace(array $payload): Workspace
     {
         return DB::transaction(function () use ($payload) {
-            $workspaceId = decryptData($payload['workspace']);
-            $departmentId = decryptData($payload['department']);
-
-            $workspace = $this->repo->getOneOrFail($workspaceId);
-            if (empty($workspace)) {
-                throw new \Exception('Workspace not found');
-            }
-
             $user = auth()->user();
             $userData = [
                 'name' => $user->name,
@@ -195,6 +187,19 @@ class WorkspaceService extends BaseService
                 'email' => $user->email,
                 'id' => $user->id
             ];
+
+            $workspaceId = decryptData($payload['workspace']);
+            $departmentId = decryptData($payload['department']);
+
+            $workspace = $this->repo->getOneOrFail($workspaceId);
+            if (empty($workspace)) {
+                throw new \Exception('Workspace not found');
+            }
+
+            if (!empty($this->profileService->getOneByWorkspace($user->id, $workspaceId))) {
+                throw new \Exception('You are already joined in this workspace');
+            }
+
             $profile = $this->profileService->createDefault(
                 $userData,
                 $workspaceId
