@@ -62,28 +62,28 @@ class ProfileController extends Controller
         }
     }
 
-    /**
-     * @OA\POST(
-     *     path="/api/profiles",
-     *     tags={"Profiles"},
-     *     summary="Create a new Profile",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=422, description="Unprocessable Entity"),
-     * )
-     */
-    public function store(ProfileStoreRequest $request)
-    {
-        try {
-            $this->authorize('create', Profile::class);
+    // /**
+    //  * @OA\POST(
+    //  *     path="/api/profiles",
+    //  *     tags={"Profiles"},
+    //  *     summary="Create a new Profile",
+    //  *     @OA\Response(response=400, description="Bad request"),
+    //  *     @OA\Response(response=422, description="Unprocessable Entity"),
+    //  * )
+    //  */
+    // public function store(ProfileStoreRequest $request)
+    // {
+    //     try {
+    //         $this->authorize('create', Profile::class);
 
-            $payload = $request->validated();
-            $profile = $this->profileService->createOne($payload);
+    //         $payload = $request->validated();
+    //         $profile = $this->profileService->createOne($payload);
 
-            return new ProfileResource($profile);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
+    //         return new ProfileResource($profile);
+    //     } catch (\Exception $e) {
+    //         return $this->sendError($e->getMessage());
+    //     }
+    // }
 
     /**
      * @OA\PUT(
