@@ -51,7 +51,7 @@ class RoleController extends Controller
      *     @OA\Response(response=404, description="Resource Not Found"),
      * )
      */
-    public function show(RoleStoreRequest $request, int $id)
+    public function show(Request $request, int $id)
     {
         try {
             $this->authorize('view', Role::class);
@@ -63,87 +63,87 @@ class RoleController extends Controller
         }
     }
 
-    /**
-     * @OA\POST(
-     *     path="/api/roles",
-     *     tags={"Roles"},
-     *     summary="Create a new Role",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=422, description="Unprocessable Entity"),
-     * )
-     */
-    public function store(RoleStoreRequest $request)
-    {
-        try {
-            $this->authorize('create', Role::class);
+    // /**
+    //  * @OA\POST(
+    //  *     path="/api/roles",
+    //  *     tags={"Roles"},
+    //  *     summary="Create a new Role",
+    //  *     @OA\Response(response=400, description="Bad request"),
+    //  *     @OA\Response(response=422, description="Unprocessable Entity"),
+    //  * )
+    //  */
+    // public function store(RoleStoreRequest $request)
+    // {
+    //     try {
+    //         $this->authorize('create', Role::class);
 
-            $role = $this->roleService->createOne($request->all());
-            return new RoleResource($role);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
+    //         $role = $this->roleService->createOne($request->all());
+    //         return new RoleResource($role);
+    //     } catch (\Exception $e) {
+    //         return $this->sendError($e->getMessage());
+    //     }
+    // }
 
-    /**
-     * @OA\PUT(
-     *     path="/api/roles/{id}",
-     *     tags={"Roles"},
-     *     summary="Update an existing Role",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=422, description="Unprocessable Entity"),
-     * )
-     */
-    public function update(RoleUpdateRequest $request, int $id)
-    {
-        try {
-            $this->authorize('update', Role::class);
+    // /**
+    //  * @OA\PUT(
+    //  *     path="/api/roles/{id}",
+    //  *     tags={"Roles"},
+    //  *     summary="Update an existing Role",
+    //  *     @OA\Response(response=400, description="Bad request"),
+    //  *     @OA\Response(response=422, description="Unprocessable Entity"),
+    //  * )
+    //  */
+    // public function update(RoleUpdateRequest $request, int $id)
+    // {
+    //     try {
+    //         $this->authorize('update', Role::class);
 
-            $role = $this->roleService->updateOne($id, $request->all());
-            return new RoleResource($role);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
+    //         $role = $this->roleService->updateOne($id, $request->all());
+    //         return new RoleResource($role);
+    //     } catch (\Exception $e) {
+    //         return $this->sendError($e->getMessage());
+    //     }
+    // }
 
-    /**
-     * @OA\DELETE(
-     *     path="/api/roles/{id}",
-     *     tags={"Roles"},
-     *     summary="Delete a Role",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function destroy(int $id)
-    {
-        try {
-            $this->authorize('delete', Role::class);
+    // /**
+    //  * @OA\DELETE(
+    //  *     path="/api/roles/{id}",
+    //  *     tags={"Roles"},
+    //  *     summary="Delete a Role",
+    //  *     @OA\Response(response=400, description="Bad request"),
+    //  *     @OA\Response(response=404, description="Resource Not Found"),
+    //  * )
+    //  */
+    // public function destroy(int $id)
+    // {
+    //     try {
+    //         $this->authorize('delete', Role::class);
 
-            $role = $this->roleService->deleteOne($id);
-            return new RoleResource($role);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
+    //         $role = $this->roleService->deleteOne($id);
+    //         return new RoleResource($role);
+    //     } catch (\Exception $e) {
+    //         return $this->sendError($e->getMessage());
+    //     }
+    // }
 
-    /**
-     * @OA\POST(
-     *     path="/api/roles/{id}/restore",
-     *     tags={"Roles"},
-     *     summary="Restore a Role from trash",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function restore(int $id)
-    {
-        try {
-            $this->authorize('restore', Role::class);
+    // /**
+    //  * @OA\POST(
+    //  *     path="/api/roles/{id}/restore",
+    //  *     tags={"Roles"},
+    //  *     summary="Restore a Role from trash",
+    //  *     @OA\Response(response=400, description="Bad request"),
+    //  *     @OA\Response(response=404, description="Resource Not Found"),
+    //  * )
+    //  */
+    // public function restore(int $id)
+    // {
+    //     try {
+    //         $this->authorize('restore', Role::class);
 
-            $role = $this->roleService->restoreOne($id);
-            return new RoleResource($role);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
+    //         $role = $this->roleService->restoreOne($id);
+    //         return new RoleResource($role);
+    //     } catch (\Exception $e) {
+    //         return $this->sendError($e->getMessage());
+    //     }
+    // }
 }
