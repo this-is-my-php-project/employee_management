@@ -73,9 +73,10 @@ class InvitationUrlService extends BaseService
      * @param array $payload
      * @return InvitationUrl|null
      */
-    public function getInvitationUrl(array $payload): ?InvitationUrl
+    public function getInvitationUrlForWorkspace(array $payload): ?InvitationUrl
     {
-        return $this->invitationUrlRepo->getOneInvitationUrlForWorkspace($payload['workspace_id']);
+        return $this->invitationUrlRepo
+            ->getOneInvitationUrlForWorkspace($payload['workspace_id']);
     }
 
     /**
@@ -114,6 +115,19 @@ class InvitationUrlService extends BaseService
      */
     public function getUrlBySignature(string $signature): ?InvitationUrl
     {
-        return $this->invitationUrlRepo->getUrlBySignature($signature);
+        return $this->invitationUrlRepo
+            ->getUrlBySignature($signature);
+    }
+
+    /**
+     * Reset invitation url
+     * 
+     * @param string|int $workspaceId
+     * @return bool
+     */
+    public function resetInvitationUrl(string|int $workspaceId): bool
+    {
+        return $this->invitationUrlRepo
+            ->resetUrlForWorkspace($workspaceId);
     }
 }

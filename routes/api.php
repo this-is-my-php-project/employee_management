@@ -51,6 +51,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('invitations/{id}', [InvitationUrlController::class, 'update']);
     Route::post('generate-url', [InvitationUrlController::class, 'generateUrl'])->name('invitations');
     Route::get('invitation-url', [InvitationUrlController::class, 'getInvitationUrl']);
+    Route::put('/reset-invitation-url', [InvitationUrlController::class, 'resetInvitationUrl']);
 
     // Projects
     Route::resource('projects', ProjectController::class);

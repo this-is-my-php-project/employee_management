@@ -153,9 +153,9 @@ class InvitationUrlController extends Controller
 
     /**
      * @OA\POST(
-     *   path="/api/invitations",
+     *   path="/api/generate-url,
      *   tags={"Workspaces"},
-     *   summary="Get invitations",
+     *   summary="Generate invitation url",
      *   @OA\Response(response=400, description="Bad request"),
      *   @OA\Response(response=404, description="Resource Not Found"),
      * )
@@ -166,19 +166,40 @@ class InvitationUrlController extends Controller
             $payload = $request->validated();
             $url = $this->invitationUrlService->generateUrl($payload);
 
-            return response()->json(['url' => $url]);
+            return $this->sendSuccess('Invitation url generated successfully', ['url' => $url]);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
     }
 
+    /**
+     * @OA\POST(
+     *   path="/api/invitation-url",
+     *   tags={"Workspaces"},
+     *   summary="Validate invitation",
+     *   @OA\Response(response=400, description="Bad request"),
+     *   @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
     public function getInvitationUrl(InvitationForWorkspace $request)
     {
         try {
             $payload = $request->validated();
-            $url = $this->invitationUrlService->getInvitationUrl($payload);
+            $url = $this->invitationUrlService->getInvitationUrlForWorkspace($payload);
 
-            return response()->json(['url' => $url]);
+            return new InvitationUrlResource($url);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function resetInvitationUrl(InvitationForWorkspace $request)
+    {
+        try {
+            $payload = $request->validated();
+            $this->invitationUrlService->resetInvitationUrl($payload['workspace_id']);
+
+            return $this->sendSuccess('Invitation url reset successfully');
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }

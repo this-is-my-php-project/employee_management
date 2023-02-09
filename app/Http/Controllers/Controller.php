@@ -30,4 +30,20 @@ class Controller extends BaseController
             'data' => $data
         ]);
     }
+
+    /**
+     * @param string $message
+     * @param array $data
+     * @return JsonResponse
+     */
+    public function sendSuccess(
+        string $message = '',
+        $data = []
+    ): JsonResponse {
+        return response()->json([
+            'status' => Response::HTTP_OK,
+            'message' => $message,
+            'data' => $data
+        ]);
+    }
 }
