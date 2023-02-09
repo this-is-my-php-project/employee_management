@@ -7,7 +7,6 @@ use App\Modules\InvitationUrl\InvitationUrlService;
 use App\Modules\InvitationUrl\Requests\InvitationForWorkspace;
 use App\Modules\InvitationUrl\Resources\InvitationUrlResource;
 use App\Modules\InvitationUrl\Requests\InvitationUrlStoreRequest;
-use App\Modules\InvitationUrl\Requests\InvitationUrlUpdateRequest;
 use Illuminate\Http\Request;
 
 class InvitationUrlController extends Controller
@@ -57,94 +56,6 @@ class InvitationUrlController extends Controller
             $this->authorize('view', InvitationUrl::class);
 
             $invitationUrl = $this->invitationUrlService->getOneOrFail($id, $request->all());
-            return new InvitationUrlResource($invitationUrl);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    /**
-     * @OA\POST(
-     *     path="/api/invitation-urls",
-     *     tags={"Invitation Urls"},
-     *     summary="Create a new Invitation Url",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=422, description="Unprocessable Entity"),
-     * )
-     */
-    public function store(InvitationUrlStoreRequest $request)
-    {
-        try {
-            $this->authorize('create', InvitationUrl::class);
-
-            $payload = $request->validated();
-            $invitationUrl = $this->invitationUrlService->createOne($payload);
-
-            return new InvitationUrlResource($invitationUrl);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    /**
-     * @OA\PUT(
-     *     path="/api/invitation-urls/{id}",
-     *     tags={"Invitation Urls"},
-     *     summary="Update an existing Invitation Url",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=422, description="Unprocessable Entity"),
-     * )
-     */
-    public function update(InvitationUrlUpdateRequest $request, int $id)
-    {
-        try {
-            $this->authorize('update', InvitationUrl::class);
-
-            $payload = $request->validated();
-            $invitationUrl = $this->invitationUrlService->updateOne($id, $payload);
-
-            return new InvitationUrlResource($invitationUrl);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    /**
-     * @OA\DELETE(
-     *     path="/api/invitation-urls/{id}",
-     *     tags={"Invitation Urls"},
-     *     summary="Delete a Invitation Url",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function destroy(int $id)
-    {
-        try {
-            $this->authorize('delete', InvitationUrl::class);
-
-            $invitationUrl = $this->invitationUrlService->deleteOne($id);
-            return new InvitationUrlResource($invitationUrl);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    /**
-     * @OA\POST(
-     *     path="/api/invitation-urls/{id}/restore",
-     *     tags={"Invitation Urls"},
-     *     summary="Restore a Invitation Url from trash",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function restore(int $id)
-    {
-        try {
-            $this->authorize('restore', InvitationUrl::class);
-
-            $invitationUrl = $this->invitationUrlService->restoreOne($id);
             return new InvitationUrlResource($invitationUrl);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
