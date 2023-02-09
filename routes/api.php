@@ -73,4 +73,5 @@ Route::middleware('auth:api')->group(function () {
 
     // profile
     Route::resource('profiles', ProfileController::class);
+    Route::put('disable-profile/{id}', [ProfileController::class, 'disableProfile']);
 });

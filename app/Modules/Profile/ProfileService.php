@@ -67,11 +67,22 @@ class ProfileService extends BaseService
 
     public function deleteAllFromWorkspace(string|int $workspaceId): bool
     {
-        return $this->profileRepo->deleteAllFromWorkspace($workspaceId);
+        return $this->profileRepo
+            ->deleteAllFromWorkspace($workspaceId);
     }
 
-    public function getOneByWorkspace(string|int $userId, string|int $workspaceId): ?Profile
-    {
+    public function getOneByWorkspace(
+        string|int $userId,
+        string|int $workspaceId
+    ): ?Profile {
         return $this->profileRepo->getOneByWorkspace($userId, $workspaceId);
+    }
+
+    public function disableProfile(string|int $id): ?Profile
+    {
+        $model = $this->getOneOrFail($id);
+        return $this->repo->updateOne($model, [
+            'is_active' => false,
+        ]);
     }
 }

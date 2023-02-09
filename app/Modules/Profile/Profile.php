@@ -25,6 +25,7 @@ class Profile extends Model
         'avatar',
         'phone',
         'email',
+        'is_active',
         'user_id',
         'workspace_id',
     ];

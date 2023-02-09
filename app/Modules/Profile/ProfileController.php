@@ -33,7 +33,7 @@ class ProfileController extends Controller
     {
         try {
             $this->authorize('viewAny', Profile::class);
-            
+
             $profiles = $this->profileService->paginate($request->all());
             return ProfileResource::collection($profiles);
         } catch (\Exception $e) {
@@ -144,6 +144,18 @@ class ProfileController extends Controller
             $this->authorize('restore', Profile::class);
 
             $profile = $this->profileService->restoreOne($id);
+            return new ProfileResource($profile);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function disableProfile(int $id)
+    {
+        try {
+            // $this->authorize('disableProfile', Profile::class);
+
+            $profile = $this->profileService->disableProfile($id);
             return new ProfileResource($profile);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
