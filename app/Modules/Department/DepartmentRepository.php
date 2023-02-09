@@ -14,25 +14,31 @@ class DepartmentRepository extends BaseRepository
     }
 
     /**
+     * Get all department in workspace.
+     * 
      * @param int $workspaceId
-     * @return array
+     * @return Collection|null
      */
-    public function getAllDepartmentWorkspace(int $workspaceId): Collection
+    public function getAllDepartmentWorkspace(int $workspaceId): ?Collection
     {
-        return $this->model->where('workspace_id', '=', $workspaceId)->get();
+        return $this->model
+            ->where('workspace_id', '=', $workspaceId)->get();
     }
 
     /**
+     * Delete all departments in workspace.
+     * 
      * @param int $workspaceId
      * @return bool
      */
     public function deleteAllFromWorkspace(int $workspaceId): bool
     {
-        return $this->model->where('workspace_id', '=', $workspaceId)->delete();
+        return $this->model
+            ->where('workspace_id', '=', $workspaceId)->delete();
     }
 
     /**
-     * Move user from one department to another
+     * Move user from one department to another.
      * 
      * @param string|int $fromDepartmentId
      * @param string|int $toDepartmentId
@@ -41,10 +47,25 @@ class DepartmentRepository extends BaseRepository
      */
     public function moveUser(string|int $fromDepartmentId, string|int $toDepartmentId, array $profileIds): bool
     {
-        return $this->model->where('id', '=', $fromDepartmentId)
+        return $this->model
+            ->where('id', '=', $fromDepartmentId)
             ->first()
             ->jobDetails()
             ->whereIn('profile_id', $profileIds)
             ->update(['department_id' => $toDepartmentId]);
+    }
+
+    /**
+     * Get root department.
+     * 
+     * @param int $workspaceId
+     * @return Department|null
+     */
+    public function getRootDepartment(int $workspaceId): ?Department
+    {
+        return $this->model
+            ->where('workspace_id', '=', $workspaceId)
+            ->where('is_default', '=', true)
+            ->first();
     }
 }

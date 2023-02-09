@@ -3,6 +3,7 @@
 namespace App\Modules\Department;
 
 use App\Libraries\Crud\BaseService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class DepartmentService extends BaseService
@@ -24,6 +25,8 @@ class DepartmentService extends BaseService
     }
 
     /**
+     * Create one department.
+     * 
      * @param array $params
      * @return Department
      */
@@ -40,6 +43,8 @@ class DepartmentService extends BaseService
     }
 
     /**
+     * Create default department for workspace.
+     * 
      * @param array $params
      * @return Department
      */
@@ -57,36 +62,46 @@ class DepartmentService extends BaseService
     }
 
     /**
+     * Delete one department.
+     * 
      * @param array $params
      * @return Department|null
      */
     public function deleteOne(string|int $id): ?Department
     {
         $department = $this->repo->getOneOrFail($id, []);
+        $profileIds = $this->getProfileInDepartment($id);
+        $rootDepartment = $this->getRootDepartment($department->workspace_id);
 
         if ($department->is_default === true) {
             throw new \Exception('Cannot delete default department');
         }
 
-        if ($department->jobDetails()->count() > 0) {
-            throw new \Exception('Cannot delete department with user');
-        }
+        $this->moveUser([
+            'from_department_id' => $id,
+            'to_department_id' => $rootDepartment->id,
+            'profile_ids' => $profileIds,
+        ]);
 
         $department->delete();
         return $department;
     }
 
     /**
+     * Get all departments in workspace.
+     * 
      * @param int $workspaceId
      * @return array
      */
-    public function getAllDepartmentWorkspace(int $workspaceId): array
+    public function getAllDepartmentWorkspace(int $workspaceId): ?Collection
     {
         $department = $this->departmentRepo->getAllDepartmentWorkspace($workspaceId);
         return $department;
     }
 
     /**
+     * Delete all departments in workspace.
+     * 
      * @param int $workspaceId
      * @return bool
      */
@@ -96,7 +111,7 @@ class DepartmentService extends BaseService
     }
 
     /**
-     * Move user from one department to another
+     * Move user from one department to another.
      * 
      * @param array $payload
      * @return bool
@@ -110,5 +125,40 @@ class DepartmentService extends BaseService
 
             return $this->departmentRepo->moveUser($fromDepartmentId, $toDepartmentId, $profileIds);
         });
+    }
+
+    /**
+     * Get root department.
+     * 
+     * @param string|int $workspaceId
+     * @return Department
+     */
+    public function getRootDepartment(string|int $workspaceId): Department
+    {
+        return $this->departmentRepo->getRootDepartment($workspaceId);
+    }
+
+    /**
+     * Get all profileIds in department.
+     * 
+     * @param string|int $departmentId
+     * @return array
+     */
+    public function getProfileInDepartment(string|int $departmentId): array
+    {
+        $department = $this->repo->getOneOrFail(
+            $departmentId,
+            [
+                'jobDetails',
+                'jobDetails.profile',
+                'jobDetails.profile.user'
+            ]
+        );
+
+        $profiles = $department->jobDetails->map(function ($jobDetail) {
+            return $jobDetail->profile->id;
+        });
+
+        return $profiles->toArray();
     }
 }
