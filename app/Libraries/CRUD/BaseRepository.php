@@ -76,6 +76,17 @@ class BaseRepository
     }
 
     /**
+     * Create insert records
+     * 
+     * @param array $payload
+     * @return bool
+     */
+    public function insertMany(array $payload)
+    {
+        return $this->model->insert($payload);
+    }
+
+    /**
      * @param Model $model
      * @return null|Model
      */

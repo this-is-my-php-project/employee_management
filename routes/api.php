@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Modules\Permission\PermissionController;
 use App\Modules\Profile\ProfileController;
 use App\Modules\Project\ProjectController;
+use App\Modules\UserAttendanceMeta\UserAttendanceMetaController;
 use App\Modules\Workspace\WorkspaceController;
 
 /*
@@ -74,4 +75,8 @@ Route::middleware('auth:api')->group(function () {
     // profile
     Route::resource('profiles', ProfileController::class);
     Route::put('disable-profile/{id}', [ProfileController::class, 'disableProfile']);
+
+    // user attendance meta
+    Route::resource('user-attendance-meta', UserAttendanceMetaController::class);
+    Route::post('many-user-attendance-meta', [UserAttendanceMetaController::class, 'insertMany']);
 });
