@@ -15,6 +15,7 @@ use App\Modules\Profile\ProfileController;
 use App\Modules\Project\ProjectController;
 use App\Modules\UserAttendanceMeta\UserAttendanceMetaController;
 use App\Modules\Workspace\WorkspaceController;
+use App\Modules\WorkspaceAttendanceMeta\WorkspaceAttendanceMetaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,14 +55,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('invitation-url', [InvitationUrlController::class, 'getInvitationUrl']);
     Route::put('/reset-invitation-url', [InvitationUrlController::class, 'resetInvitationUrl']);
 
-    // Projects
-    Route::resource('projects', ProjectController::class);
-
-    // Attendances
-    Route::get('attendances', [AttendanceController::class, 'index']);
-    Route::get('attendances/{id}', [AttendanceController::class, 'show']);
-    Route::post('attendances', [AttendanceController::class, 'store']);
-    Route::post('attendances/check-out', [AttendanceController::class, 'checkOut']);
 
     // employee types
     Route::resource('employee-types', EmployeeTypeController::class);
@@ -76,10 +69,4 @@ Route::middleware('auth:api')->group(function () {
     // profile
     Route::resource('profiles', ProfileController::class);
     Route::put('disable-profile/{id}', [ProfileController::class, 'disableProfile']);
-
-    // user attendance meta
-    Route::resource('user-attendance-meta', UserAttendanceMetaController::class);
-    Route::post('many-user-attendance-meta', [UserAttendanceMetaController::class, 'insertMany']);
-
-    Route::resource('attendance-records', AttendanceRecordController::class);
 });
