@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Modules\Attendance;
+namespace App\Modules\AttendanceRecord;
 
 use App\Modules\User\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use App\Modules\Permission\Enum\Permission;
 
-class AttendancePolicy
+class AttendanceRecordPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any Attendance.
+     * Determine whether the user can view any Attendance Record.
      *
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
@@ -23,7 +23,7 @@ class AttendancePolicy
     }
 
     /**
-     * Determine whether the user can view the Attendance.
+     * Determine whether the user can view the Attendance Record.
      *
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
@@ -35,7 +35,7 @@ class AttendancePolicy
     }
 
     /**
-     * Determine whether the user can create Attendance.
+     * Determine whether the user can create Attendance Record.
      *
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
@@ -47,7 +47,7 @@ class AttendancePolicy
     }
 
     /**
-     * Determine whether the user can update the Attendance.
+     * Determine whether the user can update the Attendance Record.
      *
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
@@ -59,7 +59,7 @@ class AttendancePolicy
     }
 
     /**
-     * Determine whether the user can delete the Attendance.
+     * Determine whether the user can delete the AttendanceRecord.
      *
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
@@ -71,7 +71,7 @@ class AttendancePolicy
     }
 
     /**
-     * Determine whether the user can restore the Attendance.
+     * Determine whether the user can restore the AttendanceRecord.
      *
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
@@ -83,7 +83,7 @@ class AttendancePolicy
     }
 
     /**
-     * Determine whether the user can permanently delete the Attendance.
+     * Determine whether the user can permanently delete the AttendanceRecord.
      *
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool

@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Attendance\AttendanceController;
+use App\Modules\AttendanceRecord\AttendanceRecordController;
 use App\Modules\Auth\AuthController;
 use App\Modules\Department\DepartmentController;
 use App\Modules\EmployeeType\EmployeeTypeController;
@@ -79,4 +80,6 @@ Route::middleware('auth:api')->group(function () {
     // user attendance meta
     Route::resource('user-attendance-meta', UserAttendanceMetaController::class);
     Route::post('many-user-attendance-meta', [UserAttendanceMetaController::class, 'insertMany']);
+
+    Route::resource('attendance-records', AttendanceRecordController::class);
 });
