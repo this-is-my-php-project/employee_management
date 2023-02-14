@@ -2,6 +2,7 @@
 
 namespace App\Modules\AttendanceService;
 
+use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Passport\HasApiTokens;
@@ -31,4 +32,16 @@ class AttendanceService extends Model
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
+
+    public function workspaces()
+    {
+        $workspace = $this->belongsToMany(
+            Workspace::class,
+            'attendance_service_workspace',
+            'attendance_service_id',
+            'workspace_id'
+        );
+
+        return $workspace;
+    }
 }

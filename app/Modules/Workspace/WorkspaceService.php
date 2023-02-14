@@ -5,16 +5,11 @@ namespace App\Modules\Workspace;
 use App\Libraries\Crud\BaseService;
 use App\Modules\Department\DepartmentService;
 use App\Modules\EmployeeType\EmployeeTypeService;
-use App\Modules\InvitationLink\InvitationLinkService;
-use App\Modules\InvitationUrl\InvitationUrl;
 use App\Modules\InvitationUrl\InvitationUrlService;
 use App\Modules\JobDetail\JobDetailService;
-use App\Modules\Meta\MetaService;
 use App\Modules\Profile\ProfileService;
 use App\Modules\Role\RoleService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
 
 class WorkspaceService extends BaseService
 {
@@ -25,14 +20,13 @@ class WorkspaceService extends BaseService
         'projects.workspaces',
         'roles',
         'roles.users',
-        'meta',
         'employeeTypes',
         'departments',
         'jobDetails',
         'userProfiles',
+        'attendanceServices'
     ];
 
-    protected MetaService $metaService;
     protected RoleService $roleService;
     protected EmployeeTypeService $employeeTypeService;
     protected DepartmentService $departmentService;
@@ -42,7 +36,6 @@ class WorkspaceService extends BaseService
     protected InvitationUrlService $invitationUrlService;
     public function __construct(
         WorkspaceRepository $repo,
-        MetaService $metaService,
         RoleService $roleService,
         EmployeeTypeService $employeeTypeService,
         DepartmentService $departmentService,
@@ -51,7 +44,6 @@ class WorkspaceService extends BaseService
         InvitationUrlService $invitationUrlService
     ) {
         parent::__construct($repo);
-        $this->metaService = $metaService;
         $this->roleService = $roleService;
         $this->employeeTypeService = $employeeTypeService;
         $this->departmentService = $departmentService;
@@ -81,9 +73,6 @@ class WorkspaceService extends BaseService
                 'cover' => $payload['cover'] ?? null,
                 'created_by_user' => auth()->user()->id
             ]);
-
-            // // create a two meta for the workspace.
-            // $this->metaService->createWorkspaceMeta($workspace->id);
 
             /**
              * add a default role to the workspace.
@@ -144,9 +133,6 @@ class WorkspaceService extends BaseService
     {
         return DB::transaction(function () use ($id) {
             $model = $this->repo->getOneOrFail($id);
-
-            // // delete workspace meta
-            // $this->metaService->deleteOne($model->id);
 
             // remove roles from workspace
             $this->roleService->removeAllFromWorkspace($model);

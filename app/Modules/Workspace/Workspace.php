@@ -2,6 +2,7 @@
 
 namespace App\Modules\Workspace;
 
+use App\Modules\AttendanceService\AttendanceService;
 use App\Modules\Department\Department;
 use App\Modules\EmployeeType\EmployeeType;
 use App\Modules\JobDetail\JobDetail;
@@ -114,16 +115,6 @@ class Workspace extends Model
     }
 
     /**
-     * Get workspace's meta
-     * 
-     * @return HasMany
-     */
-    public function meta(): HasMany
-    {
-        return $this->hasMany(\App\Modules\Meta\Meta::class);
-    }
-
-    /**
      * Get workspace's employee types
      * 
      * @return BelongsToMany
@@ -161,5 +152,15 @@ class Workspace extends Model
     public function userProfiles(): HasMany
     {
         return $this->hasMany(Profile::class);
+    }
+
+    public function attendanceServices()
+    {
+        return $this->belongsToMany(
+            AttendanceService::class,
+            'attendance_service_workspace',
+            'workspace_id',
+            'attendance_service_id'
+        );
     }
 }

@@ -88,9 +88,4 @@ class JobDetail extends Model
     {
         return $this->belongsTo(Profile::class);
     }
-
-    public function userAttendanceMeta(): HasOne
-    {
-        return $this->hasOne(UserAttendanceMeta::class);
-    }
 }

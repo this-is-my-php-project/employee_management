@@ -2,6 +2,7 @@
 
 use App\Modules\Attendance\AttendanceController;
 use App\Modules\AttendanceRecord\AttendanceRecordController;
+use App\Modules\AttendanceService\AttendanceServiceController;
 use App\Modules\Auth\AuthController;
 use App\Modules\Department\DepartmentController;
 use App\Modules\EmployeeType\EmployeeTypeController;
@@ -12,10 +13,7 @@ use App\Modules\User\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Modules\Permission\PermissionController;
 use App\Modules\Profile\ProfileController;
-use App\Modules\Project\ProjectController;
-use App\Modules\UserAttendanceMeta\UserAttendanceMetaController;
 use App\Modules\Workspace\WorkspaceController;
-use App\Modules\WorkspaceAttendanceMeta\WorkspaceAttendanceMetaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,7 +53,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('invitation-url', [InvitationUrlController::class, 'getInvitationUrl']);
     Route::put('/reset-invitation-url', [InvitationUrlController::class, 'resetInvitationUrl']);
 
-
     // employee types
     Route::resource('employee-types', EmployeeTypeController::class);
 
@@ -69,4 +66,7 @@ Route::middleware('auth:api')->group(function () {
     // profile
     Route::resource('profiles', ProfileController::class);
     Route::put('disable-profile/{id}', [ProfileController::class, 'disableProfile']);
+
+    // Attendance Service
+    Route::resource('attendance-services', AttendanceServiceController::class);
 });
