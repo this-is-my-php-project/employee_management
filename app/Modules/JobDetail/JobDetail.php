@@ -6,6 +6,7 @@ use App\Modules\Department\Department;
 use App\Modules\EmployeeType\EmployeeType;
 use App\Modules\Profile\Profile;
 use App\Modules\Role\Role;
+use App\Modules\Shift\Shift;
 use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -87,5 +88,10 @@ class JobDetail extends Model
     public function profile()
     {
         return $this->belongsTo(Profile::class);
+    }
+
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
     }
 }

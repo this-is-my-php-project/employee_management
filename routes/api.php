@@ -75,4 +75,5 @@ Route::middleware('auth:api')->group(function () {
 
     // shift
     Route::resource('shifts', ShiftController::class);
+    Route::post('assign-shift', [ShiftController::class, 'assignShift']);
 });

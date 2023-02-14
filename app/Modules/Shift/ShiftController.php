@@ -4,6 +4,7 @@ namespace App\Modules\Shift;
 
 use App\Http\Controllers\Controller;
 use App\Modules\AttendanceService\Constants\AttendanceServiceConstants;
+use App\Modules\Shift\Requests\ShiftAssignRequest;
 use App\Modules\Shift\ShiftService;
 use App\Modules\Shift\Resources\ShiftResource;
 use App\Modules\Shift\Requests\ShiftStoreRequest;
@@ -147,6 +148,20 @@ class ShiftController extends Controller
 
             $shift = $this->shiftService->restoreOne($id);
             return new ShiftResource($shift);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function assignShift(ShiftAssignRequest $request)
+    {
+        try {
+            // $this->authorize('assignShift', Shift::class);
+
+            $payload = $request->validated();
+            $shift = $this->shiftService->assignShift($payload);
+
+            return $this->sendSuccess('Shift assigned successfully');
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
