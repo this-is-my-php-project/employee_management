@@ -14,7 +14,9 @@ class ShiftUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            //  
+            'name' => 'string|max:255',
+            'clock_in' => 'string',
+            'clock_out' => 'string',
         ];
     }
 }

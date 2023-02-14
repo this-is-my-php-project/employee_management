@@ -13,6 +13,7 @@ use App\Modules\User\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Modules\Permission\PermissionController;
 use App\Modules\Profile\ProfileController;
+use App\Modules\Shift\ShiftController;
 use App\Modules\Workspace\WorkspaceController;
 
 /*
@@ -71,4 +72,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('attendance-services', [AttendanceServiceController::class, 'index']);
     Route::get('attendance-services/{id}', [AttendanceServiceController::class, 'show']);
     Route::post('join-attendance-services', [AttendanceServiceController::class, 'joinAttendanceService']);
+
+    // shift
+    Route::resource('shifts', ShiftController::class);
 });

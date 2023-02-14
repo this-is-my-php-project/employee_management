@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('shifts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->dateTime('clock_in');
-            $table->dateTime('clock_out');
+            $table->time('clock_in');
+            $table->time('clock_out');
             $table->unsignedBigInteger('attendance_service_id');
             $table->unsignedBigInteger('workspace_id');
             $table->softDeletes();

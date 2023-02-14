@@ -3,6 +3,7 @@
 namespace App\Modules\Shift;
 
 use App\Http\Controllers\Controller;
+use App\Modules\AttendanceService\Constants\AttendanceServiceConstants;
 use App\Modules\Shift\ShiftService;
 use App\Modules\Shift\Resources\ShiftResource;
 use App\Modules\Shift\Requests\ShiftStoreRequest;
@@ -33,7 +34,7 @@ class ShiftController extends Controller
     {
         try {
             $this->authorize('viewAny', Shift::class);
-            
+
             $shifts = $this->shiftService->paginate($request->all());
             return ShiftResource::collection($shifts);
         } catch (\Exception $e) {
@@ -77,6 +78,7 @@ class ShiftController extends Controller
             $this->authorize('create', Shift::class);
 
             $payload = $request->validated();
+            $payload['attendance_service_id'] = AttendanceServiceConstants::ATTENDANCE_SERVICE['id'];
             $shift = $this->shiftService->createOne($payload);
 
             return new ShiftResource($shift);
