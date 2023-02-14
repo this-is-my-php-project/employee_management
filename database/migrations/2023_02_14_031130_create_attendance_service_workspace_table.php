@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('attendance_services', function (Blueprint $table) {
+        Schema::create('attendance_service_workspace', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->default('Attendance Service');
-            $table->string('description')->default('Allows you to track attendance for your employees.');
-            $table->string('icon')->default('fas fa-calendar-check');
-            $table->softDeletes();
+            $table->unsignedBigInteger('attendance_service_id');
+            $table->unsignedBigInteger('workspace_id');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendance_services');
+        Schema::dropIfExists('attendance_service_workspace');
     }
 };

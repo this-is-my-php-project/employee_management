@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('date');
             $table->string('note')->nullable();
             $table->unsignedBigInteger('job_detail_id');
+            $table->unsignedBigInteger('shift_id');
             $table->unsignedBigInteger('workspace_id');
             $table->softDeletes();
             $table->timestamps();
