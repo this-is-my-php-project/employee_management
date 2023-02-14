@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             EmployeeTypeSeeder::class,
             RolePermissionSeeder::class,
-            // AdjustmentAdjustmentTypeSeeder::class,
+            AttendanceServiceSeeder::class,
         ]);
     }
 }

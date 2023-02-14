@@ -11,4 +11,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AttendanceService extends Model
 {
     use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
+
+    protected $table = 'attendance_services';
+
+    protected $fillable = [
+        'name',
+        'description',
+        'icon',
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+    ];
 }

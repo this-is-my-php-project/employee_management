@@ -14,10 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('attendance_service_workspace', function (Blueprint $table) {
-            $table->id();
             $table->unsignedBigInteger('attendance_service_id');
             $table->unsignedBigInteger('workspace_id');
-            $table->timestamps();
+            $table->timestamp('joined_at');
         });
     }
 
