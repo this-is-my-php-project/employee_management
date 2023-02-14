@@ -68,5 +68,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('disable-profile/{id}', [ProfileController::class, 'disableProfile']);
 
     // Attendance Service
-    Route::resource('attendance-services', AttendanceServiceController::class);
+    Route::get('attendance-services', [AttendanceServiceController::class, 'index']);
+    Route::get('attendance-services/{id}', [AttendanceServiceController::class, 'show']);
+    Route::post('join-attendance-services', [AttendanceServiceController::class, 'joinAttendanceService']);
 });

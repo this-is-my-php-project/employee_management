@@ -31,7 +31,7 @@ class WorkspaceResource extends JsonResource
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
             'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
-            'attendance_service' => AttendanceServiceResource::collection($this->whenLoaded('attendanceServices'))[0] ?? [],
+            'attendance_service' => AttendanceServiceResource::collection($this->whenLoaded('attendanceServices')),
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'employee_types' => EmployeeTypeResource::collection($this->whenLoaded('employeeTypes')),
             'departments' => DepartmentResource::collection($this->whenLoaded('departments')),

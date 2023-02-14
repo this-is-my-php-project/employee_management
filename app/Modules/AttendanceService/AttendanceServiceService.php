@@ -14,4 +14,14 @@ class AttendanceServiceService extends BaseService
     {
         parent::__construct($repo);
     }
+
+    public function joinAttendanceService(array $payload): AttendanceService
+    {
+        $attendanceService = AttendanceService::getAttendanceService();
+        $attendanceService->workspaces()->attach([
+            $payload['workspace_id'] => ['joined_at' => now()]
+        ]);
+
+        return $attendanceService;
+    }
 }

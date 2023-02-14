@@ -2,6 +2,7 @@
 
 namespace App\Modules\AttendanceService;
 
+use App\Modules\AttendanceService\Constants\AttendanceServiceConstants;
 use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -43,5 +44,10 @@ class AttendanceService extends Model
         );
 
         return $workspace;
+    }
+
+    public static function getAttendanceService()
+    {
+        return self::where('id', AttendanceServiceConstants::ATTENDANCE_SERVICE['id'])->first();
     }
 }
