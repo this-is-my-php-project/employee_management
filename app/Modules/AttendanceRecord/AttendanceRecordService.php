@@ -12,4 +12,9 @@ class AttendanceRecordService extends BaseService
     {
         parent::__construct($repo);
     }
+
+    public function createOne(array $payload): ?AttendanceRecord
+    {
+        return parent::createOne($payload);
+    }
 }

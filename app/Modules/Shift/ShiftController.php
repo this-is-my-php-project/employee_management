@@ -159,7 +159,7 @@ class ShiftController extends Controller
             // $this->authorize('assignShift', Shift::class);
 
             $payload = $request->validated();
-            $shift = $this->shiftService->assignShift($payload);
+            $this->shiftService->assignShift($payload);
 
             return $this->sendSuccess('Shift assigned successfully');
         } catch (\Exception $e) {
