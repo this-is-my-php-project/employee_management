@@ -153,14 +153,4 @@ class Workspace extends Model
     {
         return $this->hasMany(Profile::class);
     }
-
-    public function attendanceServices()
-    {
-        return $this->belongsToMany(
-            AttendanceService::class,
-            'attendance_service_workspace',
-            'workspace_id',
-            'attendance_service_id'
-        );
-    }
 }
