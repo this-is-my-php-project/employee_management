@@ -13,11 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('attendance_service_workspace', function (Blueprint $table) {
-            $table->unsignedBigInteger('attendance_service_id');
-            $table->unsignedBigInteger('workspace_id');
-            $table->timestamp('joined_at');
-        });
+        //
     }
 
     /**
@@ -27,6 +23,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendance_service_workspace');
+        //
     }
 };
