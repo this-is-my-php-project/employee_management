@@ -31,8 +31,8 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     // Users
     Route::resource('users', UserController::class);
-    Route::get('user-info', [UserController::class, 'getInfo']);
-    Route::put('user-update-info', [UserController::class, 'updateInfo']);
+    Route::get('user/user-info', [UserController::class, 'getInfo']);
+    Route::put('user/user-update-info', [UserController::class, 'updateInfo']);
 
     // Roles
     Route::resource('roles', RoleController::class);
@@ -43,14 +43,14 @@ Route::middleware('auth:api')->group(function () {
     // workspaces
     Route::resource('workspaces', WorkspaceController::class);
     Route::post('add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
-    Route::get('user-workspaces', [WorkspaceController::class, 'myWorkspaces']);
+    Route::get('user/workspaces', [WorkspaceController::class, 'myWorkspaces']);
 
     // invitations Url
     Route::get('invitations', [InvitationUrlController::class, 'index']);
     Route::get('invitations/{id}', [InvitationUrlController::class, 'show']);
     Route::post('generate-url', [InvitationUrlController::class, 'generateUrl'])->name('invitations');
     Route::get('invitation-url', [InvitationUrlController::class, 'getInvitationUrl']);
-    Route::put('/reset-invitation-url', [InvitationUrlController::class, 'resetInvitationUrl']);
+    Route::put('reset-invitation-url', [InvitationUrlController::class, 'resetInvitationUrl']);
 
     // employee types
     Route::resource('employee-types', EmployeeTypeController::class);
@@ -67,4 +67,5 @@ Route::middleware('auth:api')->group(function () {
     Route::put('disable-profile/{id}', [ProfileController::class, 'disableProfile']);
     Route::get('profile-info', [ProfileController::class, 'info']);
     Route::put('update-profile-info', [ProfileController::class, 'updateInfo']);
+    Route::get('user/profiles', [ProfileController::class, 'getProfiles']);
 });

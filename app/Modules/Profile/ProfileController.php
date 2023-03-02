@@ -20,6 +20,21 @@ class ProfileController extends Controller
         $this->profileService = $profileService;
     }
 
+    public function getProfiles(ProfileGetRequest $request)
+    {
+        try {
+            $payload = $request->validated();
+            $profiles = Profile::where(
+                'workspace_id',
+                $payload['workspace_id']
+            )->get();
+
+            return ProfileResource::collection($profiles);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
     public function info(ProfileGetRequest $request)
     {
         try {
