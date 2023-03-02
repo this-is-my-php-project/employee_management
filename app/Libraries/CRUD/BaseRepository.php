@@ -20,6 +20,11 @@ class BaseRepository
      */
     protected $model;
 
+    public function getByFields(array $fields, array $payload): ?Model
+    {
+        return $this->model->where($fields, $payload)->first();
+    }
+
     /**
      * BaseRepository constructor.
      */

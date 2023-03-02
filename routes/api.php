@@ -31,8 +31,8 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     // Users
     Route::resource('users', UserController::class);
-    Route::get('user-info', [UserController::class, 'userGetInfo']);
-    Route::put('user-update-info', [UserController::class, 'userUpdateInfo']);
+    Route::get('user-info', [UserController::class, 'getInfo']);
+    Route::put('user-update-info', [UserController::class, 'updateInfo']);
 
     // Roles
     Route::resource('roles', RoleController::class);
@@ -65,4 +65,6 @@ Route::middleware('auth:api')->group(function () {
     // profile
     Route::resource('profiles', ProfileController::class);
     Route::put('disable-profile/{id}', [ProfileController::class, 'disableProfile']);
+    Route::get('profile-info', [ProfileController::class, 'info']);
+    Route::put('update-profile-info', [ProfileController::class, 'updateInfo']);
 });

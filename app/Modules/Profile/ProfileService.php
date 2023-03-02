@@ -85,4 +85,11 @@ class ProfileService extends BaseService
             'is_active' => false,
         ]);
     }
+
+    public function getInfo(string|int $workspaceId): ?Profile
+    {
+        return Profile::where('workspace_id', $workspaceId)
+            ->where('user_id', auth()->id())
+            ->first();
+    }
 }

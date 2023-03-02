@@ -93,4 +93,9 @@ class ProfilePolicy
         // return $user->can(Permission::FORCE_DELETE_USER->value);
         return true;
     }
+
+    public function info(User $user)
+    {
+        return auth()->user()->id === $user->id;
+    }
 }

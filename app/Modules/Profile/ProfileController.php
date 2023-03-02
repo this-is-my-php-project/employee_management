@@ -4,6 +4,7 @@ namespace App\Modules\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Profile\ProfileService;
+use App\Modules\Profile\Requests\ProfileGetRequest;
 use App\Modules\Profile\Resources\ProfileResource;
 use App\Modules\Profile\Requests\ProfileStoreRequest;
 use App\Modules\Profile\Requests\ProfileUpdateRequest;
@@ -17,6 +18,35 @@ class ProfileController extends Controller
     {
         $this->middleware('auth');
         $this->profileService = $profileService;
+    }
+
+    public function info(ProfileGetRequest $request)
+    {
+        try {
+            $this->authorize('info', Profile::class);
+
+            $payload = $request->validated();
+            $profile = $this->profileService->getInfo($payload['workspace_id']);
+
+            return new ProfileResource($profile);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function updateInfo(ProfileGetRequest $request)
+    {
+        try {
+            $this->authorize('info', Profile::class);
+
+            $payload = $request->validated();
+            $profile = $this->profileService->getInfo($payload['workspace_id']);
+            $profile = $this->profileService->updateOne($profile->id, $payload);
+
+            return new ProfileResource($profile);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
     }
 
     /**
