@@ -31,7 +31,8 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     // Users
     Route::resource('users', UserController::class);
-    Route::put('users/{id}/roles', [UserController::class, 'updateUserRoles']);
+    Route::get('user-info', [UserController::class, 'userGetInfo']);
+    Route::put('user-update-info', [UserController::class, 'userUpdateInfo']);
 
     // Roles
     Route::resource('roles', RoleController::class);
@@ -42,7 +43,7 @@ Route::middleware('auth:api')->group(function () {
     // workspaces
     Route::resource('workspaces', WorkspaceController::class);
     Route::post('add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
-    Route::get('my-workspaces', [WorkspaceController::class, 'myWorkspaces']);
+    Route::get('user/workspaces', [WorkspaceController::class, 'myWorkspaces']);
 
     // invitations Url
     Route::get('invitations', [InvitationUrlController::class, 'index']);
