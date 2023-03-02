@@ -6,7 +6,6 @@ use Illuminate\Support\Str;
 use App\Libraries\Crud\BaseService;
 use App\Modules\Role\RoleRepository;
 use App\Modules\Workspace\Workspace;
-use Illuminate\Database\Eloquent\Model;
 
 class RoleService extends BaseService
 {
@@ -26,7 +25,8 @@ class RoleService extends BaseService
         'status',
         'level',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'hidden'
     ];
 
     protected $roleRepo;

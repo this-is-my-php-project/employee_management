@@ -5,9 +5,8 @@ namespace App\Modules\Role;
 use App\Modules\Role\Role;
 use App\Modules\Role\RoleService;
 use App\Http\Controllers\Controller;
+use App\Modules\Role\Requests\RoleUserRequest;
 use App\Modules\Role\Resources\RoleResource;
-use App\Modules\Role\Requests\RoleStoreRequest;
-use App\Modules\Role\Requests\RoleUpdateRequest;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -18,6 +17,19 @@ class RoleController extends Controller
     {
         $this->middleware('auth');
         $this->roleService = $roleService;
+    }
+
+    public function getRoles(RoleUserRequest $request)
+    {
+        try {
+            $roles = Role::whereHas('workspaces', function ($query) use ($request) {
+                $query->where('workspace_id', $request->workspace_id);
+            })->get();
+
+            return RoleResource::collection($roles);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
     }
 
     /**
@@ -34,6 +46,17 @@ class RoleController extends Controller
     {
         try {
             $this->authorize('viewAny', Role::class);
+
+            $filters = [
+                'filters' => [
+                    [
+                        'field' => 'hidden',
+                        'value' => '0',
+                        'operator' => '='
+                    ]
+                ]
+            ];
+            $request->merge($filters);
 
             $roles = $this->roleService->paginate($request->all());
             return RoleResource::collection($roles);
