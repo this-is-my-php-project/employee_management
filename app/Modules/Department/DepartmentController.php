@@ -169,6 +169,8 @@ class DepartmentController extends Controller
     public function moveUser(MoveUserRequest $request)
     {
         try {
+            $this->authorize('update', Department::class);
+
             $payload = $request->validated();
             $department = $this->departmentService->moveUser($payload);
             if (empty($department)) {

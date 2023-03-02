@@ -69,7 +69,7 @@ Route::middleware('auth:api')->group(function () {
     // profile
     Route::resource('profiles', ProfileController::class);
     Route::put('disable-profile/{id}', [ProfileController::class, 'disableProfile']);
-    Route::get('profile-info', [ProfileController::class, 'info']);
-    Route::put('update-profile-info', [ProfileController::class, 'updateInfo']);
+    Route::get('user/profile-info', [ProfileController::class, 'info']);
+    Route::put('user/update-profile', [ProfileController::class, 'updateInfo']);
     Route::get('user/profiles', [ProfileController::class, 'getProfiles']);
 });

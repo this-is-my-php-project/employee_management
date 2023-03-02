@@ -22,6 +22,8 @@ class RoleController extends Controller
     public function getRoles(RoleUserRequest $request)
     {
         try {
+            $this->authorize('viewAny', Role::class);
+
             $roles = Role::whereHas('workspaces', function ($query) use ($request) {
                 $query->where('workspace_id', $request->workspace_id);
             })->get();

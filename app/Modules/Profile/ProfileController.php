@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Modules\Profile\ProfileService;
 use App\Modules\Profile\Requests\ProfileGetRequest;
 use App\Modules\Profile\Resources\ProfileResource;
-use App\Modules\Profile\Requests\ProfileStoreRequest;
 use App\Modules\Profile\Requests\ProfileUpdateRequest;
 use Illuminate\Http\Request;
 

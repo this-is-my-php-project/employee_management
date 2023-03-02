@@ -21,6 +21,8 @@ class EmployeeTypeController extends Controller
     public function getEmployeeTypes(EmployeeTypeUserRequest $request)
     {
         try {
+            $this->authorize('viewAny', EmployeeType::class);
+
             $employeeTypes = EmployeeType::whereHas('workspaces', function ($query) use ($request) {
                 $query->where('workspace_id', $request->workspace_id);
             })->get();
