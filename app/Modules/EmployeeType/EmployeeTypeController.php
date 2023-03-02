@@ -5,8 +5,7 @@ namespace App\Modules\EmployeeType;
 use App\Http\Controllers\Controller;
 use App\Modules\EmployeeType\EmployeeTypeService;
 use App\Modules\EmployeeType\Resources\EmployeeTypeResource;
-use App\Modules\EmployeeType\Requests\EmployeeTypeStoreRequest;
-use App\Modules\EmployeeType\Requests\EmployeeTypeUpdateRequest;
+use App\Modules\EmployeeType\Requests\EmployeeTypeUserRequest;
 use Illuminate\Http\Request;
 
 class EmployeeTypeController extends Controller
@@ -17,6 +16,22 @@ class EmployeeTypeController extends Controller
     {
         $this->middleware('auth');
         $this->employeeTypeService = $employeeTypeService;
+    }
+
+    public function getEmployeeTypes(EmployeeTypeUserRequest $request)
+    {
+        try {
+            $employeeTypes = EmployeeType::whereHas('workspaces', function ($query) use ($request) {
+                $query->where('workspace_id', $request->workspace_id);
+            })->get();
+
+            return $this->sendSuccess(
+                'Employee Types retrieved successfully',
+                EmployeeTypeResource::collection($employeeTypes)
+            );
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
     }
 
     /**

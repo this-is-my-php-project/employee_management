@@ -26,7 +26,10 @@ class RoleController extends Controller
                 $query->where('workspace_id', $request->workspace_id);
             })->get();
 
-            return RoleResource::collection($roles);
+            return $this->sendSuccess(
+                'Roles retrieved successfully',
+                RoleResource::collection($roles)
+            );
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }

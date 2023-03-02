@@ -29,7 +29,10 @@ class ProfileController extends Controller
                 $payload['workspace_id']
             )->get();
 
-            return ProfileResource::collection($profiles);
+            return $this->sendSuccess(
+                'Profiles retrieved successfully',
+                ProfileResource::collection($profiles)
+            );
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }

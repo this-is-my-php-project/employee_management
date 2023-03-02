@@ -7,6 +7,7 @@ use App\Modules\JobDetail\JobDetailService;
 use App\Modules\JobDetail\Resources\JobDetailResource;
 use App\Modules\JobDetail\Requests\JobDetailStoreRequest;
 use App\Modules\JobDetail\Requests\JobDetailUpdateRequest;
+use App\Modules\JobDetail\Requests\JobDetailUserRequest;
 use Illuminate\Http\Request;
 
 class JobDetailController extends Controller
@@ -17,6 +18,25 @@ class JobDetailController extends Controller
     {
         $this->middleware('auth');
         $this->jobDetailService = $jobDetailService;
+    }
+
+    public function getJobDetails(JobDetailUserRequest $request)
+    {
+        try {
+            $jobDetails = JobDetail::where(
+                'workspace_id',
+                $request->workspace_id
+            )->with([
+                'employeeType',
+                'role',
+                'department',
+                'profile',
+            ])->get();
+
+            return JobDetailResource::collection($jobDetails);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
     }
 
     /**

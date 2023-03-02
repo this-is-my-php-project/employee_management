@@ -55,13 +55,16 @@ Route::middleware('auth:api')->group(function () {
 
     // employee types
     Route::resource('employee-types', EmployeeTypeController::class);
+    Route::get('user/employee-types', [EmployeeTypeController::class, 'getEmployeeTypes']);
 
     // departments
     Route::resource('departments', DepartmentController::class);
     Route::post('move-user-department', [DepartmentController::class, 'moveUser']);
+    Route::get('user/departments', [DepartmentController::class, 'getDepartments']);
 
     // job details
     Route::resource('job-details', JobDetailController::class);
+    Route::get('user/job-details', [JobDetailController::class, 'getJobDetails']);
 
     // profile
     Route::resource('profiles', ProfileController::class);

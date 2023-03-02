@@ -7,6 +7,7 @@ use App\Modules\Department\DepartmentService;
 use App\Modules\Department\Resources\DepartmentResource;
 use App\Modules\Department\Requests\DepartmentStoreRequest;
 use App\Modules\Department\Requests\DepartmentUpdateRequest;
+use App\Modules\Department\Requests\DepartmentUserRequest;
 use App\Modules\Department\Requests\MoveUserRequest;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,20 @@ class DepartmentController extends Controller
     {
         $this->middleware('auth');
         $this->departmentService = $departmentService;
+    }
+
+    public function getDepartments(DepartmentUserRequest $request)
+    {
+        try {
+            $departments = Department::where(
+                'workspace_id',
+                $request->workspace_id
+            )->get();
+
+            return DepartmentResource::collection($departments);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
     }
 
     /**

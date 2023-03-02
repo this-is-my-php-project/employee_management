@@ -193,7 +193,10 @@ class WorkspaceController extends Controller
         try {
             $workspaces = $this->workspaceService->myWorkspaces();
 
-            return WorkspaceResource::collection($workspaces);
+            return $this->sendSuccess(
+                'Workspaces fetched successfully',
+                WorkspaceResource::collection($workspaces)
+            );
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
