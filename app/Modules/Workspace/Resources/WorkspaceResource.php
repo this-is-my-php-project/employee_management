@@ -2,7 +2,6 @@
 
 namespace App\Modules\Workspace\Resources;
 
-use App\Modules\AttendanceService\Resources\AttendanceServiceResource;
 use App\Modules\Department\Resources\DepartmentResource;
 use App\Modules\EmployeeType\Resources\EmployeeTypeResource;
 use App\Modules\JobDetail\Resources\JobDetailResource;
@@ -31,7 +30,6 @@ class WorkspaceResource extends JsonResource
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
             'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
-            'attendance_service' => AttendanceServiceResource::collection($this->whenLoaded('attendanceServices')),
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'employee_types' => EmployeeTypeResource::collection($this->whenLoaded('employeeTypes')),
             'departments' => DepartmentResource::collection($this->whenLoaded('departments')),

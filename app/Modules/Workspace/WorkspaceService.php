@@ -24,7 +24,6 @@ class WorkspaceService extends BaseService
         'departments',
         'jobDetails',
         'userProfiles',
-        'attendanceServices'
     ];
 
     protected RoleService $roleService;

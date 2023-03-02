@@ -1,8 +1,5 @@
 <?php
 
-use App\Modules\Attendance\AttendanceController;
-use App\Modules\AttendanceRecord\AttendanceRecordController;
-use App\Modules\AttendanceService\AttendanceServiceController;
 use App\Modules\Auth\AuthController;
 use App\Modules\Department\DepartmentController;
 use App\Modules\EmployeeType\EmployeeTypeController;
@@ -67,13 +64,4 @@ Route::middleware('auth:api')->group(function () {
     // profile
     Route::resource('profiles', ProfileController::class);
     Route::put('disable-profile/{id}', [ProfileController::class, 'disableProfile']);
-
-    // Attendance Service
-    Route::get('attendance-services', [AttendanceServiceController::class, 'index']);
-    Route::get('attendance-services/{id}', [AttendanceServiceController::class, 'show']);
-    Route::post('join-attendance-services', [AttendanceServiceController::class, 'joinAttendanceService']);
-
-    // shift
-    Route::resource('shifts', ShiftController::class);
-    Route::post('assign-shift', [ShiftController::class, 'assignShift']);
 });

@@ -2,7 +2,6 @@
 
 namespace App\Modules\Workspace;
 
-use App\Modules\AttendanceService\AttendanceService;
 use App\Modules\Department\Department;
 use App\Modules\EmployeeType\EmployeeType;
 use App\Modules\JobDetail\JobDetail;
