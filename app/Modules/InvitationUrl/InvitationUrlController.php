@@ -97,6 +97,9 @@ class InvitationUrlController extends Controller
         try {
             $payload = $request->validated();
             $url = $this->invitationUrlService->getInvitationUrlForWorkspace($payload);
+            if (empty($url)) {
+                return $this->sendError('Invitation url not exist');
+            }
 
             return new InvitationUrlResource($url);
         } catch (\Exception $e) {

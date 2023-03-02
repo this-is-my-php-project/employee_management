@@ -17,10 +17,10 @@ class WorkspaceRepository extends BaseRepository
         return $this->model->whereHas('userProfiles', function ($query) use ($userId) {
             $query->where('profiles.user_id', $userId);
         })->with([
-            'roles',
-            'employeeTypes',
+            // 'roles',
+            // 'employeeTypes',
+            // 'jobDetails',
             'departments',
-            'jobDetails',
             'userProfiles',
         ])->get();
     }

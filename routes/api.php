@@ -43,7 +43,7 @@ Route::middleware('auth:api')->group(function () {
     // workspaces
     Route::resource('workspaces', WorkspaceController::class);
     Route::post('add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
-    Route::get('user/workspaces', [WorkspaceController::class, 'myWorkspaces']);
+    Route::get('user-workspaces', [WorkspaceController::class, 'myWorkspaces']);
 
     // invitations Url
     Route::get('invitations', [InvitationUrlController::class, 'index']);

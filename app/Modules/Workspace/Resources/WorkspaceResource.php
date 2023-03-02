@@ -26,7 +26,6 @@ class WorkspaceResource extends JsonResource
             'is_active' => $this['is_active'],
             'logo' => $this['logo'],
             'cover' => $this['cover'],
-            'created_by_user' => $this['createdByUser'],
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
             'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
