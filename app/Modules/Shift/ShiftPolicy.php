@@ -44,7 +44,13 @@ class ShiftPolicy
      */
     public function create(User $user)
     {
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        if ($user->isWorkspaceOwner()) {
+            return true;
+        }
     }
 
     /**

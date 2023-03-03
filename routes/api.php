@@ -30,6 +30,9 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
+    Route::post('logout', [AuthController::class, 'logout']);
+
+
     // Users
     Route::resource('users', UserController::class);
     Route::get('user/user-info', [UserController::class, 'getInfo']);
