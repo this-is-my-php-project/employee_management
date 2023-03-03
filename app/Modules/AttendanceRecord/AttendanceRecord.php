@@ -3,6 +3,8 @@
 namespace App\Modules\AttendanceRecord;
 
 use App\Modules\Adjustment\Adjustment;
+use App\Modules\Profile\Profile;
+use App\Modules\Shift\Shift;
 use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,16 +22,28 @@ class AttendanceRecord extends Model
         'clock_in',
         'clock_out',
         'start_date',
+        'profile_id',
+        'shift_id',
         'workspace_id',
     ];
 
-    public function adjustments()
+    public function adjustment()
     {
-        return $this->hasMany(Adjustment::class);
+        return $this->hasOne(Adjustment::class);
     }
 
     public function workspace()
     {
         return $this->belongsTo(Workspace::class);
+    }
+
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
+    }
+
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
     }
 }

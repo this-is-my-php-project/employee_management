@@ -33,7 +33,7 @@ class ShiftController extends Controller
     {
         try {
             $this->authorize('viewAny', Shift::class);
-            
+
             $shifts = $this->shiftService->paginate($request->all());
             return ShiftResource::collection($shifts);
         } catch (\Exception $e) {

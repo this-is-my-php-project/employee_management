@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('adjustments', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('clock_in');
-            $table->dateTime('clock_out');
+            $table->time('clock_in');
+            $table->time('clock_out');
             $table->date('date');
             $table->unsignedBigInteger('adjustment_type_id');
             $table->unsignedBigInteger('attendance_record_id');

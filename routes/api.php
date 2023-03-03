@@ -72,4 +72,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user/profile-info', [ProfileController::class, 'info']);
     Route::put('user/update-profile', [ProfileController::class, 'updateInfo']);
     Route::get('user/profiles', [ProfileController::class, 'getProfiles']);
+
+    Route::resource('shifts', ShiftController::class);
 });
