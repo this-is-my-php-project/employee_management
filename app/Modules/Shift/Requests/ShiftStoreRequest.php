@@ -14,8 +14,8 @@ class ShiftStoreRequest extends BaseRequest
     public function rules()
     {
         return [
-            'clock_in' => 'required|date_format:H:i',
-            'clock_out' => 'required|date_format:H:i',
+            'clock_in' => 'required|date_format:H:i:s',
+            'clock_out' => 'required|date_format:H:i:s',
             'name' => 'required|string',
             'workspace_id' => 'required|integer|exists:workspaces,id',
         ];

@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->time('clock_in');
             $table->time('clock_out');
-            $table->date('date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->unsignedBigInteger('profile_id');
             $table->unsignedBigInteger('shift_id');
             $table->unsignedBigInteger('workspace_id');

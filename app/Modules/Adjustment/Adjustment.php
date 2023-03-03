@@ -20,16 +20,12 @@ class Adjustment extends Model
     protected $fillable = [
         'clock_in',
         'clock_out',
-        'date',
-        'adjustment_type_id',
+        'start_date',
+        'end_date',
+        'adjustment_type',
         'attendance_record_id',
         'workspace_id',
     ];
-
-    public function adjustmentType()
-    {
-        return $this->belongsTo(AdjustmentType::class);
-    }
 
     public function attendanceRecord()
     {

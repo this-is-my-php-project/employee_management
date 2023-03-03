@@ -92,4 +92,11 @@ class ProfileService extends BaseService
             ->where('user_id', auth()->id())
             ->first();
     }
+
+    public function getSingleProfile(string|int $workspaceId): ?Profile
+    {
+        return Profile::where('workspace_id', $workspaceId)
+            ->where('user_id', auth()->id())
+            ->first();
+    }
 }

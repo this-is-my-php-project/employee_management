@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->time('clock_in');
             $table->time('clock_out');
-            $table->date('date');
-            $table->unsignedBigInteger('adjustment_type_id');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('reason')->nullable();
+            $table->integer('adjustment_type');
             $table->unsignedBigInteger('attendance_record_id');
             $table->unsignedBigInteger('workspace_id');
             $table->softDeletes();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\AttendanceRecord\AttendanceRecordController;
 use App\Modules\Auth\AuthController;
 use App\Modules\Department\DepartmentController;
 use App\Modules\EmployeeType\EmployeeTypeController;
@@ -75,4 +76,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resource('shifts', ShiftController::class);
     Route::post('user/assign-shift', [ShiftController::class, 'assignUser']);
+
+    Route::resource('attendance-records', AttendanceRecordController::class);
 });

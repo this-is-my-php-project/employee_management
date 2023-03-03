@@ -22,6 +22,7 @@ class AttendanceRecord extends Model
         'clock_in',
         'clock_out',
         'start_date',
+        'end_date',
         'profile_id',
         'shift_id',
         'workspace_id',
