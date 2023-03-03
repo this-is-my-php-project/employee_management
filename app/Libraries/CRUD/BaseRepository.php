@@ -33,6 +33,11 @@ class BaseRepository
         $this->model = $model;
     }
 
+    public function deleteMultipleByField(string $field, $value): bool
+    {
+        return $this->model->where($field, $value)->delete();
+    }
+
     /**
      * Update one record
      * @param Model $model

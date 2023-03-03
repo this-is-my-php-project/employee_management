@@ -140,13 +140,12 @@ class WorkspaceService extends BaseService
             $this->employeeTypeService->removeAllFromWorkspace($model);
 
             // delete all departments in workspace
-            $this->departmentService->deleteAllFromWorkspace($model->id);
-
+            $this->departmentService->deleteMultipleByField('workspace_id', $model->id);
             // delete all job details in workspace
-            $this->jobDetailService->deleteAllFromWorkspace($model->id);
+            $this->jobDetailService->deleteMultipleByField('workspace_id', $model->id);
 
             // delete all profiles in workspace
-            $this->profileService->deleteAllFromWorkspace($model->id);
+            $this->profileService->deleteMultipleByField('workspace_id', $model->id);
 
             // delete workspace
             $workspace = $this->repo->deleteOne($model);

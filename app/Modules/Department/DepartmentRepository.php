@@ -34,7 +34,7 @@ class DepartmentRepository extends BaseRepository
     public function deleteAllFromWorkspace(int $workspaceId): bool
     {
         return $this->model
-            ->where('workspace_id', '=', $workspaceId)->delete();
+            ->where('workspace_id', $workspaceId)->delete();
     }
 
     /**
