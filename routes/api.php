@@ -74,4 +74,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user/profiles', [ProfileController::class, 'getProfiles']);
 
     Route::resource('shifts', ShiftController::class);
+    Route::post('user/assign-shift', [ShiftController::class, 'assignUser']);
 });
