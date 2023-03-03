@@ -2,6 +2,7 @@
 
 namespace App\Modules\Workspace;
 
+use App\Modules\AdjustmentType\AdjustmentType;
 use App\Modules\Department\Department;
 use App\Modules\EmployeeType\EmployeeType;
 use App\Modules\JobDetail\JobDetail;
@@ -151,5 +152,10 @@ class Workspace extends Model
     public function userProfiles(): HasMany
     {
         return $this->hasMany(Profile::class);
+    }
+
+    public function adjustment_types()
+    {
+        return $this->belongsToMany(AdjustmentType::class, 'workspace_adjustment_type');
     }
 }

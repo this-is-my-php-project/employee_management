@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('clock_in');
             $table->dateTime('clock_out');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('date');
             $table->unsignedBigInteger('adjustment_type_id');
             $table->unsignedBigInteger('attendance_record_id');
             $table->unsignedBigInteger('workspace_id');

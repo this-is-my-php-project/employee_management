@@ -13,15 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('attendance_records', function (Blueprint $table) {
+        Schema::create('workspace_adjustment_type', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('clock_in');
-            $table->dateTime('clock_in');
-            $table->date('date');
-            $table->unsignedBigInteger('profile_id');
-            $table->unsignedBigInteger('shift_id');
             $table->unsignedBigInteger('workspace_id');
-            $table->softDeletes();
+            $table->unsignedBigInteger('adjustment_type_id');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendance_records');
+        Schema::dropIfExists('workspace_adjustment_type');
     }
 };
