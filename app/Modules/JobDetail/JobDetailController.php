@@ -33,7 +33,10 @@ class JobDetailController extends Controller
                 'profile',
             ])->get();
 
-            return JobDetailResource::collection($jobDetails);
+            return $this->sendSuccess(
+                'Job Details retrieved successfully',
+                JobDetailResource::collection($jobDetails)
+            );
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }

@@ -28,9 +28,9 @@ class AttendanceRecord extends Model
         'workspace_id',
     ];
 
-    public function adjustment()
+    public function adjustments()
     {
-        return $this->hasOne(Adjustment::class);
+        return $this->hasMany(Adjustment::class);
     }
 
     public function workspace()

@@ -24,4 +24,11 @@ class AttendanceRecordRepository extends BaseRepository
             ->where('shift_id', $shiftId)
             ->get();
     }
+
+    public function getAttendanceRecords(int $profileId, int $workspaceId)
+    {
+        return $this->model->where('profile_id', $profileId)
+            ->where('workspace_id', $workspaceId)
+            ->get();
+    }
 }

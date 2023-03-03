@@ -44,7 +44,7 @@ class AttendanceRecordService extends BaseService
             $date = Carbon::now()->format('Y-m-d');
             $workspaceId = $payload['workspace_id'];
 
-            $profile = $this->profileService->getSingleProfile(1);
+            $profile = $this->profileService->getSingleProfile($workspaceId);
             $shift = $profile->jobDetail->shift;
 
             if (empty($shift)) {
@@ -115,5 +115,52 @@ class AttendanceRecordService extends BaseService
             'attendance_record_id' => $payload['attendance_record_id'],
             'workspace_id' => $payload['workspace_id'],
         ]);
+    }
+
+    public function getAttendanceRecords(int $workspaceId, int $profileId)
+    {
+        $attendanceRecords = $this->attendanceRecordRepo->getAttendanceRecords($workspaceId, $profileId);
+
+        $totalLate = 0;
+        $totalLeaveEarly = 0;
+        $attended = 0;
+        $absent = 0;
+
+        foreach ($attendanceRecords as $attendanceRecord) {
+            $adjusts = $attendanceRecord->adjustments;
+
+            foreach ($adjusts as $adjust) {
+                if (!empty($adjust)) {
+
+                    if ($adjust->adjustment_type === AdjustmentConstant::LATE) {
+                        $totalLate++;
+                    }
+                    if ($adjust->adjustment_type === AdjustmentConstant::LEAVE_EARLY) {
+                        $totalLeaveEarly++;
+                    }
+                    if ($adjust->adjustment_type === AdjustmentConstant::ABSENT) {
+                        $absent++;
+                    }
+                }
+            }
+
+            $attended++;
+        }
+
+        return [
+            'meta' => [
+                'total_late' => $totalLate,
+                'total_leave_early' => $totalLeaveEarly,
+                'attended' => $attended,
+                'absent' => $absent,
+            ],
+            'data' => $attendanceRecords,
+        ];
+    }
+
+    public function getAttendanceRecordInfo(int $workspaceId)
+    {
+        $profileId = $this->profileService->getSingleProfile($workspaceId)->id;
+        return $this->getAttendanceRecords($workspaceId, $profileId);
     }
 }

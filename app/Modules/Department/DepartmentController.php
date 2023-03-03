@@ -29,7 +29,10 @@ class DepartmentController extends Controller
                 $request->workspace_id
             )->get();
 
-            return DepartmentResource::collection($departments);
+            return $this->sendSuccess(
+                'Departments retrieved successfully',
+                DepartmentResource::collection($departments)
+            );
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }

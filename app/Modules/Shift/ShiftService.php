@@ -31,4 +31,10 @@ class ShiftService extends BaseService
 
         return $data;
     }
+
+    public function getWorkspaceShifts(int $workspaceId)
+    {
+        return Shift::where('workspace_id', $workspaceId)
+            ->get();
+    }
 }

@@ -8,6 +8,7 @@ use App\Modules\Shift\ShiftService;
 use App\Modules\Shift\Resources\ShiftResource;
 use App\Modules\Shift\Requests\ShiftStoreRequest;
 use App\Modules\Shift\Requests\ShiftUpdateRequest;
+use App\Modules\Shift\Requests\ShiftUserRequest;
 use Illuminate\Http\Request;
 
 class ShiftController extends Controller
@@ -154,11 +155,25 @@ class ShiftController extends Controller
     public function assignUser(AssignUserRequest $request)
     {
         try {
-            // $this->authorize('assignUser', Shift::class);
+            $this->authorize('assignUser', Shift::class);
 
             $payload = $request->validated();
-            $shift = $this->shiftService->assignUser($payload);
+            $this->shiftService->assignUser($payload);
             return $this->sendSuccess('User assigned to shift successfully');
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function getShifts(ShiftUserRequest $request)
+    {
+        try {
+            $this->authorize('viewWorkspaceShifts', Shift::class);
+
+            $payload = $request->validated();
+            $shifts = $this->shiftService->getWorkspaceShifts($payload['workspace_id']);
+
+            return $this->sendSuccess('Shifts fetched successfully', $shifts);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }

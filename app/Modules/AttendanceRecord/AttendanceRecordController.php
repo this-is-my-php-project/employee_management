@@ -7,6 +7,8 @@ use App\Modules\AttendanceRecord\AttendanceRecordService;
 use App\Modules\AttendanceRecord\Resources\AttendanceRecordResource;
 use App\Modules\AttendanceRecord\Requests\AttendanceRecordStoreRequest;
 use App\Modules\AttendanceRecord\Requests\AttendanceRecordUpdateRequest;
+use App\Modules\AttendanceRecord\Requests\AttendanceRecordUserInfoRequest;
+use App\Modules\AttendanceRecord\Requests\AttendanceRecordUserRequest;
 use Illuminate\Http\Request;
 
 class AttendanceRecordController extends Controller
@@ -33,7 +35,7 @@ class AttendanceRecordController extends Controller
     {
         try {
             $this->authorize('viewAny', AttendanceRecord::class);
-            
+
             $attendanceRecords = $this->attendanceRecordService->paginate($request->all());
             return AttendanceRecordResource::collection($attendanceRecords);
         } catch (\Exception $e) {
@@ -145,6 +147,46 @@ class AttendanceRecordController extends Controller
 
             $attendanceRecord = $this->attendanceRecordService->restoreOne($id);
             return new AttendanceRecordResource($attendanceRecord);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function getAttendanceRecords(AttendanceRecordUserRequest $request)
+    {
+        try {
+            $this->authorize('viewWorkspaceRecord', AttendanceRecord::class);
+
+            $payload = $request->validated();
+            $attendanceRecords = $this->attendanceRecordService
+                ->getAttendanceRecords($payload['workspace_id'], $payload['profile_id']);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success',
+                'meta' => $attendanceRecords['meta'],
+                'data' => $attendanceRecords['data'],
+            ]);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function getAttendanceRecordInfo(AttendanceRecordUserInfoRequest $request)
+    {
+        try {
+            $this->authorize('viewWorkspaceRecord', AttendanceRecord::class);
+
+            $payload = $request->validated();
+            $attendanceRecordInfo = $this->attendanceRecordService
+                ->getAttendanceRecordInfo($payload['workspace_id']);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success',
+                'meta' => $attendanceRecordInfo['meta'],
+                'data' => $attendanceRecordInfo['data'],
+            ]);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }

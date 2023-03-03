@@ -74,8 +74,12 @@ Route::middleware('auth:api')->group(function () {
     Route::put('user/update-profile', [ProfileController::class, 'updateInfo']);
     Route::get('user/profiles', [ProfileController::class, 'getProfiles']);
 
+    // shifts
     Route::resource('shifts', ShiftController::class);
     Route::post('user/assign-shift', [ShiftController::class, 'assignUser']);
+    Route::get('user/shifts', [ShiftController::class, 'getShifts']);
 
     Route::resource('attendance-records', AttendanceRecordController::class);
+    Route::get('user/attendance-records', [AttendanceRecordController::class, 'getAttendanceRecords']);
+    Route::get('user/attendance-record-info', [AttendanceRecordController::class, 'getAttendanceRecordInfo']);
 });
