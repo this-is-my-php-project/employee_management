@@ -18,24 +18,6 @@ class EmployeeTypeController extends Controller
         $this->employeeTypeService = $employeeTypeService;
     }
 
-    public function getEmployeeTypes(EmployeeTypeUserRequest $request)
-    {
-        try {
-            $this->authorize('viewAny', EmployeeType::class);
-
-            $employeeTypes = EmployeeType::whereHas('workspaces', function ($query) use ($request) {
-                $query->where('workspace_id', $request->workspace_id);
-            })->get();
-
-            return $this->sendSuccess(
-                'Employee Types retrieved successfully',
-                EmployeeTypeResource::collection($employeeTypes)
-            );
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
     /**
      * @OA\GET(
      *     path="/api/employee-types",

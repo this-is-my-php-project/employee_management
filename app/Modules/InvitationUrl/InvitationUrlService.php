@@ -44,7 +44,7 @@ class InvitationUrlService extends BaseService
         $workspaceId = encryptData($payload['workspace_id']);
         $departmentId = encryptData($payload['department_id']);
         $url = URL::temporarySignedRoute(
-            'add-to-workspace',
+            'user/add-to-workspace',
             now()->addDays(7),
             [
                 'workspace' => $workspaceId,
