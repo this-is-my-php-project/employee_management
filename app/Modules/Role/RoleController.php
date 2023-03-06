@@ -32,8 +32,6 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         try {
-            $this->authorize('viewAny', Role::class);
-
             $roles = $this->roleService->paginate($request->all());
             return RoleResource::collection($roles);
         } catch (\Exception $e) {
@@ -53,8 +51,6 @@ class RoleController extends Controller
     public function show(Request $request, int $id)
     {
         try {
-            $this->authorize('view', Role::class);
-
             $role = $this->roleService->getOneOrFail($id, $request->all());
             return new RoleResource($role);
         } catch (\Exception $e) {
