@@ -19,6 +19,8 @@ class JobDetailUpdateRequest extends BaseRequest
             'employee_type_id' => 'integer|exists:employee_types,id',
             'role_id' => 'integer|exists:roles,id',
             'department_id' => 'integer|exists:departments,id',
+
+            'workspace_id' => 'integer',
         ];
     }
 }

@@ -116,6 +116,7 @@ Route::middleware('auth:api')->group(function () {
 
         // Job Details
         Route::get('job-details', [JobDetailController::class, 'getJobDetails']);
+        Route::get('job-details/{id}', [JobDetailController::class, 'show']);
 
         // Profiles
         Route::get('profiles', [ProfileController::class, 'getProfiles']);

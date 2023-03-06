@@ -21,10 +21,6 @@ class JobDetailPolicy
         if ($user->isSuperAdmin()) {
             return true;
         }
-
-        if ($user->isWorkspaceOwner()) {
-            return true;
-        }
     }
 
     /**
@@ -36,10 +32,6 @@ class JobDetailPolicy
     public function view(User $user)
     {
         if ($user->isSuperAdmin()) {
-            return true;
-        }
-
-        if ($user->isWorkspaceOwner()) {
             return true;
         }
     }
@@ -61,56 +53,13 @@ class JobDetailPolicy
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user)
+    public function update(User $user, string $workspaceId)
     {
         if ($user->isSuperAdmin()) {
             return true;
         }
 
-        if ($user->isWorkspaceOwner()) {
-            return true;
-        }
-    }
-
-    /**
-     * Determine whether the user can delete the Workspace.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(User $user)
-    {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-
-        if ($user->isWorkspaceOwner()) {
-            return true;
-        }
-    }
-
-    /**
-     * Determine whether the user can restore the Workspace.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user)
-    {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-    }
-
-    /**
-     * Determine whether the user can permanently delete the Workspace.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user)
-    {
-        if ($user->isSuperAdmin()) {
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }
