@@ -14,7 +14,7 @@ class JobDetailUserRequest extends BaseRequest
     public function rules()
     {
         return [
-            'workspace_id' => 'required|integer',
+            'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL'
         ];
     }
 }

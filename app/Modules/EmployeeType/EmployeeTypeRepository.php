@@ -13,11 +13,6 @@ class EmployeeTypeRepository extends BaseRepository
         parent::__construct($employeeType);
     }
 
-    public function getIds(): array
-    {
-        return $this->model->pluck('id')->toArray();
-    }
-
     public function getDefaultEmployeeId(): int
     {
         return $this->model->where('name', '=', EmployeeTypeConstants::NORMAL['name'])->first()->id;

@@ -14,7 +14,7 @@ class ProfileGetRequest extends BaseRequest
     public function rules()
     {
         return [
-            'workspace_id' => 'required',
+            'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
             'name' => 'nullable|string',
             'alias' => 'nullable|string',
         ];

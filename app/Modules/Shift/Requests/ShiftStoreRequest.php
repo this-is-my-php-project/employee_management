@@ -17,7 +17,7 @@ class ShiftStoreRequest extends BaseRequest
             'clock_in' => 'required|date_format:H:i:s',
             'clock_out' => 'required|date_format:H:i:s',
             'name' => 'required|string',
-            'workspace_id' => 'required|integer|exists:workspaces,id',
+            'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
         ];
     }
 }

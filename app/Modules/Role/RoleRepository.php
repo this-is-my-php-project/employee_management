@@ -13,11 +13,6 @@ class RoleRepository extends BaseRepository
         parent::__construct($role);
     }
 
-    public function getRoleIds(): array
-    {
-        return $this->model->where('key', '!=', RoleConstants::SUPER_ADMIN['key'])->pluck('id')->toArray();
-    }
-
     public function getDefaultRoleIds(): int
     {
         return $this->model->where('key', RoleConstants::ADMIN['key'])->first()->id;

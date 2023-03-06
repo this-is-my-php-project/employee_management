@@ -3,6 +3,8 @@
 namespace App\Modules\Shift;
 
 use App\Http\Controllers\Controller;
+use App\Modules\JobDetail\JobDetail;
+use App\Modules\Profile\Profile;
 use App\Modules\Shift\Requests\AssignUserRequest;
 use App\Modules\Shift\ShiftService;
 use App\Modules\Shift\Resources\ShiftResource;
@@ -19,6 +21,33 @@ class ShiftController extends Controller
     {
         $this->middleware('auth');
         $this->shiftService = $shiftService;
+    }
+
+    public function info(Request $request)
+    {
+        try {
+            $request->validate([
+                'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
+            ]);
+
+            $profile = Profile::where('user_id', $request->user()->id)
+                ->where('workspace_id', $request->workspace_id)
+                ->first();
+
+            $jobDetail = JobDetail::where('profile_id', $profile->id)->first();
+
+            $shift = $jobDetail->shift;
+            if (empty($shift)) {
+                return $this->sendError('You have not been assigned a shift');
+            }
+
+            return $this->sendSuccess(
+                'Shift retrieved successfully',
+                new ShiftResource($shift)
+            );
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
     }
 
     /**
@@ -123,7 +152,7 @@ class ShiftController extends Controller
     {
         try {
             $request->validate([
-                'workspace_id' => 'required|integer'
+                'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
             ]);
 
             $this->authorize('delete', [Shift::class, $request->workspace_id]);

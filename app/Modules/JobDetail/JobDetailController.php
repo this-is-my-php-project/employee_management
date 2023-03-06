@@ -8,6 +8,7 @@ use App\Modules\JobDetail\Resources\JobDetailResource;
 use App\Modules\JobDetail\Requests\JobDetailStoreRequest;
 use App\Modules\JobDetail\Requests\JobDetailUpdateRequest;
 use App\Modules\JobDetail\Requests\JobDetailUserRequest;
+use App\Modules\Profile\Profile;
 use Illuminate\Http\Request;
 
 class JobDetailController extends Controller
@@ -38,6 +39,35 @@ class JobDetailController extends Controller
             return $this->sendSuccess(
                 'Job Details retrieved successfully',
                 JobDetailResource::collection($jobDetails)
+            );
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function info(Request $request)
+    {
+        try {
+            $request->validate([
+                'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
+            ]);
+
+            $profile = Profile::where('user_id', $request->user()->id)
+                ->where('workspace_id', $request->workspace_id)
+                ->first();
+
+            $jobDetail = JobDetail::where('profile_id', $profile->id)
+                ->with([
+                    'employeeType',
+                    'role',
+                    'department',
+                    'profile',
+                ])
+                ->first();
+
+            return $this->sendSuccess(
+                'Job Detail info',
+                new JobDetailResource($jobDetail)
             );
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());

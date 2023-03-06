@@ -73,22 +73,11 @@ class WorkspaceService extends BaseService
                 'created_by_user' => auth()->user()->id
             ]);
 
-            /**
-             * add a default role to the workspace.
-             * many to many relationship.
-             */
-            $roleIds = $this->roleService->getRoleIds();
-            $workspace->roles()->attach($roleIds);
-
-            /**
-             * add a default employee type to the workspace.
-             * many to many relationship.
-             */
-            $employeeIds = $this->employeeTypeService->getIds();
-            $workspace->employeeTypes()->attach($employeeIds);
-
             // create default department
-            $defaultDepartment = $this->departmentService->createDefault($workspace->id, $workspace->name);
+            $defaultDepartment = $this->departmentService->createDefault(
+                $workspace->id,
+                $workspace->name
+            );
 
             // create new user data
             $userData = [
@@ -132,12 +121,6 @@ class WorkspaceService extends BaseService
     {
         return DB::transaction(function () use ($id) {
             $model = $this->repo->getOneOrFail($id);
-
-            // remove roles from workspace
-            $this->roleService->removeAllFromWorkspace($model);
-
-            // remove employee types from workspace
-            $this->employeeTypeService->removeAllFromWorkspace($model);
 
             // delete all departments in workspace
             $this->departmentService->deleteMultipleByField('workspace_id', $model->id);

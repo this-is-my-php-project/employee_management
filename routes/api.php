@@ -119,6 +119,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('job-details', [JobDetailController::class, 'getJobDetails']);
         Route::get('job-details/{id}', [JobDetailController::class, 'show']);
         Route::put('job-details/{id}', [JobDetailController::class, 'update']);
+        Route::get('job-details-info', [JobDetailController::class, 'info']);
 
         // Profiles
         Route::get('profiles', [ProfileController::class, 'getProfiles']);
@@ -136,6 +137,7 @@ Route::middleware('auth:api')->group(function () {
         Route::put('shifts/{id}', [ShiftController::class, 'update']);
         Route::delete('shifts/{id}', [ShiftController::class, 'destroy']);
         Route::post('assign-shift', [ShiftController::class, 'assignUser']);
+        Route::get('shifts-info', [ShiftController::class, 'info']);
 
         // Attendance Records
         Route::get('attendance-records', [AttendanceRecordController::class, 'getAttendanceRecords']);

@@ -142,7 +142,7 @@ class DepartmentController extends Controller
     {
         try {
             $request->validate([
-                'workspace_id' => 'required',
+                'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
             ]);
 
             $this->authorize('delete', [Department::class, $request->workspace_id]);

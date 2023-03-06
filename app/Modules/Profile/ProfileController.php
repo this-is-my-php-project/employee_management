@@ -143,7 +143,7 @@ class ProfileController extends Controller
     {
         try {
             $request->validate([
-                'workspace_id' => 'required',
+                'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
             ]);
 
             $this->authorize('delete', [Profile::class, $request->workspace_id]);

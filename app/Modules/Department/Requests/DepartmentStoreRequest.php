@@ -18,7 +18,7 @@ class DepartmentStoreRequest extends BaseRequest
             'description' => 'string',
             'level' => 'required|integer',
             'parent_id' => 'required|integer',
-            'workspace_id' => 'required|integer',
+            'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
         ];
     }
 }

@@ -16,7 +16,7 @@ class AssignUserRequest extends BaseRequest
         return [
             'shift_id' => 'required|integer|exists:shifts,id',
             'job_detail_ids' => 'required|array',
-            'workspace_id' => 'required'
+            'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
         ];
     }
 }
