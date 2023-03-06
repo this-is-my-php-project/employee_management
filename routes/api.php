@@ -113,10 +113,12 @@ Route::middleware('auth:api')->group(function () {
         Route::post('departments', [DepartmentController::class, 'store']);
         Route::put('departments/{id}', [DepartmentController::class, 'update']);
         Route::post('move-user-department', [DepartmentController::class, 'moveUser']);
+        Route::delete('departments/{id}', [DepartmentController::class, 'destroy']);
 
         // Job Details
         Route::get('job-details', [JobDetailController::class, 'getJobDetails']);
         Route::get('job-details/{id}', [JobDetailController::class, 'show']);
+        Route::put('job-details/{id}', [JobDetailController::class, 'update']);
 
         // Profiles
         Route::get('profiles', [ProfileController::class, 'getProfiles']);
@@ -129,10 +131,11 @@ Route::middleware('auth:api')->group(function () {
 
         // Shifts
         Route::get('shifts', [ShiftController::class, 'getShifts']);
-        Route::post('assign-shift', [ShiftController::class, 'assignUser']);
+        Route::get('shifts/{id}', [ShiftController::class, 'show']);
         Route::post('shifts', [ShiftController::class, 'store']);
         Route::put('shifts/{id}', [ShiftController::class, 'update']);
         Route::delete('shifts/{id}', [ShiftController::class, 'destroy']);
+        Route::post('assign-shift', [ShiftController::class, 'assignUser']);
 
         // Attendance Records
         Route::get('attendance-records', [AttendanceRecordController::class, 'getAttendanceRecords']);

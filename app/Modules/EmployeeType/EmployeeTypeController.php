@@ -31,8 +31,6 @@ class EmployeeTypeController extends Controller
     public function index(Request $request)
     {
         try {
-            $this->authorize('viewAny', EmployeeType::class);
-
             $employeeTypes = $this->employeeTypeService->paginate($request->all());
             return EmployeeTypeResource::collection($employeeTypes);
         } catch (\Exception $e) {
@@ -52,8 +50,6 @@ class EmployeeTypeController extends Controller
     public function show(Request $request, int $id)
     {
         try {
-            $this->authorize('view', EmployeeType::class);
-
             $employeeType = $this->employeeTypeService->getOneOrFail($id, $request->all());
             return new EmployeeTypeResource($employeeType);
         } catch (\Exception $e) {

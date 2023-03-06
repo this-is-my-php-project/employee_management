@@ -55,8 +55,6 @@ class ShiftController extends Controller
     public function show(Request $request, int $id)
     {
         try {
-            $this->authorize('view', Shift::class);
-
             $shift = $this->shiftService->getOneOrFail($id, $request->all());
             return new ShiftResource($shift);
         } catch (\Exception $e) {

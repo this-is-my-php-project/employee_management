@@ -29,9 +29,13 @@ class ShiftPolicy
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user)
+    public function view(User $user, string $workspaceId)
     {
         if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }
