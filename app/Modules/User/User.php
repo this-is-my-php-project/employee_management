@@ -74,9 +74,11 @@ class User extends Authenticatable
         return $this->is_super_admin == true;
     }
 
-    public function isWorkspaceOwner()
+    public function isWorkspaceOwner(string|int $workspace_id)
     {
-        $userWorkspace = Workspace::where('created_by_user', $this->id)->first();
+        $userWorkspace = Workspace::where('created_by_user', $this->id)
+            ->where('id', $workspace_id)
+            ->first();
 
         if (empty($userWorkspace)) {
             return false;

@@ -115,6 +115,10 @@ class ProfilePolicy
 
     public function info(User $user)
     {
+        if ($user->isWorkspaceOwner()) {
+            return true;
+        }
+
         return auth()->user()->id === $user->id;
     }
 }
