@@ -136,6 +136,7 @@ Route::middleware('auth:api')->group(function () {
 
         // Attendance Records
         Route::get('attendance-records', [AttendanceRecordController::class, 'getAttendanceRecords']);
+        Route::get('attendance-records/{id}', [AttendanceRecordController::class, 'show']);
         Route::get('attendance-record-info', [AttendanceRecordController::class, 'getAttendanceRecordInfo']);
         Route::post('attendance-records', [AttendanceRecordController::class, 'store']);
     });
