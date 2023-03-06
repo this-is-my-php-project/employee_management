@@ -90,60 +90,62 @@ Route::middleware('auth:api')->group(function () {
     });
 
 
-    Route::prefix('user')->group(function () {
-        // Users
-        Route::get('user-self-info', [UserController::class, 'getSelfInfo']);
-        Route::put('user-update-self-info', [UserController::class, 'updateSelfInfo']);
+    Route::middleware('BelongToWorkspace')->group(function () {
+        Route::prefix('user')->group(function () {
+            // Users
+            Route::get('user-self-info', [UserController::class, 'getSelfInfo']);
+            Route::put('user-update-self-info', [UserController::class, 'updateSelfInfo']);
 
-        // Workspaces
-        Route::get('workspaces', [WorkspaceController::class, 'myWorkspaces']);
-        Route::post('workspaces', [WorkspaceController::class, 'store']);
-        Route::put('workspaces/{id}', [WorkspaceController::class, 'update']);
-        Route::delete('workspaces/{id}', [WorkspaceController::class, 'destroy']);
-        Route::post('add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
+            // Workspaces
+            Route::get('workspaces', [WorkspaceController::class, 'myWorkspaces']);
+            Route::post('workspaces', [WorkspaceController::class, 'store']);
+            Route::put('workspaces/{id}', [WorkspaceController::class, 'update']);
+            Route::delete('workspaces/{id}', [WorkspaceController::class, 'destroy']);
+            Route::post('add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
 
-        // invitations Url
-        Route::post('generate-url', [InvitationUrlController::class, 'generateUrl'])->name('invitations');
-        Route::get('invitation-url', [InvitationUrlController::class, 'getInvitationUrl']);
-        Route::put('reset-invitation-url', [InvitationUrlController::class, 'resetInvitationUrl']);
+            // invitations Url
+            Route::post('generate-url', [InvitationUrlController::class, 'generateUrl'])->name('invitations');
+            Route::get('invitation-url', [InvitationUrlController::class, 'getInvitationUrl']);
+            Route::put('reset-invitation-url', [InvitationUrlController::class, 'resetInvitationUrl']);
 
-        // Departments
-        Route::get('departments', [DepartmentController::class, 'getDepartments']);
-        Route::get('departments/{id}', [DepartmentController::class, 'show']);
-        Route::post('departments', [DepartmentController::class, 'store']);
-        Route::put('departments/{id}', [DepartmentController::class, 'update']);
-        Route::post('move-user-department', [DepartmentController::class, 'moveUser']);
-        Route::delete('departments/{id}', [DepartmentController::class, 'destroy']);
+            // Departments
+            Route::get('departments', [DepartmentController::class, 'getDepartments']);
+            Route::get('departments/{id}', [DepartmentController::class, 'show']);
+            Route::post('departments', [DepartmentController::class, 'store']);
+            Route::put('departments/{id}', [DepartmentController::class, 'update']);
+            Route::post('move-user-department', [DepartmentController::class, 'moveUser']);
+            Route::delete('departments/{id}', [DepartmentController::class, 'destroy']);
 
-        // Job Details
-        Route::get('job-details', [JobDetailController::class, 'getJobDetails']);
-        Route::get('job-details/{id}', [JobDetailController::class, 'show']);
-        Route::put('job-details/{id}', [JobDetailController::class, 'update']);
-        Route::get('job-details-info', [JobDetailController::class, 'info']);
+            // Job Details
+            Route::get('job-details', [JobDetailController::class, 'getJobDetails']);
+            Route::get('job-details/{id}', [JobDetailController::class, 'show']);
+            Route::put('job-details/{id}', [JobDetailController::class, 'update']);
+            Route::get('job-details-info', [JobDetailController::class, 'info']);
 
-        // Profiles
-        Route::get('profiles', [ProfileController::class, 'getProfiles']);
-        Route::get('profiles/{id}', [ProfileController::class, 'show']);
-        Route::put('profiles/{id}', [ProfileController::class, 'update']);
-        Route::delete('profiles/{id}', [ProfileController::class, 'destroy']);
-        // Profile Info
-        Route::get('profile-self-info', [ProfileController::class, 'info']);
-        Route::put('profile-update-self-info', [ProfileController::class, 'updateInfo']);
+            // Profiles
+            Route::get('profiles', [ProfileController::class, 'getProfiles']);
+            Route::get('profiles/{id}', [ProfileController::class, 'show']);
+            Route::put('profiles/{id}', [ProfileController::class, 'update']);
+            Route::delete('profiles/{id}', [ProfileController::class, 'destroy']);
+            // Profile Info
+            Route::get('profile-self-info', [ProfileController::class, 'info']);
+            Route::put('profile-update-self-info', [ProfileController::class, 'updateInfo']);
 
-        // Shifts
-        Route::get('shifts', [ShiftController::class, 'getShifts']);
-        Route::get('shifts/{id}', [ShiftController::class, 'show']);
-        Route::post('shifts', [ShiftController::class, 'store']);
-        Route::put('shifts/{id}', [ShiftController::class, 'update']);
-        Route::delete('shifts/{id}', [ShiftController::class, 'destroy']);
-        Route::post('assign-shift', [ShiftController::class, 'assignUser']);
-        Route::get('shifts-info', [ShiftController::class, 'info']);
+            // Shifts
+            Route::get('shifts', [ShiftController::class, 'getShifts']);
+            Route::get('shifts/{id}', [ShiftController::class, 'show']);
+            Route::post('shifts', [ShiftController::class, 'store']);
+            Route::put('shifts/{id}', [ShiftController::class, 'update']);
+            Route::delete('shifts/{id}', [ShiftController::class, 'destroy']);
+            Route::post('assign-shift', [ShiftController::class, 'assignUser']);
+            Route::get('shifts-info', [ShiftController::class, 'info']);
 
-        // Attendance Records
-        Route::get('attendance-records', [AttendanceRecordController::class, 'getAttendanceRecords']);
-        Route::get('attendance-records/{id}', [AttendanceRecordController::class, 'show']);
-        Route::get('attendance-record-info', [AttendanceRecordController::class, 'getAttendanceRecordInfo']);
-        Route::post('attendance-records', [AttendanceRecordController::class, 'store']);
+            // Attendance Records
+            Route::get('attendance-records', [AttendanceRecordController::class, 'getAttendanceRecords']);
+            Route::get('attendance-records/{id}', [AttendanceRecordController::class, 'show']);
+            Route::get('attendance-record-info', [AttendanceRecordController::class, 'getAttendanceRecordInfo']);
+            Route::post('attendance-records', [AttendanceRecordController::class, 'store']);
+        });
     });
 
     Route::prefix('public')->group(function () {
