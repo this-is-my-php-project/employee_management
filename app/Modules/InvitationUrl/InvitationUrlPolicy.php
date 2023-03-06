@@ -10,13 +10,13 @@ class InvitationUrlPolicy
 {
     use HandlesAuthorization;
 
-    public function reset(User $user)
+    public function reset(User $user, string $workspaceId)
     {
         if ($user->isSuperAdmin()) {
             return true;
         }
 
-        if ($user->isWorkspaceOwner()) {
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }
@@ -69,10 +69,6 @@ class InvitationUrlPolicy
         if ($user->isSuperAdmin()) {
             return true;
         }
-
-        if ($user->isWorkspaceOwner()) {
-            return true;
-        }
     }
 
     /**
@@ -82,36 +78,6 @@ class InvitationUrlPolicy
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user)
-    {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-
-        if ($user->isWorkspaceOwner()) {
-            return true;
-        }
-    }
-
-    /**
-     * Determine whether the user can restore the Workspace.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user)
-    {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-    }
-
-    /**
-     * Determine whether the user can permanently delete the Workspace.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user)
     {
         if ($user->isSuperAdmin()) {
             return true;

@@ -109,7 +109,9 @@ Route::middleware('auth:api')->group(function () {
 
         // Departments
         Route::get('departments', [DepartmentController::class, 'getDepartments']);
+        Route::get('departments/{id}', [DepartmentController::class, 'show']);
         Route::post('departments', [DepartmentController::class, 'store']);
+        Route::put('departments/{id}', [DepartmentController::class, 'update']);
         Route::post('move-user-department', [DepartmentController::class, 'moveUser']);
 
         // Job Details

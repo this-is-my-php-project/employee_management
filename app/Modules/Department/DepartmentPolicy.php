@@ -21,10 +21,6 @@ class DepartmentPolicy
         if ($user->isSuperAdmin()) {
             return true;
         }
-
-        if ($user->isWorkspaceOwner()) {
-            return true;
-        }
     }
 
     /**
@@ -33,13 +29,9 @@ class DepartmentPolicy
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user)
+    public function view(User $user,)
     {
         if ($user->isSuperAdmin()) {
-            return true;
-        }
-
-        if ($user->isWorkspaceOwner()) {
             return true;
         }
     }
@@ -50,13 +42,13 @@ class DepartmentPolicy
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user, string $workspaceId)
     {
         if ($user->isSuperAdmin()) {
             return true;
         }
 
-        if ($user->isWorkspaceOwner()) {
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }
@@ -67,13 +59,13 @@ class DepartmentPolicy
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user)
+    public function update(User $user, string $workspaceId)
     {
         if ($user->isSuperAdmin()) {
             return true;
         }
 
-        if ($user->isWorkspaceOwner()) {
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }
@@ -84,39 +76,13 @@ class DepartmentPolicy
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user)
+    public function delete(User $user, $workspaceId)
     {
         if ($user->isSuperAdmin()) {
             return true;
         }
 
-        if ($user->isWorkspaceOwner()) {
-            return true;
-        }
-    }
-
-    /**
-     * Determine whether the user can restore the Workspace.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user)
-    {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-    }
-
-    /**
-     * Determine whether the user can permanently delete the Workspace.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user)
-    {
-        if ($user->isSuperAdmin()) {
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }
