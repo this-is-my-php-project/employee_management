@@ -131,6 +131,8 @@ Route::middleware('auth:api')->group(function () {
         Route::get('shifts', [ShiftController::class, 'getShifts']);
         Route::post('assign-shift', [ShiftController::class, 'assignUser']);
         Route::post('shifts', [ShiftController::class, 'store']);
+        Route::put('shifts/{id}', [ShiftController::class, 'update']);
+        Route::delete('shifts/{id}', [ShiftController::class, 'destroy']);
 
         // Attendance Records
         Route::get('attendance-records', [AttendanceRecordController::class, 'getAttendanceRecords']);

@@ -76,9 +76,10 @@ class ShiftController extends Controller
     public function store(ShiftStoreRequest $request)
     {
         try {
-            $this->authorize('create', Shift::class);
-
             $payload = $request->validated();
+
+            $this->authorize('create', [Shift::class, $payload['workspace_id']]);
+
             $shift = $this->shiftService->createOne($payload);
 
             return new ShiftResource($shift);
@@ -99,9 +100,10 @@ class ShiftController extends Controller
     public function update(ShiftUpdateRequest $request, int $id)
     {
         try {
-            $this->authorize('update', Shift::class);
-
             $payload = $request->validated();
+
+            $this->authorize('update', [Shift::class, $payload['workspace_id']]);
+
             $shift = $this->shiftService->updateOne($id, $payload);
 
             return new ShiftResource($shift);
@@ -119,33 +121,16 @@ class ShiftController extends Controller
      *     @OA\Response(response=404, description="Resource Not Found"),
      * )
      */
-    public function destroy(int $id)
+    public function destroy(Request $request, int $id)
     {
         try {
-            $this->authorize('delete', Shift::class);
+            $request->validate([
+                'workspace_id' => 'required|integer'
+            ]);
+
+            $this->authorize('delete', [Shift::class, $request->workspace_id]);
 
             $shift = $this->shiftService->deleteOne($id);
-            return new ShiftResource($shift);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    /**
-     * @OA\POST(
-     *     path="/api/shifts/{id}/restore",
-     *     tags={"Shifts"},
-     *     summary="Restore a Shift from trash",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function restore(int $id)
-    {
-        try {
-            $this->authorize('restore', Shift::class);
-
-            $shift = $this->shiftService->restoreOne($id);
             return new ShiftResource($shift);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
@@ -155,9 +140,10 @@ class ShiftController extends Controller
     public function assignUser(AssignUserRequest $request)
     {
         try {
-            $this->authorize('assignUser', Shift::class);
-
             $payload = $request->validated();
+
+            $this->authorize('assignUser', [Shift::class, $payload['workspace_id']]);
+
             $this->shiftService->assignUser($payload);
             return $this->sendSuccess('User assigned to shift successfully');
         } catch (\Exception $e) {
@@ -168,9 +154,10 @@ class ShiftController extends Controller
     public function getShifts(ShiftUserRequest $request)
     {
         try {
-            $this->authorize('viewWorkspaceShifts', Shift::class);
-
             $payload = $request->validated();
+
+            $this->authorize('viewWorkspaceShifts', [Shift::class, $payload['workspace_id']]);
+
             $shifts = $this->shiftService->getWorkspaceShifts($payload['workspace_id']);
 
             return $this->sendSuccess('Shifts fetched successfully', $shifts);
