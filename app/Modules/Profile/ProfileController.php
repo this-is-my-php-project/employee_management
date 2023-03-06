@@ -23,6 +23,7 @@ class ProfileController extends Controller
     {
         try {
             $payload = $request->validated();
+
             $profiles = Profile::where(
                 'workspace_id',
                 $payload['workspace_id']
@@ -40,8 +41,6 @@ class ProfileController extends Controller
     public function info(ProfileGetRequest $request)
     {
         try {
-            $this->authorize('info', Profile::class);
-
             $payload = $request->validated();
             $profile = $this->profileService->getInfo($payload['workspace_id']);
 
@@ -54,8 +53,6 @@ class ProfileController extends Controller
     public function updateInfo(ProfileGetRequest $request)
     {
         try {
-            $this->authorize('info', Profile::class);
-
             $payload = $request->validated();
             $profile = $this->profileService->getInfo($payload['workspace_id']);
             $profile = $this->profileService->updateOne($profile->id, $payload);
@@ -100,7 +97,7 @@ class ProfileController extends Controller
     public function show(Request $request, int $id)
     {
         try {
-            $this->authorize('view', Profile::class);
+            // $this->authorize('view', Profile::class);
 
             $profile = $this->profileService->getOneOrFail($id, $request->all());
             return new ProfileResource($profile);
@@ -108,29 +105,6 @@ class ProfileController extends Controller
             return $this->sendError($e->getMessage());
         }
     }
-
-    // /**
-    //  * @OA\POST(
-    //  *     path="/api/profiles",
-    //  *     tags={"Profiles"},
-    //  *     summary="Create a new Profile",
-    //  *     @OA\Response(response=400, description="Bad request"),
-    //  *     @OA\Response(response=422, description="Unprocessable Entity"),
-    //  * )
-    //  */
-    // public function store(ProfileStoreRequest $request)
-    // {
-    //     try {
-    //         $this->authorize('create', Profile::class);
-
-    //         $payload = $request->validated();
-    //         $profile = $this->profileService->createOne($payload);
-
-    //         return new ProfileResource($profile);
-    //     } catch (\Exception $e) {
-    //         return $this->sendError($e->getMessage());
-    //     }
-    // }
 
     /**
      * @OA\PUT(
@@ -144,9 +118,10 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request, int $id)
     {
         try {
-            $this->authorize('update', Profile::class);
-
             $payload = $request->validated();
+
+            $this->authorize('update', [Profile::class, $payload['workspace_id']]);
+
             $profile = $this->profileService->updateOne($id, $payload);
 
             return new ProfileResource($profile);
@@ -164,45 +139,16 @@ class ProfileController extends Controller
      *     @OA\Response(response=404, description="Resource Not Found"),
      * )
      */
-    public function destroy(int $id)
+    public function destroy(Request $request, int $id)
     {
         try {
-            $this->authorize('delete', Profile::class);
+            $request->validate([
+                'workspace_id' => 'required',
+            ]);
+
+            $this->authorize('delete', [Profile::class, $request->workspace_id]);
 
             $profile = $this->profileService->deleteOne($id);
-            return new ProfileResource($profile);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    /**
-     * @OA\POST(
-     *     path="/api/profiles/{id}/restore",
-     *     tags={"Profiles"},
-     *     summary="Restore a Profile from trash",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function restore(int $id)
-    {
-        try {
-            $this->authorize('restore', Profile::class);
-
-            $profile = $this->profileService->restoreOne($id);
-            return new ProfileResource($profile);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    public function disableProfile(int $id)
-    {
-        try {
-            // $this->authorize('disableProfile', Profile::class);
-
-            $profile = $this->profileService->disableProfile($id);
             return new ProfileResource($profile);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());

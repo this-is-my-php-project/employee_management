@@ -121,8 +121,9 @@ Route::middleware('auth:api')->group(function () {
         // Profiles
         Route::get('profiles', [ProfileController::class, 'getProfiles']);
         Route::get('profiles/{id}', [ProfileController::class, 'show']);
-        Route::put('profiles-update-info', [ProfileController::class, 'getProfiles']);
+        Route::put('profiles/{id}', [ProfileController::class, 'update']);
         Route::delete('profiles/{id}', [ProfileController::class, 'destroy']);
+        // Profile Info
         Route::get('profile-self-info', [ProfileController::class, 'info']);
         Route::put('profile-update-self-info', [ProfileController::class, 'updateInfo']);
 
