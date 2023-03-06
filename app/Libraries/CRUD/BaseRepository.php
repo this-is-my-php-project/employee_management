@@ -20,12 +20,22 @@ class BaseRepository
      */
     protected $model;
 
+    public function getByFields(array $fields, array $payload): ?Model
+    {
+        return $this->model->where($fields, $payload)->first();
+    }
+
     /**
      * BaseRepository constructor.
      */
     public function __construct(Model $model)
     {
         $this->model = $model;
+    }
+
+    public function deleteMultipleByField(string $field, $value): bool
+    {
+        return $this->model->where($field, $value)->delete();
     }
 
     /**
@@ -73,6 +83,17 @@ class BaseRepository
         }
 
         return $models;
+    }
+
+    /**
+     * Create insert records
+     * 
+     * @param array $payload
+     * @return bool
+     */
+    public function insertMany(array $payload)
+    {
+        return $this->model->insert($payload);
     }
 
     /**

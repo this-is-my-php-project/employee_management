@@ -14,6 +14,16 @@ class ProfileRepository extends BaseRepository
 
     public function deleteAllFromWorkspace(string|int $workspaceId): bool
     {
-        return $this->model->where('workspace_id', $workspaceId)->delete();
+        return $this->model
+            ->where('workspace_id', $workspaceId)
+            ->delete();
+    }
+
+    public function getOneByWorkspace(string|int $userId, string|int $workspaceId): ?Profile
+    {
+        return $this->model
+            ->where('user_id', $userId)
+            ->where('workspace_id', $workspaceId)
+            ->first();
     }
 }

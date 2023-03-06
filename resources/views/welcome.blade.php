@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>TASK MANAGEMENT</title>
+    <title>Employee MANAGEMENT</title>
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -393,7 +393,7 @@
 <body class="antialiased">
     <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
         <div style="font-size: 100px; color:#e2e8f0">
-            API TASK MANAGEMENT
+            API EMPLOYEE MANAGEMENT
         </div>
     </div>
 </body>

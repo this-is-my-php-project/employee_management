@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('avatar')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('workspace_id')->nullable();
             $table->softDeletes();

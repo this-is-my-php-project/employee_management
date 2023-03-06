@@ -21,6 +21,32 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
+    public function getInfo()
+    {
+        try {
+            $this->authorize('info', User::class);
+
+            $user = auth()->user();
+            return new UserResource($user);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
+    public function updateInfo(UserUpdateRequest $request)
+    {
+        try {
+            $this->authorize('info', User::class);
+
+            $payload = $request->validated();
+            $user = $this->userService->updateOne(auth()->user()->id, $payload);
+
+            return new UserResource($user);
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
+    }
+
     /**
      * @OA\GET(
      *     path="/api/users",

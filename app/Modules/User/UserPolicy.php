@@ -73,4 +73,9 @@ class UserPolicy
             return true;
         }
     }
+
+    public function info(User $user)
+    {
+        return auth()->user()->id === $user->id;
+    }
 }

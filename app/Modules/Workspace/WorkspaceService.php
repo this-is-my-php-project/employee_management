@@ -5,13 +5,11 @@ namespace App\Modules\Workspace;
 use App\Libraries\Crud\BaseService;
 use App\Modules\Department\DepartmentService;
 use App\Modules\EmployeeType\EmployeeTypeService;
+use App\Modules\InvitationUrl\InvitationUrlService;
 use App\Modules\JobDetail\JobDetailService;
-use App\Modules\Meta\MetaService;
 use App\Modules\Profile\ProfileService;
 use App\Modules\Role\RoleService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
 
 class WorkspaceService extends BaseService
 {
@@ -22,38 +20,36 @@ class WorkspaceService extends BaseService
         'projects.workspaces',
         'roles',
         'roles.users',
-        'meta',
         'employeeTypes',
         'departments',
         'jobDetails',
         'userProfiles',
     ];
 
-    protected MetaService $metaService;
     protected RoleService $roleService;
     protected EmployeeTypeService $employeeTypeService;
     protected DepartmentService $departmentService;
     protected JobDetailService $jobDetailService;
     protected ProfileService $profileService;
     protected WorkspaceRepository $workspaceRepo;
-
+    protected InvitationUrlService $invitationUrlService;
     public function __construct(
         WorkspaceRepository $repo,
-        MetaService $metaService,
         RoleService $roleService,
         EmployeeTypeService $employeeTypeService,
         DepartmentService $departmentService,
         JobDetailService $jobDetailService,
         ProfileService $profileService,
+        InvitationUrlService $invitationUrlService
     ) {
         parent::__construct($repo);
-        $this->metaService = $metaService;
         $this->roleService = $roleService;
         $this->employeeTypeService = $employeeTypeService;
         $this->departmentService = $departmentService;
         $this->jobDetailService = $jobDetailService;
         $this->profileService = $profileService;
         $this->workspaceRepo = $repo;
+        $this->invitationUrlService = $invitationUrlService;
     }
 
     /**
@@ -76,9 +72,6 @@ class WorkspaceService extends BaseService
                 'cover' => $payload['cover'] ?? null,
                 'created_by_user' => auth()->user()->id
             ]);
-
-            // // create a two meta for the workspace.
-            // $this->metaService->createWorkspaceMeta($workspace->id);
 
             /**
              * add a default role to the workspace.
@@ -140,9 +133,6 @@ class WorkspaceService extends BaseService
         return DB::transaction(function () use ($id) {
             $model = $this->repo->getOneOrFail($id);
 
-            // // delete workspace meta
-            // $this->metaService->deleteOne($model->id);
-
             // remove roles from workspace
             $this->roleService->removeAllFromWorkspace($model);
 
@@ -150,13 +140,12 @@ class WorkspaceService extends BaseService
             $this->employeeTypeService->removeAllFromWorkspace($model);
 
             // delete all departments in workspace
-            $this->departmentService->deleteAllFromWorkspace($model->id);
-
+            $this->departmentService->deleteMultipleByField('workspace_id', $model->id);
             // delete all job details in workspace
-            $this->jobDetailService->deleteAllFromWorkspace($model->id);
+            $this->jobDetailService->deleteMultipleByField('workspace_id', $model->id);
 
             // delete all profiles in workspace
-            $this->profileService->deleteAllFromWorkspace($model->id);
+            $this->profileService->deleteMultipleByField('workspace_id', $model->id);
 
             // delete workspace
             $workspace = $this->repo->deleteOne($model);
@@ -174,14 +163,6 @@ class WorkspaceService extends BaseService
     public function addToWorkspace(array $payload): Workspace
     {
         return DB::transaction(function () use ($payload) {
-            $workspaceId = decryptData($payload['workspace_id']);
-            $departmentId = decryptData($payload['department_id']);
-
-            $workspace = $this->repo->getOneOrFail($workspaceId);
-            if (empty($workspace)) {
-                throw new \Exception('Workspace not found');
-            }
-
             $user = auth()->user();
             $userData = [
                 'name' => $user->name,
@@ -190,6 +171,19 @@ class WorkspaceService extends BaseService
                 'email' => $user->email,
                 'id' => $user->id
             ];
+
+            $workspaceId = decryptData($payload['workspace']);
+            $departmentId = decryptData($payload['department']);
+
+            $workspace = $this->repo->getOneOrFail($workspaceId);
+            if (empty($workspace)) {
+                throw new \Exception('Workspace not found');
+            }
+
+            if (!empty($this->profileService->getOneByWorkspace($user->id, $workspaceId))) {
+                throw new \Exception('You are already joined in this workspace');
+            }
+
             $profile = $this->profileService->createDefault(
                 $userData,
                 $workspaceId
@@ -219,26 +213,5 @@ class WorkspaceService extends BaseService
         $userId = auth()->user()->id;
         $workspaces = $this->workspaceRepo->myWorkspaces($userId);
         return $workspaces;
-    }
-
-    /**
-     * Invite a user to a workspace with URL.
-     * 
-     * @param array $payload
-     * @return string
-     */
-    public function invitations($payload): string
-    {
-        $workspaceId = encryptData($payload['workspace_id']);
-        $departmentId = encryptData($payload['department_id']);
-        $url = URL::temporarySignedRoute(
-            'add-to-workspace',
-            now()->addDays(7),
-            [
-                'workspace_id' => $workspaceId,
-                'department_id' => $departmentId
-            ]
-        );
-        return $url;
     }
 }

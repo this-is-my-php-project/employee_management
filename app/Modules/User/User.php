@@ -3,6 +3,8 @@
 namespace App\Modules\User;
 
 use App\Modules\Profile\Profile;
+use App\Modules\Role\Constants\RoleConstants;
+use App\Modules\Role\Role;
 use App\Modules\Workspace\Workspace;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -84,5 +86,62 @@ class User extends Authenticatable
         if ($this->id == $userWorkspace) {
             return true;
         }
+    }
+
+    /**
+     * Check if user is admin.
+     * 
+     * @param string|int $workspace_id
+     * @return bool
+     */
+    public function is_admin(string|int $workspace_id)
+    {
+        $profile = Profile::where('user_id', $this->id)->where('workspace_id', $workspace_id)->first();
+        $role_id = $profile->jobDetail->role_id;
+        $role = Role::find($role_id);
+
+        if ($role->key == RoleConstants::ADMIN['key']) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if user is manager.
+     * 
+     * @param string|int $workspace_id
+     * @return bool
+     */
+    public function is_manager(string|int $workspace_id)
+    {
+        $profile = Profile::where('user_id', $this->id)->where('workspace_id', $workspace_id)->first();
+        $role_id = $profile->jobDetail->role_id;
+        $role = Role::find($role_id);
+
+        if ($role->key == RoleConstants::MANAGER['key']) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if user is member.
+     * 
+     * @param string|int $workspace_id
+     * @return bool
+     */
+    public function is_member(string|int $workspace_id)
+    {
+        $profile = Profile::where('user_id', $this->id)->where('workspace_id', $workspace_id)->first();
+        $role_id = $profile->jobDetail->role_id;
+        $role = Role::find($role_id);
+
+        if ($role->key == RoleConstants::MEMBER['key']) {
+            return true;
+        }
+
+        return false;
     }
 }

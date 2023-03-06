@@ -7,6 +7,7 @@ use App\Modules\JobDetail\JobDetailService;
 use App\Modules\JobDetail\Resources\JobDetailResource;
 use App\Modules\JobDetail\Requests\JobDetailStoreRequest;
 use App\Modules\JobDetail\Requests\JobDetailUpdateRequest;
+use App\Modules\JobDetail\Requests\JobDetailUserRequest;
 use Illuminate\Http\Request;
 
 class JobDetailController extends Controller
@@ -17,6 +18,28 @@ class JobDetailController extends Controller
     {
         $this->middleware('auth');
         $this->jobDetailService = $jobDetailService;
+    }
+
+    public function getJobDetails(JobDetailUserRequest $request)
+    {
+        try {
+            $jobDetails = JobDetail::where(
+                'workspace_id',
+                $request->workspace_id
+            )->with([
+                'employeeType',
+                'role',
+                'department',
+                'profile',
+            ])->get();
+
+            return $this->sendSuccess(
+                'Job Details retrieved successfully',
+                JobDetailResource::collection($jobDetails)
+            );
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
+        }
     }
 
     /**
@@ -62,28 +85,28 @@ class JobDetailController extends Controller
         }
     }
 
-    /**
-     * @OA\POST(
-     *     path="/api/job-details",
-     *     tags={"Job Details"},
-     *     summary="Create a new Job Detail",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=422, description="Unprocessable Entity"),
-     * )
-     */
-    public function store(JobDetailStoreRequest $request)
-    {
-        try {
-            $this->authorize('create', JobDetail::class);
+    // /**
+    //  * @OA\POST(
+    //  *     path="/api/job-details",
+    //  *     tags={"Job Details"},
+    //  *     summary="Create a new Job Detail",
+    //  *     @OA\Response(response=400, description="Bad request"),
+    //  *     @OA\Response(response=422, description="Unprocessable Entity"),
+    //  * )
+    //  */
+    // public function store(JobDetailStoreRequest $request)
+    // {
+    //     try {
+    //         $this->authorize('create', JobDetail::class);
 
-            $payload = $request->validated();
-            $jobDetail = $this->jobDetailService->createOne($payload);
+    //         $payload = $request->validated();
+    //         $jobDetail = $this->jobDetailService->createOne($payload);
 
-            return new JobDetailResource($jobDetail);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
+    //         return new JobDetailResource($jobDetail);
+    //     } catch (\Exception $e) {
+    //         return $this->sendError($e->getMessage());
+    //     }
+    // }
 
     /**
      * @OA\PUT(
@@ -108,45 +131,45 @@ class JobDetailController extends Controller
         }
     }
 
-    /**
-     * @OA\DELETE(
-     *     path="/api/job-details/{id}",
-     *     tags={"Job Details"},
-     *     summary="Delete a Job Detail",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function destroy(int $id)
-    {
-        try {
-            $this->authorize('delete', JobDetail::class);
+    // /**
+    //  * @OA\DELETE(
+    //  *     path="/api/job-details/{id}",
+    //  *     tags={"Job Details"},
+    //  *     summary="Delete a Job Detail",
+    //  *     @OA\Response(response=400, description="Bad request"),
+    //  *     @OA\Response(response=404, description="Resource Not Found"),
+    //  * )
+    //  */
+    // public function destroy(int $id)
+    // {
+    //     try {
+    //         $this->authorize('delete', JobDetail::class);
 
-            $jobDetail = $this->jobDetailService->deleteOne($id);
-            return new JobDetailResource($jobDetail);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
+    //         $jobDetail = $this->jobDetailService->deleteOne($id);
+    //         return new JobDetailResource($jobDetail);
+    //     } catch (\Exception $e) {
+    //         return $this->sendError($e->getMessage());
+    //     }
+    // }
 
-    /**
-     * @OA\POST(
-     *     path="/api/job-details/{id}/restore",
-     *     tags={"Job Details"},
-     *     summary="Restore a Job Detail from trash",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function restore(int $id)
-    {
-        try {
-            $this->authorize('restore', JobDetail::class);
+    // /**
+    //  * @OA\POST(
+    //  *     path="/api/job-details/{id}/restore",
+    //  *     tags={"Job Details"},
+    //  *     summary="Restore a Job Detail from trash",
+    //  *     @OA\Response(response=400, description="Bad request"),
+    //  *     @OA\Response(response=404, description="Resource Not Found"),
+    //  * )
+    //  */
+    // public function restore(int $id)
+    // {
+    //     try {
+    //         $this->authorize('restore', JobDetail::class);
 
-            $jobDetail = $this->jobDetailService->restoreOne($id);
-            return new JobDetailResource($jobDetail);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
+    //         $jobDetail = $this->jobDetailService->restoreOne($id);
+    //         return new JobDetailResource($jobDetail);
+    //     } catch (\Exception $e) {
+    //         return $this->sendError($e->getMessage());
+    //     }
+    // }
 }

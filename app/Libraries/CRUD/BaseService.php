@@ -68,6 +68,11 @@ class BaseService
         return null;
     }
 
+    public function deleteMultipleByField(string $field, $value): bool
+    {
+        return $this->repo->deleteMultipleByField($field, $value);
+    }
+
     /**
      * Get relations from request
      * 

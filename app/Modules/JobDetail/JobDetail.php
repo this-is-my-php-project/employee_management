@@ -6,9 +6,11 @@ use App\Modules\Department\Department;
 use App\Modules\EmployeeType\EmployeeType;
 use App\Modules\Profile\Profile;
 use App\Modules\Role\Role;
+use App\Modules\Shift\Shift;
 use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,6 +29,7 @@ class JobDetail extends Model
         'department_id',
         'workspace_id',
         'profile_id',
+        'shift_id',
     ];
 
     protected $hidden = [
@@ -86,5 +89,10 @@ class JobDetail extends Model
     public function profile()
     {
         return $this->belongsTo(Profile::class);
+    }
+
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
     }
 }

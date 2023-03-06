@@ -1,16 +1,17 @@
 <?php
 
-use App\Modules\Attendance\AttendanceController;
+use App\Modules\AttendanceRecord\AttendanceRecordController;
 use App\Modules\Auth\AuthController;
 use App\Modules\Department\DepartmentController;
 use App\Modules\EmployeeType\EmployeeTypeController;
+use App\Modules\InvitationUrl\InvitationUrlController;
 use App\Modules\JobDetail\JobDetailController;
 use App\Modules\Role\RoleController;
 use App\Modules\User\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Modules\Permission\PermissionController;
 use App\Modules\Profile\ProfileController;
-use App\Modules\Project\ProjectController;
+use App\Modules\Shift\ShiftController;
 use App\Modules\Workspace\WorkspaceController;
 
 /*
@@ -29,40 +30,59 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
+    Route::post('logout', [AuthController::class, 'logout']);
+
+
     // Users
     Route::resource('users', UserController::class);
-    Route::put('users/{id}/roles', [UserController::class, 'updateUserRoles']);
+    Route::get('user/user-info', [UserController::class, 'getInfo']);
+    Route::put('user/user-update-info', [UserController::class, 'updateInfo']);
 
     // Roles
     Route::resource('roles', RoleController::class);
+    Route::get('user/roles', [RoleController::class, 'getRoles']);
 
     // Permissions
     Route::resource('permissions', PermissionController::class);
 
     // workspaces
     Route::resource('workspaces', WorkspaceController::class);
-    Route::get('invitations', [WorkspaceController::class, 'invitations'])->name('invitations');
     Route::post('add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
-    Route::get('my-workspaces', [WorkspaceController::class, 'myWorkspaces']);
+    Route::get('user/workspaces', [WorkspaceController::class, 'myWorkspaces']);
 
-    // Projects
-    Route::resource('projects', ProjectController::class);
-
-    // Attendances
-    Route::get('attendances', [AttendanceController::class, 'index']);
-    Route::get('attendances/{id}', [AttendanceController::class, 'show']);
-    Route::post('attendances', [AttendanceController::class, 'store']);
-    Route::post('attendances/check-out', [AttendanceController::class, 'checkOut']);
+    // invitations Url
+    Route::get('invitations', [InvitationUrlController::class, 'index']);
+    Route::get('invitations/{id}', [InvitationUrlController::class, 'show']);
+    Route::post('generate-url', [InvitationUrlController::class, 'generateUrl'])->name('invitations');
+    Route::get('invitation-url', [InvitationUrlController::class, 'getInvitationUrl']);
+    Route::put('reset-invitation-url', [InvitationUrlController::class, 'resetInvitationUrl']);
 
     // employee types
     Route::resource('employee-types', EmployeeTypeController::class);
+    Route::get('user/employee-types', [EmployeeTypeController::class, 'getEmployeeTypes']);
 
     // departments
     Route::resource('departments', DepartmentController::class);
+    Route::post('move-user-department', [DepartmentController::class, 'moveUser']);
+    Route::get('user/departments', [DepartmentController::class, 'getDepartments']);
 
     // job details
     Route::resource('job-details', JobDetailController::class);
+    Route::get('user/job-details', [JobDetailController::class, 'getJobDetails']);
 
     // profile
     Route::resource('profiles', ProfileController::class);
+    Route::put('disable-profile/{id}', [ProfileController::class, 'disableProfile']);
+    Route::get('user/profile-info', [ProfileController::class, 'info']);
+    Route::put('user/update-profile', [ProfileController::class, 'updateInfo']);
+    Route::get('user/profiles', [ProfileController::class, 'getProfiles']);
+
+    // shifts
+    Route::resource('shifts', ShiftController::class);
+    Route::post('user/assign-shift', [ShiftController::class, 'assignUser']);
+    Route::get('user/shifts', [ShiftController::class, 'getShifts']);
+
+    Route::resource('attendance-records', AttendanceRecordController::class);
+    Route::get('user/attendance-records', [AttendanceRecordController::class, 'getAttendanceRecords']);
+    Route::get('user/attendance-record-info', [AttendanceRecordController::class, 'getAttendanceRecordInfo']);
 });

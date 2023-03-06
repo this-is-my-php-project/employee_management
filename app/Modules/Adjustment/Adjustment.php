@@ -3,10 +3,10 @@
 namespace App\Modules\Adjustment;
 
 use App\Modules\AdjustmentType\AdjustmentType;
+use App\Modules\AttendanceRecord\AttendanceRecord;
 use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,35 +18,22 @@ class Adjustment extends Model
     protected $table = 'adjustments';
 
     protected $fillable = [
-        'name',
-        'status',
-        'adjustment_type_id',
+        'clock_in',
+        'clock_out',
+        'start_date',
+        'end_date',
+        'adjustment_type',
+        'attendance_record_id',
         'workspace_id',
-        'is_global'
     ];
 
-    protected $hidden = [
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
-    protected $casts = [
-        'id' => 'integer',
-        'name' => 'string',
-        'status' => 'boolean',
-        'adjustment_type_id' => 'integer',
-        'workspace_id' => 'integer',
-        'is_global' => 'boolean',
-    ];
-
-    public function workspace(): BelongsTo
+    public function attendanceRecord()
     {
-        return $this->belongsTo(Workspace::class);
+        return $this->belongsTo(AttendanceRecord::class);
     }
 
-    public function type(): BelongsTo
+    public function workspace()
     {
-        return $this->belongsTo(AdjustmentType::class);
+        return $this->belongsTo(Workspace::class);
     }
 }

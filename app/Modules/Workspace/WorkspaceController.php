@@ -3,6 +3,7 @@
 namespace App\Modules\Workspace;
 
 use App\Http\Controllers\Controller;
+use App\Modules\InvitationUrl\InvitationUrlService;
 use App\Modules\Workspace\Requests\WorkspaceInviteRequest;
 use App\Modules\Workspace\WorkspaceService;
 use App\Modules\Workspace\Resources\WorkspaceResource;
@@ -12,12 +13,16 @@ use Illuminate\Http\Request;
 
 class WorkspaceController extends Controller
 {
-    protected $workspaceService;
+    protected WorkspaceService $workspaceService;
+    protected InvitationUrlService $invitationUrlService;
 
-    public function __construct(WorkspaceService $workspaceService)
-    {
+    public function __construct(
+        WorkspaceService $workspaceService,
+        InvitationUrlService $invitationUrlService
+    ) {
         $this->middleware('auth');
         $this->workspaceService = $workspaceService;
+        $this->invitationUrlService = $invitationUrlService;
     }
 
     /**
@@ -164,10 +169,7 @@ class WorkspaceController extends Controller
     public function addToWorkspace(WorkspaceInviteRequest $request)
     {
         try {
-            if (!$request->hasValidSignature()) {
-                return $this->sendError('Invalid invite link');
-            }
-
+            $this->invitationUrlService->validateUrl($request);
             $payload = $request->validated();
             $workspace = $this->workspaceService->addToWorkspace($payload);
 
@@ -191,28 +193,10 @@ class WorkspaceController extends Controller
         try {
             $workspaces = $this->workspaceService->myWorkspaces();
 
-            return WorkspaceResource::collection($workspaces);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    /**
-     * @OA\POST(
-     *   path="/api/invitations",
-     *   tags={"Workspaces"},
-     *   summary="Get invitations",
-     *   @OA\Response(response=400, description="Bad request"),
-     *   @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function invitations(WorkspaceInviteRequest $request)
-    {
-        try {
-            $payload = $request->validated();
-            $url = $this->workspaceService->invitations($payload);
-
-            return $url;
+            return $this->sendSuccess(
+                'Workspaces fetched successfully',
+                WorkspaceResource::collection($workspaces)
+            );
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }

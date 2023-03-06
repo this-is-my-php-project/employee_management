@@ -14,10 +14,7 @@ class UserUpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'password' => 'string',
             'name' => 'string',
-            'status' => 'boolean',
-            'role_id' => 'array',
         ];
     }
 }

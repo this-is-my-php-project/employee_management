@@ -3,6 +3,7 @@
 namespace App\Modules\Role;
 
 use App\Modules\JobDetail\JobDetail;
+use App\Modules\Workspace\Workspace;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -29,6 +30,7 @@ class Role extends Model
         'level',
         'is_active',
         'is_global',
+        'hidden',
     ];
 
     /**
@@ -49,5 +51,10 @@ class Role extends Model
     public function jobDetails()
     {
         return $this->hasMany(JobDetail::class);
+    }
+
+    public function workspaces()
+    {
+        return $this->belongsToMany(Workspace::class, 'workspace_role');
     }
 }

@@ -5,7 +5,6 @@ namespace App\Modules\Workspace\Resources;
 use App\Modules\Department\Resources\DepartmentResource;
 use App\Modules\EmployeeType\Resources\EmployeeTypeResource;
 use App\Modules\JobDetail\Resources\JobDetailResource;
-use App\Modules\Meta\Resources\MetaResource;
 use App\Modules\Profile\Resources\ProfileResource;
 use App\Modules\Role\Resources\RoleResource;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,12 +26,10 @@ class WorkspaceResource extends JsonResource
             'is_active' => $this['is_active'],
             'logo' => $this['logo'],
             'cover' => $this['cover'],
-            'created_by_user' => $this['createdByUser'],
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
             'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
-            'meta' => MetaResource::collection($this->whenLoaded('meta')),
             'employee_types' => EmployeeTypeResource::collection($this->whenLoaded('employeeTypes')),
             'departments' => DepartmentResource::collection($this->whenLoaded('departments')),
             'job_details' => JobDetailResource::collection($this->whenLoaded('jobDetails')),

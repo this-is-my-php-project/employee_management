@@ -23,6 +23,7 @@ class ProfileResource extends JsonResource
             'alias' => $this['alias'],
             'phone' => $this['phone'],
             'email' => $this['email'],
+            'is_active' => $this['is_active'],
             'user' => new UserResource($this->whenLoaded('user')),
             'workspace' => new WorkspaceResource($this->whenLoaded('workspace')),
             'job_detail' => new JobDetailResource($this->whenLoaded('jobDetail')),

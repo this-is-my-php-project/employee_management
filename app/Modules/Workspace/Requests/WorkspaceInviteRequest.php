@@ -14,10 +14,10 @@ class WorkspaceInviteRequest extends BaseRequest
     public function rules()
     {
         return [
-            'workspace_id' => 'required|string',
-            'department_id' => 'required|string',
-            'expires' => 'required|string',
-            'signature' => 'required|string',
+            'workspace' => 'required|string',
+            'department' => 'required|string',
+            'expires' => 'string',
+            'signature' => 'string',
         ];
     }
 }

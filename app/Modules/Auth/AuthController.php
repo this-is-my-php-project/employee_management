@@ -46,4 +46,17 @@ class AuthController extends Controller
 
         return new AuthResource($user);
     }
+
+    /**
+     * @return AuthResource
+     */
+    public function logout()
+    {
+        $user = auth()->user()->token();
+        $user->revoke();
+
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+    }
 }

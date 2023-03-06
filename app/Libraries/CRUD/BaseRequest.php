@@ -16,8 +16,8 @@ class BaseRequest extends FormRequest
     {
         if ($validator->fails()) {
             throw new HttpResponseException((new Controller())->sendError(
+                'Validation Error.',
                 500,
-                'failed',
                 $validator->errors()->toArray()
             ));
         }

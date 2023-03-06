@@ -16,8 +16,8 @@ class WorkspaceUpdateRequest extends BaseRequest
         return [
             'name' => 'string',
             'description' => 'string',
-            'logo' => 'file',
-            'cover' => 'file',
+            // 'logo' => 'file',
+            // 'cover' => 'file',
         ];
     }
 }
