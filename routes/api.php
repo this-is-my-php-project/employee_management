@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Adjustment\AdjustmentController;
 use App\Modules\AttendanceRecord\AttendanceRecordController;
 use App\Modules\Auth\AuthController;
 use App\Modules\Department\DepartmentController;
@@ -89,6 +90,7 @@ Route::middleware('auth:api')->group(function () {
         });
     });
 
+    Route::post('user/workspaces', [WorkspaceController::class, 'store']);
 
     Route::middleware('BelongToWorkspace')->group(function () {
         Route::prefix('user')->group(function () {
@@ -98,7 +100,6 @@ Route::middleware('auth:api')->group(function () {
 
             // Workspaces
             Route::get('workspaces', [WorkspaceController::class, 'myWorkspaces']);
-            Route::post('workspaces', [WorkspaceController::class, 'store']);
             Route::put('workspaces/{id}', [WorkspaceController::class, 'update']);
             Route::delete('workspaces/{id}', [WorkspaceController::class, 'destroy']);
             Route::post('add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
@@ -145,6 +146,12 @@ Route::middleware('auth:api')->group(function () {
             Route::get('attendance-records/{id}', [AttendanceRecordController::class, 'show']);
             Route::get('attendance-record-info', [AttendanceRecordController::class, 'getAttendanceRecordInfo']);
             Route::post('attendance-records', [AttendanceRecordController::class, 'store']);
+
+            // Adjustments
+            Route::get('adjustments', [AdjustmentController::class, 'getAdjustments']);
+            Route::get('adjustments/{id}', [AdjustmentController::class, 'show']);
+            Route::get('adjustment-info', [AdjustmentController::class, 'getAdjustmentInfo']);
+            Route::post('adjustments', [AdjustmentController::class, 'store']);
         });
     });
 

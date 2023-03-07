@@ -93,4 +93,21 @@ class AdjustmentPolicy
         // return $user->can(Permission::FORCE_DELETE_USER->value);
         return true;
     }
+
+    /**
+     * Determine whether the user can delete the Workspace.
+     *
+     * @param  \App\Modules\User\User  $user
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function viewWorkspaceAdjustment(User $user, string $workspaceId)
+    {
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        if ($user->isWorkspaceOwner($workspaceId)) {
+            return true;
+        }
+    }
 }
