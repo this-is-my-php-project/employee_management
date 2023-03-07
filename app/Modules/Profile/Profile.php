@@ -67,4 +67,11 @@ class Profile extends Model
     {
         return $this->hasOne(JobDetail::class);
     }
+
+    public static function getProfile(string|int $workspace)
+    {
+        return self::where('workspace_id', $workspace)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+    }
 }

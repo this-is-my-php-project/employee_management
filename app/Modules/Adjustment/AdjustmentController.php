@@ -48,9 +48,7 @@ class AdjustmentController extends Controller
                 'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
             ]);
 
-            $profile = Profile::where('user_id', $request->user()->id)
-                ->where('workspace_id', $request->workspace_id)
-                ->first();
+            $profile = Profile::getProfile($request->workspace_id);
 
             $adjustments = Adjustment::where('workspace_id', $request->workspace_id)
                 ->where('profile_id', $profile->id)

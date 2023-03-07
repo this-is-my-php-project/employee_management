@@ -2,7 +2,6 @@
 
 namespace App\Modules\Adjustment;
 
-use App\Modules\AdjustmentType\AdjustmentType;
 use App\Modules\AttendanceRecord\AttendanceRecord;
 use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +24,7 @@ class Adjustment extends Model
         'adjustment_type',
         'attendance_record_id',
         'workspace_id',
+        'profile_id',
     ];
 
     public function attendanceRecord()
