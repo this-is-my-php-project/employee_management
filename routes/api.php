@@ -90,19 +90,19 @@ Route::middleware('auth:api')->group(function () {
         });
     });
 
+    // Users
+    Route::get('user/user-self-info', [UserController::class, 'getSelfInfo']);
+    Route::put('user/user-update-self-info', [UserController::class, 'updateSelfInfo']);
+
+    // Workspaces
     Route::post('user/workspaces', [WorkspaceController::class, 'store']);
+    Route::get('user/workspaces', [WorkspaceController::class, 'myWorkspaces']);
+    Route::put('user/workspaces/{id}', [WorkspaceController::class, 'update']);
+    Route::delete('user/workspaces/{id}', [WorkspaceController::class, 'destroy']);
+    Route::post('user/add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
 
     Route::middleware('BelongToWorkspace')->group(function () {
         Route::prefix('user')->group(function () {
-            // Users
-            Route::get('user-self-info', [UserController::class, 'getSelfInfo']);
-            Route::put('user-update-self-info', [UserController::class, 'updateSelfInfo']);
-
-            // Workspaces
-            Route::get('workspaces', [WorkspaceController::class, 'myWorkspaces']);
-            Route::put('workspaces/{id}', [WorkspaceController::class, 'update']);
-            Route::delete('workspaces/{id}', [WorkspaceController::class, 'destroy']);
-            Route::post('add-to-workspace', [WorkspaceController::class, 'addToWorkspace'])->name('add-to-workspace');
 
             // invitations Url
             Route::post('generate-url', [InvitationUrlController::class, 'generateUrl'])->name('invitations');

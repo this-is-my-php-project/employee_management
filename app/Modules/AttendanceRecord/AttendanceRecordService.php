@@ -55,7 +55,7 @@ class AttendanceRecordService extends BaseService
                 $profile->id,
                 $workspaceId,
                 $shift->id
-            );
+            )->toArray();
 
             if (!empty($todayRecords)) {
                 throw new \Exception('You have already clocked in');
@@ -123,7 +123,6 @@ class AttendanceRecordService extends BaseService
     public function getAttendanceRecords(int $workspaceId, int $profileId)
     {
         $attendanceRecords = $this->attendanceRecordRepo->getAttendanceRecords($workspaceId, $profileId);
-
         $totalLate = 0;
         $totalLeaveEarly = 0;
         $attended = 0;
@@ -164,6 +163,6 @@ class AttendanceRecordService extends BaseService
     public function getAttendanceRecordInfo(int $workspaceId)
     {
         $profileId = $this->profileService->getSingleProfile($workspaceId)->id;
-        return $this->getAttendanceRecords($workspaceId, $profileId);
+        return $this->getAttendanceRecords($profileId, $workspaceId);
     }
 }
