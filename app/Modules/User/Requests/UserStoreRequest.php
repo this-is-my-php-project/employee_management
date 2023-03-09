@@ -19,7 +19,7 @@ class UserStoreRequest extends BaseRequest
             'name' => 'string',
             'phone' => 'string',
             'status' => 'boolean',
-            'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
+            'workspace_id' => 'required|exists:workspaces,id',
             'role_id' => 'integer|exists:roles,id',
         ];
     }

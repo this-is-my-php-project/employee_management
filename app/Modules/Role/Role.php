@@ -33,13 +33,6 @@ class Role extends Model
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     */
-    protected $hidden = [
-        'deleted_at',
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      */
     protected $casts = [

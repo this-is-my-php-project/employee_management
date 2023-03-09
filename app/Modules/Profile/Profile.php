@@ -29,10 +29,6 @@ class Profile extends Model
         'workspace_id',
     ];
 
-    protected $hidden = [
-        'deleted_at',
-    ];
-
     protected $casts = [
         'is_active' => 'boolean',
     ];

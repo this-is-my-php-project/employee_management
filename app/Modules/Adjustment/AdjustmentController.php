@@ -24,7 +24,7 @@ class AdjustmentController extends Controller
     {
         try {
             $request->validate([
-                'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
+                'workspace_id' => 'required|exists:workspaces,id,',
             ]);
 
             $this->authorize('viewWorkspaceAdjustment', [Adjustment::class, $request->workspace_id]);
@@ -45,7 +45,7 @@ class AdjustmentController extends Controller
     {
         try {
             $request->validate([
-                'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
+                'workspace_id' => 'required|exists:workspaces,id',
             ]);
 
             $profile = Profile::getProfile($request->workspace_id);

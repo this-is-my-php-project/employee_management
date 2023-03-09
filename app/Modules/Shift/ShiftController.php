@@ -27,7 +27,7 @@ class ShiftController extends Controller
     {
         try {
             $request->validate([
-                'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
+                'workspace_id' => 'required|exists:workspaces,id',
             ]);
 
             $profile = Profile::where('user_id', $request->user()->id)
@@ -152,7 +152,7 @@ class ShiftController extends Controller
     {
         try {
             $request->validate([
-                'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
+                'workspace_id' => 'required|exists:workspaces,id',
             ]);
 
             $this->authorize('delete', [Shift::class, $request->workspace_id]);

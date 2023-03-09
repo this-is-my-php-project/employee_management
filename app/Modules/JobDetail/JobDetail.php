@@ -30,10 +30,6 @@ class JobDetail extends Model
         'shift_id',
     ];
 
-    protected $hidden = [
-        'deleted_at',
-    ];
-
     protected $casts = [
         'is_active' => 'boolean',
         'is_global' => 'boolean',
