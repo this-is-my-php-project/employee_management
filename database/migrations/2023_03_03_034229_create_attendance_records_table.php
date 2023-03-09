@@ -22,7 +22,6 @@ return new class extends Migration
             $table->unsignedBigInteger('profile_id');
             $table->unsignedBigInteger('shift_id');
             $table->unsignedBigInteger('workspace_id');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
