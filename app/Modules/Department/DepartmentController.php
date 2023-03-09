@@ -72,8 +72,6 @@ class DepartmentController extends Controller
     public function show(Request $request, int $id)
     {
         try {
-            $this->authorize('view', Department::class);
-
             $department = $this->departmentService->getOneOrFail($id, $request->all());
             return new DepartmentResource($department);
         } catch (\Exception $e) {
@@ -160,7 +158,7 @@ class DepartmentController extends Controller
         try {
             $payload = $request->validated();
 
-            $this->authorize('update', Department::class, $payload['workspace_id']);
+            $this->authorize('update', [Department::class, $payload['workspace_id']]);
 
             $department = $this->departmentService->moveUser($payload);
             if (empty($department)) {
