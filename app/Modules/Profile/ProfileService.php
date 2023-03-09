@@ -3,6 +3,8 @@
 namespace App\Modules\Profile;
 
 use App\Libraries\Crud\BaseService;
+use App\Modules\Adjustment\AdjustmentService;
+use App\Modules\AttendanceRecord\AttendanceRecordService;
 use App\Modules\JobDetail\JobDetailService;
 use Illuminate\Support\Facades\DB;
 
@@ -18,16 +20,21 @@ class ProfileService extends BaseService
     ];
 
     protected JobDetailService $jobDetailService;
-
     protected ProfileRepository $profileRepo;
+    protected AttendanceRecordService $attendanceRecordService;
+    protected AdjustmentService $adjustmentService;
 
     public function __construct(
         ProfileRepository $repo,
-        JobDetailService $jobDetailService
+        JobDetailService $jobDetailService,
+        AttendanceRecordService $attendanceRecordService,
+        AdjustmentService $adjustmentService
     ) {
         parent::__construct($repo);
         $this->profileRepo = $repo;
         $this->jobDetailService = $jobDetailService;
+        $this->attendanceRecordService = $attendanceRecordService;
+        $this->adjustmentService = $adjustmentService;
     }
 
     /**
@@ -59,7 +66,14 @@ class ProfileService extends BaseService
 
             $profile = $this->repo->deleteOne($profile);
 
+            // Delete job detail
             $this->jobDetailService->deleteOne($jobDetailId);
+
+            // Delete attendance record
+            $this->attendanceRecordService->deleteMultipleByField('profile_id', $id);
+
+            // Delete adjustment
+            $this->adjustmentService->deleteMultipleByField('profile_id', $id);
 
             return $profile;
         });
