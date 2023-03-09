@@ -11,7 +11,7 @@ class BelongToWorkspace
     public function handle(Request $request, Closure $next)
     {
         $request->validate([
-            'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
+            'workspace_id' => 'required|exists:workspaces,id'
         ]);
 
         $profile = Profile::where('user_id', $request->user()->id)

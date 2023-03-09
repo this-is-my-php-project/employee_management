@@ -17,7 +17,7 @@ class MoveUserRequest extends BaseRequest
             'from_department_id' => 'required|integer',
             'to_department_id' => 'required|integer',
             'profile_ids' => 'array',
-            'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
+            'workspace_id' => 'required|exists:workspaces,id',
         ];
     }
 }

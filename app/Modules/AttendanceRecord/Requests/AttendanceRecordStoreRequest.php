@@ -16,7 +16,7 @@ class AttendanceRecordStoreRequest extends BaseRequest
         return [
             'clock_in' => 'required|date_format:H:i:s',
             'clock_out' => 'required|date_format:H:i:s',
-            'workspace_id' => 'required|exists:workspaces,id,deleted_at,NULL',
+            'workspace_id' => 'required|exists:workspaces,id',
         ];
     }
 }

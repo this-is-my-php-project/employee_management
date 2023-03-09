@@ -22,7 +22,6 @@ return new class extends Migration
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('workspace_id')->nullable();
             $table->unsignedBigInteger('profile_id')->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }
