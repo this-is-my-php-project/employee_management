@@ -55,7 +55,7 @@ class AttendanceRecordController extends Controller
     public function show(Request $request, int $id)
     {
         try {
-            $this->authorize('view', AttendanceRecord::class);
+            // $this->authorize('view', AttendanceRecord::class);
 
             $attendanceRecord = $this->attendanceRecordService->getOneOrFail($id, $request->all());
             return new AttendanceRecordResource($attendanceRecord);
@@ -87,77 +87,13 @@ class AttendanceRecordController extends Controller
         }
     }
 
-    /**
-     * @OA\PUT(
-     *     path="/api/attendance-records/{id}",
-     *     tags={"Attendance Records"},
-     *     summary="Update an existing Attendance Record",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=422, description="Unprocessable Entity"),
-     * )
-     */
-    public function update(AttendanceRecordUpdateRequest $request, int $id)
-    {
-        try {
-            $this->authorize('update', AttendanceRecord::class);
-
-            $payload = $request->validated();
-            $attendanceRecord = $this->attendanceRecordService->updateOne($id, $payload);
-
-            return new AttendanceRecordResource($attendanceRecord);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    /**
-     * @OA\DELETE(
-     *     path="/api/attendance-records/{id}",
-     *     tags={"Attendance Records"},
-     *     summary="Delete a Attendance Record",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function destroy(int $id)
-    {
-        try {
-            $this->authorize('delete', AttendanceRecord::class);
-
-            $attendanceRecord = $this->attendanceRecordService->deleteOne($id);
-            return new AttendanceRecordResource($attendanceRecord);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    /**
-     * @OA\POST(
-     *     path="/api/attendance-records/{id}/restore",
-     *     tags={"Attendance Records"},
-     *     summary="Restore a Attendance Record from trash",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function restore(int $id)
-    {
-        try {
-            $this->authorize('restore', AttendanceRecord::class);
-
-            $attendanceRecord = $this->attendanceRecordService->restoreOne($id);
-            return new AttendanceRecordResource($attendanceRecord);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
     public function getAttendanceRecords(AttendanceRecordUserRequest $request)
     {
         try {
-            $this->authorize('viewWorkspaceRecord', AttendanceRecord::class);
-
             $payload = $request->validated();
+
+            $this->authorize('viewWorkspaceRecord', [AttendanceRecord::class, $payload['workspace_id']]);
+
             $attendanceRecords = $this->attendanceRecordService
                 ->getAttendanceRecords($payload['workspace_id'], $payload['profile_id']);
 
@@ -175,9 +111,8 @@ class AttendanceRecordController extends Controller
     public function getAttendanceRecordInfo(AttendanceRecordUserInfoRequest $request)
     {
         try {
-            $this->authorize('viewWorkspaceRecord', AttendanceRecord::class);
-
             $payload = $request->validated();
+
             $attendanceRecordInfo = $this->attendanceRecordService
                 ->getAttendanceRecordInfo($payload['workspace_id']);
 

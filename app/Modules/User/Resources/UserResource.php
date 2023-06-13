@@ -25,7 +25,6 @@ class UserResource extends JsonResource
             'avatar' => $this['avatar'],
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
-            'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
             'profiles' => ProfileResource::collection($this->whenLoaded('profiles')),
         ];
     }

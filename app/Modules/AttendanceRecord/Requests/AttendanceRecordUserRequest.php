@@ -14,7 +14,7 @@ class AttendanceRecordUserRequest extends BaseRequest
     public function rules()
     {
         return [
-            'workspace_id' => 'required|integer|exists:workspaces,id',
+            'workspace_id' => 'required|exists:workspaces,id',
             'profile_id' => 'required|integer|exists:profiles,id',
         ];
     }

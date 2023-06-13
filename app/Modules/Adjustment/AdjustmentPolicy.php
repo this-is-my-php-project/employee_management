@@ -18,8 +18,9 @@ class AdjustmentPolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can(Permission::VIEW_USER);
-        return true;
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
     }
 
     /**
@@ -47,50 +48,19 @@ class AdjustmentPolicy
     }
 
     /**
-     * Determine whether the user can update the Adjustment.
+     * Determine whether the user can delete the Workspace.
      *
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user)
+    public function viewWorkspaceAdjustment(User $user, string $workspaceId)
     {
-        // return $user->can(Permission::UPDATE_USER->value);
-        return true;
-    }
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
 
-    /**
-     * Determine whether the user can delete the Adjustment.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(User $user)
-    {
-        // return $user->can(Permission::DELETE_USER->value);
-        return true;
-    }
-
-    /**
-     * Determine whether the user can restore the Adjustment.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user)
-    {
-        // return $user->can(Permission::RESTORE_USER->value);
-        return true;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the Adjustment.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user)
-    {
-        // return $user->can(Permission::FORCE_DELETE_USER->value);
-        return true;
+        if ($user->isWorkspaceOwner($workspaceId)) {
+            return true;
+        }
     }
 }

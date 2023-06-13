@@ -10,14 +10,12 @@ use App\Modules\Shift\Shift;
 use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class JobDetail extends Model
 {
-    use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
+    use HasFactory, HasApiTokens, Notifiable;
 
     protected $table = 'job_details';
 
@@ -30,10 +28,6 @@ class JobDetail extends Model
         'workspace_id',
         'profile_id',
         'shift_id',
-    ];
-
-    protected $hidden = [
-        'deleted_at',
     ];
 
     protected $casts = [

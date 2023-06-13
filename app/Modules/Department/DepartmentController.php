@@ -72,8 +72,6 @@ class DepartmentController extends Controller
     public function show(Request $request, int $id)
     {
         try {
-            $this->authorize('view', Department::class);
-
             $department = $this->departmentService->getOneOrFail($id, $request->all());
             return new DepartmentResource($department);
         } catch (\Exception $e) {
@@ -93,9 +91,10 @@ class DepartmentController extends Controller
     public function store(DepartmentStoreRequest $request)
     {
         try {
-            $this->authorize('create', Department::class);
-
             $payload = $request->validated();
+
+            $this->authorize('create', [Department::class, $payload['workspace_id']]);
+
             $department = $this->departmentService->createOne($payload);
 
             return new DepartmentResource($department);
@@ -116,9 +115,10 @@ class DepartmentController extends Controller
     public function update(DepartmentUpdateRequest $request, int $id)
     {
         try {
-            $this->authorize('update', Department::class);
-
             $payload = $request->validated();
+
+            $this->authorize('update', [Department::class, $payload['workspace_id']]);
+
             $department = $this->departmentService->updateOne($id, $payload);
 
             return new DepartmentResource($department);
@@ -136,33 +136,17 @@ class DepartmentController extends Controller
      *     @OA\Response(response=404, description="Resource Not Found"),
      * )
      */
-    public function destroy(int $id)
+    public function destroy(Request $request, int $id)
     {
         try {
-            $this->authorize('delete', Department::class);
+            $request->validate([
+                'workspace_id' => 'required|exists:workspaces,id',
+            ]);
+
+            $this->authorize('delete', [Department::class, $request->workspace_id]);
 
             $department = $this->departmentService->deleteOne($id);
-            return new DepartmentResource($department);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
 
-    /**
-     * @OA\POST(
-     *     path="/api/departments/{id}/restore",
-     *     tags={"Departments"},
-     *     summary="Restore a Department from trash",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function restore(int $id)
-    {
-        try {
-            $this->authorize('restore', Department::class);
-
-            $department = $this->departmentService->restoreOne($id);
             return new DepartmentResource($department);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
@@ -172,9 +156,10 @@ class DepartmentController extends Controller
     public function moveUser(MoveUserRequest $request)
     {
         try {
-            $this->authorize('update', Department::class);
-
             $payload = $request->validated();
+
+            $this->authorize('update', [Department::class, $payload['workspace_id']]);
+
             $department = $this->departmentService->moveUser($payload);
             if (empty($department)) {
                 return $this->sendError('Something went wrong');

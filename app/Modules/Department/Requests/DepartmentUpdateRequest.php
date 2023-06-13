@@ -16,6 +16,7 @@ class DepartmentUpdateRequest extends BaseRequest
         return [
             'name' => 'string',
             'description' => 'string',
+            'workspace_id' => 'required|exists:workspaces,id',
         ];
     }
 }

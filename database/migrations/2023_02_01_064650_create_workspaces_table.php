@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->string('cover')->nullable();
             $table->unsignedBigInteger('created_by_user');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

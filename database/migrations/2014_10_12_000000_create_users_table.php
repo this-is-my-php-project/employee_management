@@ -23,7 +23,6 @@ return new class extends Migration
             $table->boolean('is_active')->default(1);
             $table->foreignId('avatar')->nullable();
             $table->boolean('is_super_admin')->default(0);
-            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

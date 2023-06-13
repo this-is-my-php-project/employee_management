@@ -74,9 +74,10 @@ class InvitationUrlController extends Controller
     public function generateUrl(InvitationUrlStoreRequest $request)
     {
         try {
-            $this->authorize('reset', InvitationUrl::class);
-
             $payload = $request->validated();
+
+            $this->authorize('reset', [InvitationUrl::class, $payload['workspace_id']]);
+
             $url = $this->invitationUrlService->generateUrl($payload);
 
             return $this->sendSuccess('Invitation url generated successfully', ['url' => $url]);
@@ -97,9 +98,10 @@ class InvitationUrlController extends Controller
     public function getInvitationUrl(InvitationForWorkspace $request)
     {
         try {
-            $this->authorize('reset', InvitationUrl::class);
-
             $payload = $request->validated();
+
+            $this->authorize('reset', [InvitationUrl::class, $payload['workspace_id']]);
+
             $url = $this->invitationUrlService->getInvitationUrlForWorkspace($payload);
             if (empty($url)) {
                 return $this->sendError('Invitation url not exist');
@@ -114,9 +116,10 @@ class InvitationUrlController extends Controller
     public function resetInvitationUrl(InvitationForWorkspace $request)
     {
         try {
-            $this->authorize('reset', InvitationUrl::class);
-
             $payload = $request->validated();
+
+            $this->authorize('reset', [InvitationUrl::class, $payload['workspace_id']]);
+
             $this->invitationUrlService->resetInvitationUrl($payload['workspace_id']);
 
             return $this->sendSuccess('Invitation url reset successfully');

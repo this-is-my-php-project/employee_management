@@ -29,9 +29,13 @@ class ShiftPolicy
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user)
+    public function view(User $user, string $workspaceId)
     {
         if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }
@@ -42,13 +46,13 @@ class ShiftPolicy
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(User $user, string $workspaceId)
     {
         if ($user->isSuperAdmin()) {
             return true;
         }
 
-        if ($user->isWorkspaceOwner()) {
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }
@@ -59,13 +63,13 @@ class ShiftPolicy
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user)
+    public function update(User $user, string $workspaceId)
     {
         if ($user->isSuperAdmin()) {
             return true;
         }
 
-        if ($user->isWorkspaceOwner()) {
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }
@@ -76,61 +80,35 @@ class ShiftPolicy
      * @param  \App\Modules\User\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user)
+    public function delete(User $user, string $workspaceId)
     {
         if ($user->isSuperAdmin()) {
             return true;
         }
 
-        if ($user->isWorkspaceOwner()) {
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }
 
-    /**
-     * Determine whether the user can restore the Workspace.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user)
+    public function assignUser(User $user, string $workspaceId)
     {
         if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }
 
-    /**
-     * Determine whether the user can permanently delete the Workspace.
-     *
-     * @param  \App\Modules\User\User  $user
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user)
-    {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-    }
-
-    public function assignUser(User $user)
+    public function viewWorkspaceShifts(User $user, string $workspaceId)
     {
         if ($user->isSuperAdmin()) {
             return true;
         }
 
-        if ($user->isWorkspaceOwner()) {
-            return true;
-        }
-    }
-
-    public function viewWorkspaceShifts(User $user)
-    {
-        if ($user->isSuperAdmin()) {
-            return true;
-        }
-
-        if ($user->isWorkspaceOwner()) {
+        if ($user->isWorkspaceOwner($workspaceId)) {
             return true;
         }
     }

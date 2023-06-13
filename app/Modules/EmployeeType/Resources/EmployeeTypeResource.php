@@ -23,7 +23,6 @@ class EmployeeTypeResource extends JsonResource
             'is_global' => $this['is_global'],
             'created_at' => $this['created_at'],
             'updated_at' => $this['updated_at'],
-            'deleted_at' => $this->when($this['deleted_at'], $this['deleted_at']),
             'workspaces' => WorkspaceResource::collection($this->whenLoaded('workspaces')),
         ];
     }

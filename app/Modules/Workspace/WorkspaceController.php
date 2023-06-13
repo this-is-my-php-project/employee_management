@@ -60,7 +60,7 @@ class WorkspaceController extends Controller
     public function show(Request $request, int $id)
     {
         try {
-            $this->authorize('view', Workspace::class);
+            $this->authorize('view', [Workspace::class, $id]);
 
             $workspace = $this->workspaceService->getOneOrFail($id, $request->all());
             return new WorkspaceResource($workspace);
@@ -104,7 +104,7 @@ class WorkspaceController extends Controller
     public function update(WorkspaceUpdateRequest $request, int $id)
     {
         try {
-            $this->authorize('update', Workspace::class);
+            $this->authorize('update', [Workspace::class, $id]);
 
             $payload = $request->validated();
             $workspace = $this->workspaceService->updateOne($id, $payload);
@@ -127,30 +127,9 @@ class WorkspaceController extends Controller
     public function destroy(int $id)
     {
         try {
-            $this->authorize('delete', Workspace::class);
+            $this->authorize('delete', [Workspace::class, $id]);
 
             $workspace = $this->workspaceService->deleteOne($id);
-            return new WorkspaceResource($workspace);
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
-    /**
-     * @OA\POST(
-     *     path="/api/workspaces/{id}/restore",
-     *     tags={"Workspaces"},
-     *     summary="Restore a Workspace from trash",
-     *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource Not Found"),
-     * )
-     */
-    public function restore(int $id)
-    {
-        try {
-            $this->authorize('restore', Workspace::class);
-
-            $workspace = $this->workspaceService->restoreOne($id);
             return new WorkspaceResource($workspace);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());

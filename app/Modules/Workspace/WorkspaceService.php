@@ -3,12 +3,16 @@
 namespace App\Modules\Workspace;
 
 use App\Libraries\Crud\BaseService;
+use App\Modules\Adjustment\AdjustmentService;
+use App\Modules\AttendanceRecord\AttendanceRecordService;
 use App\Modules\Department\DepartmentService;
 use App\Modules\EmployeeType\EmployeeTypeService;
 use App\Modules\InvitationUrl\InvitationUrlService;
 use App\Modules\JobDetail\JobDetailService;
 use App\Modules\Profile\ProfileService;
 use App\Modules\Role\RoleService;
+use App\Modules\Shift\ShiftRepository;
+use App\Modules\Shift\ShiftService;
 use Illuminate\Support\Facades\DB;
 
 class WorkspaceService extends BaseService
@@ -33,6 +37,10 @@ class WorkspaceService extends BaseService
     protected ProfileService $profileService;
     protected WorkspaceRepository $workspaceRepo;
     protected InvitationUrlService $invitationUrlService;
+    protected ShiftService $shiftService;
+    protected AttendanceRecordService $attendanceRecordService;
+    protected AdjustmentService $adjustmentService;
+
     public function __construct(
         WorkspaceRepository $repo,
         RoleService $roleService,
@@ -40,7 +48,10 @@ class WorkspaceService extends BaseService
         DepartmentService $departmentService,
         JobDetailService $jobDetailService,
         ProfileService $profileService,
-        InvitationUrlService $invitationUrlService
+        InvitationUrlService $invitationUrlService,
+        ShiftService $shiftService,
+        AttendanceRecordService $attendanceRecordService,
+        AdjustmentService $adjustmentService
     ) {
         parent::__construct($repo);
         $this->roleService = $roleService;
@@ -50,6 +61,9 @@ class WorkspaceService extends BaseService
         $this->profileService = $profileService;
         $this->workspaceRepo = $repo;
         $this->invitationUrlService = $invitationUrlService;
+        $this->shiftService = $shiftService;
+        $this->attendanceRecordService = $attendanceRecordService;
+        $this->adjustmentService = $adjustmentService;
     }
 
     /**
@@ -73,22 +87,11 @@ class WorkspaceService extends BaseService
                 'created_by_user' => auth()->user()->id
             ]);
 
-            /**
-             * add a default role to the workspace.
-             * many to many relationship.
-             */
-            $roleIds = $this->roleService->getRoleIds();
-            $workspace->roles()->attach($roleIds);
-
-            /**
-             * add a default employee type to the workspace.
-             * many to many relationship.
-             */
-            $employeeIds = $this->employeeTypeService->getIds();
-            $workspace->employeeTypes()->attach($employeeIds);
-
             // create default department
-            $defaultDepartment = $this->departmentService->createDefault($workspace->id, $workspace->name);
+            $defaultDepartment = $this->departmentService->createDefault(
+                $workspace->id,
+                $workspace->name
+            );
 
             // create new user data
             $userData = [
@@ -132,21 +135,20 @@ class WorkspaceService extends BaseService
     {
         return DB::transaction(function () use ($id) {
             $model = $this->repo->getOneOrFail($id);
-
-            // remove roles from workspace
-            $this->roleService->removeAllFromWorkspace($model);
-
-            // remove employee types from workspace
-            $this->employeeTypeService->removeAllFromWorkspace($model);
-
+            // delete al urls in workspace
+            $this->invitationUrlService->deleteMultipleByField('workspace_id', $model->id);
             // delete all departments in workspace
             $this->departmentService->deleteMultipleByField('workspace_id', $model->id);
-            // delete all job details in workspace
-            $this->jobDetailService->deleteMultipleByField('workspace_id', $model->id);
-
             // delete all profiles in workspace
             $this->profileService->deleteMultipleByField('workspace_id', $model->id);
-
+            // delete all job details in workspace
+            $this->jobDetailService->deleteMultipleByField('workspace_id', $model->id);
+            // delete all shifts in workspace
+            $this->shiftService->deleteMultipleByField('workspace_id', $model->id);
+            // delete all attendance records in workspace
+            $this->attendanceRecordService->deleteMultipleByField('workspace_id', $model->id);
+            // delete all adjustments in workspace
+            $this->adjustmentService->deleteMultipleByField('workspace_id', $model->id);
             // delete workspace
             $workspace = $this->repo->deleteOne($model);
 

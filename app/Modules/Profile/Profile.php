@@ -11,11 +11,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Profile extends Model
 {
-    use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
+    use HasFactory, HasApiTokens, Notifiable;
 
     protected $table = 'profiles';
 
@@ -28,10 +27,6 @@ class Profile extends Model
         'is_active',
         'user_id',
         'workspace_id',
-    ];
-
-    protected $hidden = [
-        'deleted_at',
     ];
 
     protected $casts = [
@@ -66,5 +61,12 @@ class Profile extends Model
     public function jobDetail(): HasOne
     {
         return $this->hasOne(JobDetail::class);
+    }
+
+    public static function getProfile(string|int $workspace)
+    {
+        return self::where('workspace_id', $workspace)
+            ->where('user_id', auth()->user()->id)
+            ->first();
     }
 }

@@ -23,7 +23,6 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('workspace_id')->nullable();
-            $table->softDeletes();
             $table->timestamps();
         });
     }

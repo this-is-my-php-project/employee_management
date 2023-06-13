@@ -17,6 +17,7 @@ class ProfileUpdateRequest extends BaseRequest
             'name' => 'string|max:255',
             'alias' => 'nullable|string|max:255',
             'avatar' => 'nullable|string|max:255',
+            'workspace_id' => 'required|exists:workspaces,id',
         ];
     }
 }

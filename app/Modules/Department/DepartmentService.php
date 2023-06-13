@@ -3,6 +3,7 @@
 namespace App\Modules\Department;
 
 use App\Libraries\Crud\BaseService;
+use App\Modules\Workspace\Workspace;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -119,6 +120,13 @@ class DepartmentService extends BaseService
     public function moveUser(array $payload): bool
     {
         return DB::transaction(function () use ($payload) {
+            $fromDepartment = $this->repo->getOneOrFail($payload['from_department_id'], []);
+            $toDepartment = $this->repo->getOneOrFail($payload['to_department_id'], []);
+
+            if ($fromDepartment->workspace_id !== $toDepartment->workspace_id) {
+                throw new \Exception('Department not in same workspace');
+            }
+
             $fromDepartmentId = $payload['from_department_id'];
             $toDepartmentId = $payload['to_department_id'];
             $profileIds = $payload['profile_ids'];

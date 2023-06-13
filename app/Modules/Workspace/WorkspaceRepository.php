@@ -20,8 +20,8 @@ class WorkspaceRepository extends BaseRepository
             // 'roles',
             // 'employeeTypes',
             // 'jobDetails',
-            'departments',
-            'userProfiles',
+            // 'departments',
+            // 'userProfiles',
         ])->get();
     }
 }

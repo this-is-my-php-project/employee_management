@@ -19,7 +19,6 @@ return new class extends Migration
             $table->time('clock_out');
             $table->string('name');
             $table->unsignedBigInteger('workspace_id');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

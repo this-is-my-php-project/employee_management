@@ -324,11 +324,10 @@ class GenerateModule extends Command
         use Illuminate\Database\Eloquent\Factories\HasFactory;
         use Laravel\Passport\HasApiTokens;
         use Illuminate\Notifications\Notifiable;
-        use Illuminate\Database\Eloquent\SoftDeletes;
 
         class $modelName extends Model
         {
-            use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
+            use HasFactory, HasApiTokens, Notifiable;
         }
         
         XML;

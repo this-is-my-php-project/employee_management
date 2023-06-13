@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('adjustment_type');
             $table->unsignedBigInteger('attendance_record_id');
             $table->unsignedBigInteger('workspace_id');
-            $table->softDeletes();
+            $table->unsignedBigInteger('profile_id');
             $table->timestamps();
         });
     }

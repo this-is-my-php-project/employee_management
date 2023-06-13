@@ -14,7 +14,7 @@ class RoleUserRequest extends BaseRequest
     public function rules()
     {
         return [
-            'workspace_id' => 'required|integer|not_in:0|exists:workspaces,id',
+            'workspace_id' => 'required|exists:workspaces,id',
         ];
     }
 }

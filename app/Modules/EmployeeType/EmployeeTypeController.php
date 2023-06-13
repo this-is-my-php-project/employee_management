@@ -18,24 +18,6 @@ class EmployeeTypeController extends Controller
         $this->employeeTypeService = $employeeTypeService;
     }
 
-    public function getEmployeeTypes(EmployeeTypeUserRequest $request)
-    {
-        try {
-            $this->authorize('viewAny', EmployeeType::class);
-
-            $employeeTypes = EmployeeType::whereHas('workspaces', function ($query) use ($request) {
-                $query->where('workspace_id', $request->workspace_id);
-            })->get();
-
-            return $this->sendSuccess(
-                'Employee Types retrieved successfully',
-                EmployeeTypeResource::collection($employeeTypes)
-            );
-        } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
-        }
-    }
-
     /**
      * @OA\GET(
      *     path="/api/employee-types",
@@ -49,8 +31,6 @@ class EmployeeTypeController extends Controller
     public function index(Request $request)
     {
         try {
-            $this->authorize('viewAny', EmployeeType::class);
-
             $employeeTypes = $this->employeeTypeService->paginate($request->all());
             return EmployeeTypeResource::collection($employeeTypes);
         } catch (\Exception $e) {
@@ -70,100 +50,10 @@ class EmployeeTypeController extends Controller
     public function show(Request $request, int $id)
     {
         try {
-            $this->authorize('view', EmployeeType::class);
-
             $employeeType = $this->employeeTypeService->getOneOrFail($id, $request->all());
             return new EmployeeTypeResource($employeeType);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
     }
-
-    // /**
-    //  * @OA\POST(
-    //  *     path="/api/employee-types",
-    //  *     tags={"Employee Types"},
-    //  *     summary="Create a new Employee Type",
-    //  *     @OA\Response(response=400, description="Bad request"),
-    //  *     @OA\Response(response=422, description="Unprocessable Entity"),
-    //  * )
-    //  */
-    // public function store(EmployeeTypeStoreRequest $request)
-    // {
-    //     try {
-    //         $this->authorize('create', EmployeeType::class);
-
-    //         $payload = $request->validated();
-    //         $employeeType = $this->employeeTypeService->createOne($payload);
-
-    //         return new EmployeeTypeResource($employeeType);
-    //     } catch (\Exception $e) {
-    //         return $this->sendError($e->getMessage());
-    //     }
-    // }
-
-    // /**
-    //  * @OA\PUT(
-    //  *     path="/api/employee-types/{id}",
-    //  *     tags={"Employee Types"},
-    //  *     summary="Update an existing Employee Type",
-    //  *     @OA\Response(response=400, description="Bad request"),
-    //  *     @OA\Response(response=422, description="Unprocessable Entity"),
-    //  * )
-    //  */
-    // public function update(EmployeeTypeUpdateRequest $request, int $id)
-    // {
-    //     try {
-    //         $this->authorize('update', EmployeeType::class);
-
-    //         $payload = $request->validated();
-    //         $employeeType = $this->employeeTypeService->updateOne($id, $payload);
-
-    //         return new EmployeeTypeResource($employeeType);
-    //     } catch (\Exception $e) {
-    //         return $this->sendError($e->getMessage());
-    //     }
-    // }
-
-    // /**
-    //  * @OA\DELETE(
-    //  *     path="/api/employee-types/{id}",
-    //  *     tags={"Employee Types"},
-    //  *     summary="Delete a Employee Type",
-    //  *     @OA\Response(response=400, description="Bad request"),
-    //  *     @OA\Response(response=404, description="Resource Not Found"),
-    //  * )
-    //  */
-    // public function destroy(int $id)
-    // {
-    //     try {
-    //         $this->authorize('delete', EmployeeType::class);
-
-    //         $employeeType = $this->employeeTypeService->deleteOne($id);
-    //         return new EmployeeTypeResource($employeeType);
-    //     } catch (\Exception $e) {
-    //         return $this->sendError($e->getMessage());
-    //     }
-    // }
-
-    // /**
-    //  * @OA\POST(
-    //  *     path="/api/employee-types/{id}/restore",
-    //  *     tags={"Employee Types"},
-    //  *     summary="Restore a Employee Type from trash",
-    //  *     @OA\Response(response=400, description="Bad request"),
-    //  *     @OA\Response(response=404, description="Resource Not Found"),
-    //  * )
-    //  */
-    // public function restore(int $id)
-    // {
-    //     try {
-    //         $this->authorize('restore', EmployeeType::class);
-
-    //         $employeeType = $this->employeeTypeService->restoreOne($id);
-    //         return new EmployeeTypeResource($employeeType);
-    //     } catch (\Exception $e) {
-    //         return $this->sendError($e->getMessage());
-    //     }
-    // }
 }

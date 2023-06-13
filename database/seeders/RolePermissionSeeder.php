@@ -18,18 +18,6 @@ class RolePermissionSeeder extends Seeder
         $roles = [
             [
                 'id' => 1,
-                'name' => RoleConstants::SUPER_ADMIN['name'],
-                'key' => RoleConstants::SUPER_ADMIN['key'],
-                'description' => 'Super Admin',
-                'parent_id' => null,
-                'level' => 0,
-                'is_active' => true,
-                'is_global' => false,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 2,
                 'name' => RoleConstants::ADMIN['name'],
                 'key' => RoleConstants::ADMIN['key'],
                 'description' => 'Administrator of a workspace',
@@ -41,7 +29,7 @@ class RolePermissionSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 3,
+                'id' => 2,
                 'name' => RoleConstants::MANAGER['name'],
                 'key' => RoleConstants::MANAGER['key'],
                 'description' => 'Manager of a workspace',
@@ -53,7 +41,7 @@ class RolePermissionSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 4,
+                'id' => 3,
                 'name' => RoleConstants::MEMBER['name'],
                 'key' => RoleConstants::MEMBER['key'],
                 'description' => 'Member of a workspace',

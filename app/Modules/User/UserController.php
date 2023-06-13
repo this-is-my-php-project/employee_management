@@ -21,7 +21,7 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    public function getInfo()
+    public function getSelfInfo()
     {
         try {
             $this->authorize('info', User::class);
@@ -33,7 +33,7 @@ class UserController extends Controller
         }
     }
 
-    public function updateInfo(UserUpdateRequest $request)
+    public function updateSelfInfo(UserUpdateRequest $request)
     {
         try {
             $this->authorize('info', User::class);

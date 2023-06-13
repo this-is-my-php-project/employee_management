@@ -85,16 +85,6 @@ class RoleService extends BaseService
     }
 
     /**
-     * Get all role ids.
-     * 
-     * @return array
-     */
-    public function getRoleIds(): array
-    {
-        return $this->roleRepo->getRoleIds();
-    }
-
-    /**
      * Get default role ids.
      * 
      * @return int
@@ -102,18 +92,6 @@ class RoleService extends BaseService
     public function getDefaultRoleIds(): int
     {
         return $this->roleRepo->getDefaultRoleIds();
-    }
-
-    /**
-     * Detach all roles from a workspace.
-     * 
-     * @param Workspace $workspace
-     * @return Workspace
-     */
-    public function removeAllFromWorkspace(Workspace $workspace): Workspace
-    {
-        $workspace->roles()->detach($this->getRoleIds());
-        return $workspace;
     }
 
     public function getInviteRoleId(): int
